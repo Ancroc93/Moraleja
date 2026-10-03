@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Autodiagnóstico C.L.A.R.A. · Moraleja</title>
+<title>Autodiagnóstico de Comunicación · Moraleja</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -19,7 +19,7 @@
   --border2: rgba(191,32,72,0.22);
   --ink:     #2B0E17;
   --ink2:    #5C2A38;
-  --muted:   rgba(43,14,23,0.45);
+  --muted:   rgba(43,14,23,0.68);
   --muted2:  rgba(43,14,23,0.16);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -173,6 +173,35 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--muted);padding:14px 32px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .25s ease;}
 .btn-outline:hover{border-color:var(--rust);color:var(--rust);}
 
+/* ── AUTH (registro y verificación) ── */
+#screen-register,#screen-verify{align-items:center;justify-content:center;padding:70px 24px 80px;text-align:center;}
+.auth-wrap{max-width:460px;width:100%;margin:0 auto;}
+.auth-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:3px;padding:40px 36px;text-align:left;box-shadow:0 6px 28px rgba(191,32,72,0.07);}
+.auth-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,38px);font-weight:300;color:var(--ink);margin-bottom:10px;line-height:1.2;}
+.auth-title em{font-style:italic;color:var(--rust);}
+.auth-sub{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:28px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-family:'Montserrat',sans-serif;font-weight:600;}
+.field input[type=text],.field input[type=email]{width:100%;background:var(--surface2);border:1.5px solid var(--border2);border-radius:2px;padding:14px 16px;font-family:'Raleway',sans-serif;font-size:15px;color:var(--ink);}
+.field input:focus{outline:none;border-color:var(--rust);}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.7;margin:22px 0;}
+.consent input{margin-top:4px;accent-color:#BF2048;width:16px;height:16px;flex-shrink:0;}
+.consent a{color:var(--rust);}
+.auth-error{display:none;font-size:13px;color:#a83a3a;background:rgba(168,58,58,0.08);border:1px solid rgba(168,58,58,0.25);border-radius:2px;padding:12px 14px;margin-bottom:18px;line-height:1.6;}
+.auth-error.show{display:block;}
+.auth-note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:18px;text-align:center;}
+.auth-note a{color:var(--rust);}
+.auth-card .btn-primary{width:100%;padding:16px 20px;}
+.verify-number{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:600;color:var(--rust);line-height:1;margin-bottom:8px;}
+#btn-resend:disabled{opacity:.4;cursor:not-allowed;}
+#auth-info{display:none;margin-top:26px;font-size:12px;color:var(--muted);}
+#auth-info.show{display:block;}
+#auth-info a{color:var(--rust);cursor:pointer;}
+#btn-last-result{display:none;margin-top:16px;}
+#btn-last-result.show{display:inline-block;}
+#save-note{display:none;font-size:13px;color:var(--muted);margin-top:18px;line-height:1.7;}
+#save-note.show{display:block;}
+
 @media(max-width:860px){
   .results-content{grid-template-columns:1fr;gap:40px;}
   .dim-grid,.profile-grid{grid-template-columns:1fr;}
@@ -189,6 +218,55 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 </head>
 <body>
 
+<!-- REGISTER -->
+<div id="screen-register" class="screen">
+  <div class="intro-logo-wrap">
+    <div class="moraleja-logo intro-logo">Moraleja</div>
+    <div class="moraleja-tagline intro-logo-tag">Comunicación Consciente</div>
+  </div>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2 class="auth-title">Crea tu acceso <em>gratuito</em></h2>
+      <p class="auth-sub">Te enviamos un enlace a tu correo para entrar, sin contraseñas. Así puedes guardar tu perfil y consultarlo cuando quieras, desde cualquier dispositivo.</p>
+      <div class="auth-error" id="register-error"></div>
+      <form id="register-form" novalidate>
+        <div class="field">
+          <label for="reg-nombre">Tu nombre</label>
+          <input type="text" id="reg-nombre" name="nombre" autocomplete="given-name" placeholder="Ej. Carolina" />
+        </div>
+        <div class="field">
+          <label for="reg-email">Tu correo electrónico</label>
+          <input type="email" id="reg-email" name="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" />
+        </div>
+        <div id="turnstile-wrap"></div>
+        <label class="consent">
+          <input type="checkbox" id="reg-consent" />
+          <span>Acepto el tratamiento de mis datos según la <a href="politica-datos.html" target="_blank" rel="noopener">política de tratamiento de datos</a>, y que Moraleja me contacte con contenidos y ofertas relacionados.</span>
+        </label>
+        <button class="btn-primary" type="submit" id="btn-register">Enviarme el enlace →</button>
+      </form>
+      <p class="auth-note">Al continuar aceptas nuestra <a href="politica-datos.html" target="_blank" rel="noopener">política de datos</a>. Nunca compartiremos tu correo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- VERIFY -->
+<div id="screen-verify" class="screen">
+  <div class="intro-logo-wrap">
+    <div class="moraleja-logo intro-logo">Moraleja</div>
+    <div class="moraleja-tagline intro-logo-tag">Comunicación Consciente</div>
+  </div>
+  <div class="auth-wrap">
+    <div class="auth-card" style="text-align:center;">
+      <div class="verify-number">✉</div>
+      <h2 class="auth-title">Revisa tu correo</h2>
+      <p class="auth-sub" id="verify-text">Te enviamos un enlace de acceso. Ábrelo para entrar al diagnóstico.</p>
+      <button class="btn-outline" id="btn-resend" onclick="resendLink()" disabled>Reenviar enlace (<span id="resend-countdown">60</span>s)</button>
+      <p class="auth-note">¿No lo ves? Revisa spam o promociones.<br><a href="#" onclick="backToRegister(event)">Corregir mi correo</a></p>
+    </div>
+  </div>
+</div>
+
 <!-- INTRO -->
 <div id="screen-intro" class="screen active">
   <div class="intro-logo-wrap">
@@ -197,22 +275,24 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   </div>
   <div class="intro-orb"><div class="intro-orb-inner">🌱</div></div>
   <p class="intro-tag">Herramienta de Autodiagnóstico · Comunicación Consciente para Emprendedoras</p>
-  <h1 class="intro-title">Antes de mostrar tu marca,<br><em>escucha tu voz interior</em></h1>
+  <h1 class="intro-title">Descubre cómo estás comunicando hoy<br><em>y qué está frenando el crecimiento de tu marca</em></h1>
   <p class="intro-desc">Antes de comunicar hacia afuera, toda emprendedora comunica hacia adentro. Este autodiagnóstico te revela cómo tus creencias y tu diálogo interno están moldeando tu forma de mostrarte, vender y construir tu marca — para que puedas comunicar desde la consciencia, no desde el miedo. Responde con honestidad. No hay respuestas correctas.</p>
   <div class="intro-clara">
-    <div class="clara-letter"><div class="clara-circle" style="background:#BF2048">C</div><div class="clara-word">Consciencia</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#DD793B">L</div><div class="clara-word">Lenguaje</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#EDB548">A</div><div class="clara-word">Alineación</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#E68199">R</div><div class="clara-word">Relaciones</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#8C3D5A">A</div><div class="clara-word">Acción</div></div>
+    <div class="clara-letter"><div class="clara-circle" style="background:#BF2048">1</div><div class="clara-word">Consciencia</div></div>
+    <div class="clara-letter"><div class="clara-circle" style="background:#DD793B">2</div><div class="clara-word">Lenguaje</div></div>
+    <div class="clara-letter"><div class="clara-circle" style="background:#EDB548">3</div><div class="clara-word">Alineación</div></div>
+    <div class="clara-letter"><div class="clara-circle" style="background:#E68199">4</div><div class="clara-word">Relaciones</div></div>
+    <div class="clara-letter"><div class="clara-circle" style="background:#8C3D5A">5</div><div class="clara-word">Acción</div></div>
   </div>
   <div class="intro-stats">
     <div class="stat"><span class="stat-num">20</span><span class="stat-label">Preguntas</span></div>
-    <div class="stat"><span class="stat-num">5</span><span class="stat-label">Dimensiones C.L.A.R.A.</span></div>
-    <div class="stat"><span class="stat-num">4</span><span class="stat-label">Perfiles</span></div>
+    <div class="stat"><span class="stat-num">5</span><span class="stat-label">Dimensiones</span></div>
+    <div class="stat"><span class="stat-num">7</span><span class="stat-label">Perfiles</span></div>
     <div class="stat"><span class="stat-num">~8</span><span class="stat-label">Minutos</span></div>
   </div>
   <button class="btn-primary" onclick="startQuiz()">Comenzar diagnóstico →</button>
+  <div><button class="btn-outline" id="btn-last-result" onclick="showLastResult()">Ver mi último resultado →</button></div>
+  <p id="auth-info">Sesión: <span id="auth-email"></span> · <a onclick="signOut()">Salir</a></p>
 </div>
 
 <!-- QUIZ -->
@@ -243,7 +323,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div>
     </div>
     <p class="loading-text">Analizando tu perfil...</p>
-    <p class="loading-sub">Procesando tus 5 dimensiones C.L.A.R.A.</p>
+    <p class="loading-sub">Procesando tus 5 dimensiones</p>
   </div>
 </div>
 
@@ -258,7 +338,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <p class="result-desc" id="result-desc"></p>
       </div>
       <div class="radar-wrap">
-        <p class="radar-title">Tu mapa C.L.A.R.A.</p>
+        <p class="radar-title">Tu mapa de comunicación</p>
         <canvas id="radarChart" width="300" height="300"></canvas>
       </div>
     </div>
@@ -285,116 +365,131 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <button class="btn-outline" onclick="window.print()">⬇ Guardar mi diagnóstico</button>
       <button class="btn-primary" onclick="restartQuiz()">Volver a comenzar</button>
     </div>
+    <p id="save-note"></p>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
+/* ═════════ CONFIGURACIÓN — completar al activar ═════════
+   Mientras SUPABASE_URL no sea una URL real, el test funciona
+   en MODO ABIERTO (sin registro), para no romper la página. */
+const CONFIG={
+  SUPABASE_URL:'TU_SUPABASE_URL',          // ej. https://xyzcompany.supabase.co
+  SUPABASE_ANON_KEY:'TU_SUPABASE_ANON_KEY', // clave pública "anon" (segura en frontend con RLS)
+  TURNSTILE_SITE_KEY:'TU_TURNSTILE_SITE_KEY', // clave pública de Cloudflare Turnstile
+  EDGE_SUBSCRIBE_URL:'',                    // ej. https://xyzcompany.supabase.co/functions/v1/subscribe (vacío = desactivado)
+  CONSENT_VERSION:'v1-2026-09-25',
+};
+const AUTH_ENABLED=typeof CONFIG.SUPABASE_URL==='string'&&CONFIG.SUPABASE_URL.indexOf('http')===0&&typeof window.supabase!=='undefined';
+let supaClient=null,lastSavedResult=null;
+
 const DIMS=['consciencia','lenguaje','alineacion','relaciones','accion'];
 const DIM_LABELS=['Consciencia','Lenguaje','Alineación','Relaciones','Acción'];
 const DIM_COLORS=['#BF2048','#DD793B','#EDB548','#E68199','#8C3D5A'];
 
 const questions=[
-  {dim:'consciencia',dimLabel:'C · Consciencia',dimNum:1,text:'Cuando piensas en mostrarte como emprendedora, ¿qué voz aparece primero en tu cabeza?',options:[
+  {dim:'consciencia',dimLabel:'Consciencia',dimNum:1,text:'Cuando piensas en mostrarte como emprendedora, ¿qué voz aparece primero en tu cabeza?',options:[
     {text:'"¿Quién soy yo para hacer esto?" — dudo si merezco el espacio.',s:{consciencia:1,alineacion:1}},
     {text:'Una mezcla de ilusión y miedo que no logro identificar bien.',s:{consciencia:2,alineacion:2}},
     {text:'Reconozco la duda, sé de dónde viene, y decido no quedarme ahí.',s:{consciencia:5,alineacion:4}},
     {text:'No me detengo a pensarlo — prefiero actuar antes de analizar.',s:{consciencia:2,accion:3}}]},
-  {dim:'consciencia',dimLabel:'C · Consciencia',dimNum:1,text:'¿Con qué frecuencia te descubres comparándote con otras emprendedoras de tu sector?',options:[
+  {dim:'consciencia',dimLabel:'Consciencia',dimNum:1,text:'¿Con qué frecuencia te descubres comparándote con otras emprendedoras de tu sector?',options:[
     {text:'Casi todo el tiempo — es agotador y me paraliza.',s:{consciencia:1,relaciones:1}},
     {text:'A veces, sobre todo cuando veo resultados que yo no tengo.',s:{consciencia:2,relaciones:2}},
     {text:'Ocasionalmente, pero logro volver el foco a mi propio camino.',s:{consciencia:4,relaciones:4}},
     {text:'Casi nunca — prefiero no mirar mucho lo que hacen las demás.',s:{consciencia:3,relaciones:2}}]},
-  {dim:'consciencia',dimLabel:'C · Consciencia',dimNum:1,text:'¿Qué tan clara tienes la diferencia entre "esto es un miedo mío" y "esto es un hecho real del negocio"?',options:[
+  {dim:'consciencia',dimLabel:'Consciencia',dimNum:1,text:'¿Qué tan clara tienes la diferencia entre "esto es un miedo mío" y "esto es un hecho real del negocio"?',options:[
     {text:'Casi nunca las distingo — todo se siente como una verdad urgente.',s:{consciencia:1}},
     {text:'A veces me doy cuenta, pero después de haber reaccionado ya.',s:{consciencia:2}},
     {text:'Logro pausar y preguntarme si es miedo o hecho antes de decidir.',s:{consciencia:5,accion:4}},
     {text:'Prefiero no analizarlo tanto — actuar me ayuda a no pensar de más.',s:{consciencia:2,accion:2}}]},
-  {dim:'consciencia',dimLabel:'C · Consciencia',dimNum:1,text:'¿Qué frase describe mejor tu diálogo interno cuando algo no sale como esperabas en tu emprendimiento?',options:[
+  {dim:'consciencia',dimLabel:'Consciencia',dimNum:1,text:'¿Qué frase describe mejor tu diálogo interno cuando algo no sale como esperabas en tu emprendimiento?',options:[
     {text:'"Sabía que no iba a funcionar" — la duda se confirma.',s:{consciencia:1,lenguaje:1}},
     {text:'"Otra vez yo haciendo las cosas mal" — me juzgo con dureza.',s:{consciencia:2,lenguaje:1}},
     {text:'"¿Qué puedo aprender de esto?" — lo miro con curiosidad.',s:{consciencia:5,lenguaje:4}},
     {text:'Prefiero no pensarlo mucho y seguir avanzando rápido.',s:{consciencia:2,accion:3}}]},
 
-  {dim:'lenguaje',dimLabel:'L · Lenguaje',dimNum:2,text:'Cuando describes tu emprendimiento a alguien nuevo, ¿cómo te escuchas?',options:[
+  {dim:'lenguaje',dimLabel:'Lenguaje',dimNum:2,text:'Cuando describes tu emprendimiento a alguien nuevo, ¿cómo te escuchas?',options:[
     {text:'Le resto importancia: "es un proyectico", "algo pequeño que hago".',s:{lenguaje:1,alineacion:1}},
     {text:'Lo explico bien, pero me cuesta decir el precio o el valor real.',s:{lenguaje:2,alineacion:2}},
     {text:'Hablo con claridad y orgullo de lo que hago y por qué importa.',s:{lenguaje:5,alineacion:4}},
     {text:'A veces exagero o "vendo humo" para sonar más grande de lo que soy.',s:{lenguaje:2,alineacion:2}}]},
-  {dim:'lenguaje',dimLabel:'L · Lenguaje',dimNum:2,text:'¿Cómo te hablas a ti misma cuando cometes un error frente a una clienta?',options:[
+  {dim:'lenguaje',dimLabel:'Lenguaje',dimNum:2,text:'¿Cómo te hablas a ti misma cuando cometes un error frente a una clienta?',options:[
     {text:'Con dureza — me digo cosas que no le diría a nadie más.',s:{lenguaje:1,consciencia:1}},
     {text:'Me frustro, pero trato de no quedarme ahí mucho tiempo.',s:{lenguaje:2,consciencia:2}},
     {text:'Me hablo como le hablaría a una amiga en la misma situación.',s:{lenguaje:5,relaciones:4}},
     {text:'Lo minimizo rápido y sigo — no me gusta detenerme en eso.',s:{lenguaje:3,accion:2}}]},
-  {dim:'lenguaje',dimLabel:'L · Lenguaje',dimNum:2,text:'Al escribir una publicación o mensaje de venta, ¿qué te pasa con las palabras?',options:[
+  {dim:'lenguaje',dimLabel:'Lenguaje',dimNum:2,text:'Al escribir una publicación o mensaje de venta, ¿qué te pasa con las palabras?',options:[
     {text:'Las suavizo tanto que al final no queda claro qué ofrezco.',s:{lenguaje:1,accion:1}},
     {text:'Las escribo, borro y reescribo muchas veces por miedo al juicio.',s:{lenguaje:2,consciencia:2}},
     {text:'Encuentro un lenguaje propio, claro y consistente con quien soy.',s:{lenguaje:5,alineacion:5}},
     {text:'Copio bastante el tono de otras cuentas que me gustan.',s:{lenguaje:2,alineacion:1}}]},
-  {dim:'lenguaje',dimLabel:'L · Lenguaje',dimNum:2,text:'¿Qué tan cómoda te sientes hablando de dinero — tus precios, tus ingresos — en voz alta?',options:[
+  {dim:'lenguaje',dimLabel:'Lenguaje',dimNum:2,text:'¿Qué tan cómoda te sientes hablando de dinero — tus precios, tus ingresos — en voz alta?',options:[
     {text:'Me cuesta muchísimo, casi siempre bajo el precio antes de decirlo.',s:{lenguaje:1,accion:1}},
     {text:'Lo digo, pero con un tono de disculpa o justificándome de más.',s:{lenguaje:2,accion:2}},
     {text:'Lo digo con naturalidad, es información, no un juicio sobre mí.',s:{lenguaje:5,consciencia:4}},
     {text:'Evito el tema cuando puedo y dejo que otros lo pregunten.',s:{lenguaje:2,relaciones:2}}]},
 
-  {dim:'alineacion',dimLabel:'A · Alineación',dimNum:3,text:'¿Qué tan parecida es la "tú" que muestras en redes a la que eres en el día a día?',options:[
+  {dim:'alineacion',dimLabel:'Alineación',dimNum:3,text:'¿Qué tan parecida es la "tú" que muestras en redes a la que eres en el día a día?',options:[
     {text:'Bastante diferente — muestro una versión más segura de la que siento ser.',s:{alineacion:1,consciencia:1}},
     {text:'Hay una brecha, sobre todo en los momentos difíciles que no muestro.',s:{alineacion:2,consciencia:2}},
     {text:'Bastante coherente — lo que ven se parece a lo que realmente vivo.',s:{alineacion:5,consciencia:4}},
     {text:'Casi no muestro nada personal, prefiero mantenerlo separado.',s:{alineacion:2,relaciones:1}}]},
-  {dim:'alineacion',dimLabel:'A · Alineación',dimNum:3,text:'Cuando una clienta te pide algo que no está alineado con lo que quieres para tu marca, ¿qué haces?',options:[
+  {dim:'alineacion',dimLabel:'Alineación',dimNum:3,text:'Cuando una clienta te pide algo que no está alineado con lo que quieres para tu marca, ¿qué haces?',options:[
     {text:'Acepto igual — necesito los ingresos más de lo que necesito coherencia.',s:{alineacion:1,accion:1}},
     {text:'Dudo mucho antes de decidir, y a veces termino cediendo.',s:{alineacion:2,accion:2}},
     {text:'Lo evalúo con calma y decido desde lo que quiero construir.',s:{alineacion:5,accion:4}},
     {text:'Digo que no de inmediato, aunque a veces sin explicar bien por qué.',s:{alineacion:3,relaciones:2}}]},
-  {dim:'alineacion',dimLabel:'A · Alineación',dimNum:3,text:'¿Con qué frecuencia sientes que estás "actuando" un personaje de emprendedora exitosa?',options:[
+  {dim:'alineacion',dimLabel:'Alineación',dimNum:3,text:'¿Con qué frecuencia sientes que estás "actuando" un personaje de emprendedora exitosa?',options:[
     {text:'Casi siempre — siento que hay un personaje y luego estoy yo.',s:{alineacion:1,lenguaje:1}},
     {text:'A veces, sobre todo cuando las cosas no van bien y no lo muestro.',s:{alineacion:2,lenguaje:2}},
     {text:'Rara vez — lo que comunico nace de lo que realmente pienso y siento.',s:{alineacion:5,consciencia:4}},
     {text:'No sabría decirlo, no reflexiono mucho sobre eso.',s:{alineacion:2,consciencia:1}}]},
-  {dim:'alineacion',dimLabel:'A · Alineación',dimNum:3,text:'¿Tus decisiones de negocio (precios, horarios, con quién trabajas) reflejan tus valores o responden más al miedo a perder oportunidades?',options:[
+  {dim:'alineacion',dimLabel:'Alineación',dimNum:3,text:'¿Tus decisiones de negocio (precios, horarios, con quién trabajas) reflejan tus valores o responden más al miedo a perder oportunidades?',options:[
     {text:'Responden casi siempre al miedo — digo que sí a casi todo.',s:{alineacion:1,accion:1}},
     {text:'Es una mezcla, dependiendo de qué tan urgida esté ese mes.',s:{alineacion:2,accion:2}},
     {text:'Cada vez más reflejan lo que realmente quiero construir.',s:{alineacion:4,accion:4}},
     {text:'Tengo reglas claras y las sostengo, aunque implique decir que no.',s:{alineacion:5,relaciones:4}}]},
 
-  {dim:'relaciones',dimLabel:'R · Relaciones',dimNum:4,text:'Cuando alguien no responde a tu mensaje de venta o propuesta, ¿qué piensas primero?',options:[
+  {dim:'relaciones',dimLabel:'Relaciones',dimNum:4,text:'Cuando alguien no responde a tu mensaje de venta o propuesta, ¿qué piensas primero?',options:[
     {text:'"No le interesé" o "no sirvo para vender" — me lo tomo personal.',s:{relaciones:1,consciencia:1}},
     {text:'Me preocupa un rato, aunque trato de no darle tantas vueltas.',s:{relaciones:2,consciencia:2}},
     {text:'Pienso en las mil razones posibles y sigo adelante sin engancharme.',s:{relaciones:5,consciencia:4}},
     {text:'Casi no lo pienso — sigo con la lista de tareas del día.',s:{relaciones:3,accion:3}}]},
-  {dim:'relaciones',dimLabel:'R · Relaciones',dimNum:4,text:'¿Cómo te sientes pidiendo ayuda o mostrando que algo de tu negocio no va bien a otras personas?',options:[
+  {dim:'relaciones',dimLabel:'Relaciones',dimNum:4,text:'¿Cómo te sientes pidiendo ayuda o mostrando que algo de tu negocio no va bien a otras personas?',options:[
     {text:'Evito hacerlo — siento que debo tener todo bajo control siempre.',s:{relaciones:1,lenguaje:1}},
     {text:'Lo hago solo con muy pocas personas de mucha confianza.',s:{relaciones:3,lenguaje:2}},
     {text:'Puedo pedir ayuda y mostrar mis procesos sin sentir que fallo.',s:{relaciones:5,consciencia:4}},
     {text:'Lo comparto, aunque a veces demasiado y con cualquiera.',s:{relaciones:2,alineacion:2}}]},
-  {dim:'relaciones',dimLabel:'R · Relaciones',dimNum:4,text:'Un comentario negativo o una crítica en redes, ¿qué le hace a tu semana?',options:[
+  {dim:'relaciones',dimLabel:'Relaciones',dimNum:4,text:'Un comentario negativo o una crítica en redes, ¿qué le hace a tu semana?',options:[
     {text:'Me desestabiliza varios días, aunque intente disimularlo.',s:{relaciones:1,consciencia:1}},
     {text:'Me afecta el día, pero logro seguir con mis tareas.',s:{relaciones:2,consciencia:2}},
     {text:'Lo reviso con curiosidad, tomo lo útil y sigo.',s:{relaciones:5,consciencia:4}},
     {text:'No leo comentarios o los ignoro por completo.',s:{relaciones:2,lenguaje:1}}]},
-  {dim:'relaciones',dimLabel:'R · Relaciones',dimNum:4,text:'¿Cómo describirías tu red de apoyo como emprendedora?',options:[
+  {dim:'relaciones',dimLabel:'Relaciones',dimNum:4,text:'¿Cómo describirías tu red de apoyo como emprendedora?',options:[
     {text:'Casi no tengo — siento que debo resolver todo sola.',s:{relaciones:1,accion:1}},
     {text:'Tengo algunas personas, pero me cuesta acudir a ellas.',s:{relaciones:2,accion:2}},
     {text:'Tengo una red que consulto y que también me consulta a mí.',s:{relaciones:5,alineacion:3}},
     {text:'Prefiero avanzar sola, es más rápido y no depende de nadie.',s:{relaciones:2,accion:3}}]},
 
-  {dim:'accion',dimLabel:'A · Acción',dimNum:5,text:'Tienes una idea nueva para tu marca — ¿qué pasa entre la idea y el momento de publicarla o lanzarla?',options:[
+  {dim:'accion',dimLabel:'Acción',dimNum:5,text:'Tienes una idea nueva para tu marca — ¿qué pasa entre la idea y el momento de publicarla o lanzarla?',options:[
     {text:'Se queda en borrador mucho tiempo — nunca se siente "lista".',s:{accion:1,consciencia:2}},
     {text:'La publico, pero después de mucho darle vueltas y dudar.',s:{accion:2,consciencia:2}},
     {text:'La preparo con cuidado y la lanzo en un tiempo razonable.',s:{accion:5,alineacion:4}},
     {text:'La publico casi de inmediato, sin pensarlo demasiado.',s:{accion:4,consciencia:1}}]},
-  {dim:'accion',dimLabel:'A · Acción',dimNum:5,text:'Cuando algo te da miedo — subir precios, lanzar algo nuevo, mostrar la cara — ¿qué sueles hacer?',options:[
+  {dim:'accion',dimLabel:'Acción',dimNum:5,text:'Cuando algo te da miedo — subir precios, lanzar algo nuevo, mostrar la cara — ¿qué sueles hacer?',options:[
     {text:'Lo postergo indefinidamente, esperando "sentirme lista".',s:{accion:1,consciencia:1}},
     {text:'Lo hago, pero tarde y con mucha ansiedad en el proceso.',s:{accion:2,relaciones:2}},
     {text:'Reconozco el miedo y avanzo de todas formas, con un plan.',s:{accion:5,consciencia:4}},
     {text:'Lo hago impulsivamente para "quitármelo de encima" rápido.',s:{accion:3,consciencia:1}}]},
-  {dim:'accion',dimLabel:'A · Acción',dimNum:5,text:'¿Qué tan seguido tus decisiones de negocio están guiadas por lo que "deberías" hacer según otras personas, y no por lo que tú realmente quieres?',options:[
+  {dim:'accion',dimLabel:'Acción',dimNum:5,text:'¿Qué tan seguido tus decisiones de negocio están guiadas por lo que "deberías" hacer según otras personas, y no por lo que tú realmente quieres?',options:[
     {text:'Muy seguido — sigo fórmulas de otras cuentas o mentoras al pie de la letra.',s:{accion:1,alineacion:1}},
     {text:'A veces, cuando no tengo claridad propia recurro a copiar.',s:{accion:2,alineacion:2}},
     {text:'Cada vez menos — confío más en mi propio criterio.',s:{accion:4,alineacion:4}},
     {text:'Casi nunca, aunque a veces eso me hace ir muy sola.',s:{accion:5,relaciones:2}}]},
-  {dim:'accion',dimLabel:'A · Acción',dimNum:5,text:'Mirando tu emprendimiento hoy, ¿qué tan alineadas sientes tus acciones diarias con la marca que quieres construir?',options:[
+  {dim:'accion',dimLabel:'Acción',dimNum:5,text:'Mirando tu emprendimiento hoy, ¿qué tan alineadas sientes tus acciones diarias con la marca que quieres construir?',options:[
     {text:'Muy poco — hago cosas por urgencia, no por estrategia.',s:{accion:1,alineacion:1}},
     {text:'Parcialmente — tengo claridad, pero no siempre la sostengo.',s:{accion:2,alineacion:2}},
     {text:'Bastante — mis acciones del día a día construyen lo que quiero a futuro.',s:{accion:5,alineacion:5}},
@@ -406,6 +501,9 @@ const profiles={
   muralla:{name:'La Invisible',subtitle:'Perfeccionismo que posterga el mostrarse',color:'#DD793B',desc:'Tienes mucho para ofrecer, pero una parte de ti prefiere quedarse detrás de la cámara, del "todavía no está listo", del "cuando tenga más tiempo". Tu diálogo interno tiende a exigirte perfección antes de mostrarte, y eso te protege del juicio — pero también frena tu crecimiento. La gente que necesita lo que ofreces no siempre te encuentra, porque tu marca no termina de mostrarse. Tu camino no es tener más certeza, es aprender a mostrarte con la incertidumbre incluida.',strengths:['Cuidado y calidad en todo lo que sí decides mostrar','Pensamiento reflexivo antes de tomar decisiones','Alta exigencia que garantiza un buen producto o servicio'],shadows:['Perfeccionismo que posterga lanzamientos y publicaciones','Tendencia a esconderte detrás de la marca en vez de mostrarte','La creencia de que "no estoy lista todavía" se repite con frecuencia'],growth:['Lanzar en versión "suficientemente buena" en vez de esperar la perfecta','Mostrar el proceso, no solo el resultado terminado','Identificar el costo real de no mostrarte']},
   espejo:{name:'La Camaleón',subtitle:'Se adapta al juicio ajeno más que a su propia voz',color:'#EDB548',desc:'Eres sensible al entorno y a lo que otras personas piensan — y eso te hace empática con tus clientas. Pero en tu propio emprendimiento, esa sensibilidad se convierte en un espejo: ajustas tu mensaje, tus precios o tu estilo según lo que crees que los demás esperan de ti, más que según lo que tú realmente quieres construir. La comparación constante con otras emprendedoras alimenta un diálogo interno que nunca se siente "suficiente". Tu evolución es construir una voz propia que no dependa de la aprobación externa.',strengths:['Gran capacidad de leer a la clienta y adaptarte a su necesidad','Apertura a aprender de otras emprendedoras y referentes','Sensibilidad genuina hacia las personas que te rodean'],shadows:['El mensaje de tu marca cambia según quién te esté mirando','Comparación constante que alimenta el diálogo interno crítico','Dificultad para sostener precios o decisiones frente a la opinión externa'],growth:['Definir 3 valores no negociables de tu marca y volver a ellos','Practicar sostener una decisión sin necesitar aprobación externa','Limitar el consumo de contenido que alimenta la comparación']},
   arquitecto:{name:'La Consciente',subtitle:'Comunica y construye desde la claridad',color:'#8C3D5A',desc:'Tienes una relación consciente con tu diálogo interno — reconoces tus creencias, las cuestionas cuando hace falta, y construyes tu marca desde un lugar de coherencia. Tu comunicación hacia afuera nace de una conversación honesta contigo misma. Eso no significa que no tengas miedo — significa que no dejas que el miedo decida por ti. Tu zona de desarrollo no es aprender más sobre ti misma, es sostener esa consciencia incluso en los momentos de mayor presión del negocio.',strengths:['Consciencia clara de tus propias creencias y patrones','Coherencia entre lo que sientes, piensas y comunicas','Capacidad de actuar con miedo, sin que el miedo decida por ti'],shadows:['Riesgo de exigirte mantener la consciencia todo el tiempo, sin descanso','Puede costarte pedir ayuda al sentir que "ya deberías saber manejar esto"','Alta exigencia contigo misma en los momentos de presión'],growth:['Sostener la consciencia también en los momentos de mayor estrés del negocio','Acompañar a otras emprendedoras en su propio proceso','Celebrar el avance, no solo identificar lo que falta']},
+  modesta:{name:'La Modesta',subtitle:'Mucho valor en lo que haces, pocas palabras para defenderlo',color:'#B7791F',desc:'Tu trabajo habla bien de ti, pero tus palabras no siempre lo acompañan: suavizas lo que ofreces, te cuesta nombrar el precio sin justificarte y describes tu emprendimiento restándole tamaño. Desde la Comunicación No Violenta, este es un lenguaje que minimiza necesidades y valor — y en un negocio, ese lenguaje se traduce en precios bajos, mensajes confusos y clientas que no terminan de entender por qué elegirte. Tu evolución no es sonar más grande de lo que eres, es nombrar con precisión el valor real de lo que ya haces.',strengths:['Calidad real en tu producto o servicio','Cercanía y honestidad al hablar de lo que haces','Escucha atenta a lo que tu clienta necesita'],shadows:['Suavizas tu oferta hasta que deja de entenderse','Justificas el precio antes de que alguien lo cuestione','Describes tu negocio en pequeño para no incomodar'],growth:['Nombrar tu precio como información, sin disculpa','Practicar una frase clara sobre lo que ofreces y por qué importa','Revisar qué creencia aparece cada vez que te achicas al hablar']},
+  autosuficiente:{name:'La Autosuficiente',subtitle:'Todo sola, todo bajo control... hasta que pesa',color:'#E68199',desc:'Resuelves, decides y avanzas sin pedirle nada a nadie — y eso te ha hecho fuerte. Pero la investigación de Brené Brown lo nombra con claridad: la autosuficiencia total es una armadura. Evitas mostrar que algo no va bien, te cuesta pedir ayuda y las críticas te llegan como un veredicto personal en vez de información útil. El costo en un emprendimiento es alto: decides sola, te agotas sola y te pierdes la red que acelera a cualquier marca. Tu evolución no es depender de otros, es elegir en quién apoyarte.',strengths:['Autonomía y capacidad de resolver','Criterio propio para decidir rápido','Resiliencia frente a los momentos difíciles'],shadows:['Evitas pedir ayuda aunque la necesites','Te tomas las críticas como un juicio personal','Cargas con todo el negocio en silencio'],growth:['Diseñar tu red de apoyo de forma intencional','Pedir ayuda en algo pequeño esta semana','Separar el dato útil de una crítica del juicio sobre ti']},
+  exploradora:{name:'La Exploradora',subtitle:'Ya ves el patrón, aún no lo sostienes siempre',color:'#4A8A6A',desc:'Estás en el punto más interesante del camino: ya identificas tus creencias, cuestionas tu diálogo interno y actúas con más criterio que antes — pero no todos los días ni en todas las decisiones. Hay semanas de claridad y semanas donde el miedo vuelve a decidir por ti. Eso no es un retroceso, es el proceso normal de quien está construyendo una nueva forma de comunicar. Tu evolución ahora es constancia: convertir esos momentos de claridad en un sistema que sostenga tu marca incluso en las semanas difíciles.',strengths:['Consciencia en construcción sobre tus patrones','Momentos reales de coherencia entre lo que sientes y muestras','Apertura para seguir aprendiendo y ajustando'],shadows:['La claridad aparece y desaparece según la semana','Bajo presión, vuelves a decidir desde el miedo','Te frustra no sostener siempre tu mejor versión'],growth:['Crear un ritual semanal corto de revisión','Celebrar avances para no medirte solo por lo que falta','Elegir una dimensión y trabajarla durante 30 días']},
 };
 
 const toolsDB={
@@ -429,6 +527,9 @@ const profileToolMap={
   muralla:['version_suficiente','detras_camara','carta_yo_emprendedora','check_in_interno','red_apoyo'],
   espejo:['tres_valores','dieta_comparacion','precio_sin_disculpa','red_apoyo','mapa_creencias'],
   arquitecto:['diario_alineacion','celebracion_semanal','mentoria_pares','precio_sin_disculpa','check_in_interno'],
+  modesta:['precio_sin_disculpa','carta_yo_emprendedora','mapa_creencias','tres_valores','detras_camara'],
+  autosuficiente:['red_apoyo','mentoria_pares','check_in_interno','carta_yo_emprendedora','diario_alineacion'],
+  exploradora:['check_in_interno','mapa_creencias','celebracion_semanal','tres_valores','diario_alineacion'],
 };
 
 const dimInsights={
@@ -445,6 +546,178 @@ let scores={consciencia:0,lenguaje:0,alineacion:0,relaciones:0,accion:0};
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0);}
 function startQuiz(){currentQ=0;selectedAnswer=null;scores={consciencia:0,lenguaje:0,alineacion:0,relaciones:0,accion:0};showScreen('quiz');renderQuestion();}
 function restartQuiz(){startQuiz();}
+
+/* ── AUTH: registro, enlace mágico y guardado ── */
+function authError(msg){
+  const el=document.getElementById('register-error');
+  el.textContent=msg;el.classList.add('show');
+}
+function clearAuthError(){document.getElementById('register-error').classList.remove('show');}
+
+function initAuth(){
+  if(!AUTH_ENABLED){showScreen('intro');return;} // MODO ABIERTO temporal
+  try{
+    supaClient=window.supabase.createClient(CONFIG.SUPABASE_URL,CONFIG.SUPABASE_ANON_KEY);
+  }catch(e){showScreen('intro');return;}
+  mountTurnstile();
+  supaClient.auth.onAuthStateChange((_ev,session)=>{
+    if(session){enterApp(session);}else{showScreen('register');}
+  });
+  supaClient.auth.getSession().then(({data})=>{
+    if(data&&data.session){enterApp(data.session);}else{showScreen('register');}
+  });
+}
+
+function mountTurnstile(){
+  if(!CONFIG.TURNSTILE_SITE_KEY||CONFIG.TURNSTILE_SITE_KEY.indexOf('TU_')===0)return;
+  const wrap=document.getElementById('turnstile-wrap');
+  const div=document.createElement('div');
+  div.className='cf-turnstile';div.dataset.sitekey=CONFIG.TURNSTILE_SITE_KEY;
+  wrap.appendChild(div);
+  const s=document.createElement('script');
+  s.src='https://challenges.cloudflare.com/turnstile/v0/api.js';s.async=true;s.defer=true;
+  document.head.appendChild(s);
+}
+
+function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim());}
+
+function lastSendAt(){return parseInt(localStorage.getItem('moraleja_otp_at')||'0',10);}
+function markSend(){localStorage.setItem('moraleja_otp_at',String(Date.now()));}
+
+async function handleRegister(ev){
+  ev.preventDefault();clearAuthError();
+  const nombre=document.getElementById('reg-nombre').value.trim();
+  const email=document.getElementById('reg-email').value.trim().toLowerCase();
+  const consent=document.getElementById('reg-consent').checked;
+  if(nombre.length<2){authError('Cuéntanos tu nombre (mínimo 2 letras).');return;}
+  if(!validEmail(email)){authError('Revisa tu correo: parece incompleto.');return;}
+  if(!consent){authError('Para continuar necesitas aceptar el tratamiento de datos.');return;}
+  if(Date.now()-lastSendAt()<60000){authError('Espera un minuto antes de pedir otro enlace.');return;}
+  const btn=document.getElementById('btn-register');
+  btn.disabled=true;btn.textContent='Enviando…';
+  try{
+    const {error}=await supaClient.auth.signInWithOtp({
+      email,
+      options:{data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname}
+    });
+    if(error)throw error;
+    markSend();
+    subscribeMailchimp(nombre,email); // no bloquea: si falla, el acceso igual funciona
+    document.getElementById('verify-text').textContent='Enviamos un enlace de acceso a '+email+'. Ábrelo para entrar al diagnóstico.';
+    showScreen('verify');startResendTimer();
+  }catch(e){authError('No pudimos enviar el enlace. Revisa tu conexión e inténtalo de nuevo.');}
+  btn.disabled=false;btn.textContent='Enviarme el enlace →';
+}
+
+let resendTimer=null;
+function startResendTimer(){
+  let secs=60;
+  const btn=document.getElementById('btn-resend'),cd=document.getElementById('resend-countdown');
+  btn.disabled=true;cd.textContent=String(secs);
+  clearInterval(resendTimer);
+  resendTimer=setInterval(()=>{
+    secs--;cd.textContent=String(Math.max(secs,0));
+    if(secs<=0){clearInterval(resendTimer);btn.disabled=false;btn.innerHTML='Reenviar enlace →';}
+  },1000);
+}
+
+async function resendLink(){
+  const email=document.getElementById('reg-email').value.trim().toLowerCase();
+  const nombre=document.getElementById('reg-nombre').value.trim();
+  if(!validEmail(email))return;
+  markSend();
+  try{await supaClient.auth.signInWithOtp({email,options:{data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname}});}catch(e){}
+  startResendTimer();
+}
+
+function backToRegister(ev){if(ev)ev.preventDefault();clearInterval(resendTimer);showScreen('register');}
+
+function enterApp(session){
+  const email=(session.user&&session.user.email)||'';
+  document.getElementById('auth-email').textContent=email;
+  document.getElementById('auth-info').classList.add('show');
+  showScreen('intro');
+  loadLastResult();
+}
+
+async function signOut(){
+  try{await supaClient.auth.signOut();}catch(e){}
+  lastSavedResult=null;
+  document.getElementById('btn-last-result').classList.remove('show');
+  document.getElementById('auth-info').classList.remove('show');
+  showScreen('register');
+}
+
+/* Suscripción a Mailchimp vía Edge Function (llave privada vive en el servidor, nunca en esta página) */
+function subscribeMailchimp(nombre,email){
+  if(!CONFIG.EDGE_SUBSCRIBE_URL)return;
+  fetch(CONFIG.EDGE_SUBSCRIBE_URL,{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({nombre,email,consent_version:CONFIG.CONSENT_VERSION})
+  }).catch(()=>{});
+}
+
+/* ── Guardado y recuperación del perfil ── */
+async function saveResult(type,norm){
+  const note=document.getElementById('save-note');
+  const payload={perfil:type,puntajes:norm,fecha:new Date().toISOString()};
+  try{localStorage.setItem('moraleja_last_result',JSON.stringify(payload));}catch(e){}
+  if(AUTH_ENABLED&&supaClient){
+    try{
+      const {data:{user}}=await supaClient.auth.getUser();
+      if(user){
+        await supaClient.from('resultados').insert({
+          user_id:user.id,email:user.email,
+          nombre:(user.user_metadata&&user.user_metadata.nombre)||'',
+          perfil:type,puntajes:norm,consent_version:CONFIG.CONSENT_VERSION
+        });
+        note.textContent='✓ Guardado en tu cuenta. Podrás consultarlo cuando quieras, desde cualquier dispositivo.';
+        note.classList.add('show');return;
+      }
+    }catch(e){}
+  }
+  note.textContent='Tu resultado quedó guardado en este dispositivo.';
+  note.classList.add('show');
+}
+
+async function loadLastResult(){
+  if(!(AUTH_ENABLED&&supaClient))return;
+  try{
+    const {data:{user}}=await supaClient.auth.getUser();
+    if(!user)return;
+    const {data,error}=await supaClient.from('resultados')
+      .select('perfil,puntajes,created_at').eq('user_id',user.id)
+      .order('created_at',{ascending:false}).limit(1);
+    if(error||!data||!data.length)return;
+    lastSavedResult={type:data[0].perfil,norm:data[0].puntajes};
+    const btn=document.getElementById('btn-last-result');
+    btn.classList.add('show');
+  }catch(e){}
+}
+
+function showLastResult(){
+  let saved=lastSavedResult;
+  if(!saved){
+    try{saved=JSON.parse(localStorage.getItem('moraleja_last_result')||'null');}catch(e){saved=null;}
+  }
+  if(!saved||!saved.type||!profiles[saved.type]){startQuiz();return;}
+  const prof=profiles[saved.type];
+  document.getElementById('result-name').textContent=prof.name;
+  document.getElementById('result-name').style.color=prof.color;
+  document.getElementById('result-subtitle').textContent=prof.subtitle;
+  document.getElementById('result-desc').textContent=prof.desc;
+  buildRadar(saved.norm,prof.color);
+  buildDimensions(saved.norm);
+  buildProfileCards(prof);
+  buildTools(saved.type);
+  showScreen('results');
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const form=document.getElementById('register-form');
+  if(form)form.addEventListener('submit',handleRegister);
+  initAuth();
+});
 
 function renderQuestion(){
   selectedAnswer=null;
@@ -493,13 +766,14 @@ function determineProfile(){
   const{consciencia:c,lenguaje:l,alineacion:al,relaciones:r,accion:ac}=norm;
   const avg=(c+l+al+r+ac)/5;
   if(avg>=70)return{type:'arquitecto',norm};
-  if(ac>=60&&c<50)return{type:'volcanico',norm};
-  if(ac<45&&al<50)return{type:'muralla',norm};
-  if(al<50&&r>=55)return{type:'espejo',norm};
-  if(c<45)return{type:'volcanico',norm};
-  if(ac<45)return{type:'muralla',norm};
-  if(al<45)return{type:'espejo',norm};
-  return{type:'arquitecto',norm};
+  const minVal=Math.min(c,l,al,r,ac);
+  if(minVal>50)return{type:'exploradora',norm};
+  const lowest=DIMS.reduce((a,b)=>norm[a]<=norm[b]?a:b);
+  if(lowest==='consciencia')return{type:'volcanico',norm};
+  if(lowest==='lenguaje')return{type:'modesta',norm};
+  if(lowest==='alineacion')return{type:'espejo',norm};
+  if(lowest==='relaciones')return{type:'autosuficiente',norm};
+  return{type:'muralla',norm};
 }
 
 function buildResults(){
@@ -513,6 +787,7 @@ function buildResults(){
   buildDimensions(norm);
   buildProfileCards(prof);
   buildTools(type);
+  saveResult(type,norm);
 }
 
 function buildRadar(norm,color){

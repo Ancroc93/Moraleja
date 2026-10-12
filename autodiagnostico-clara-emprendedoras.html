@@ -262,6 +262,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <h2 class="auth-title">Revisa tu correo</h2>
       <p class="auth-sub" id="verify-text">Te enviamos un enlace de acceso. Ábrelo para entrar al diagnóstico.</p>
       <button class="btn-outline" id="btn-resend" onclick="resendLink()" disabled>Reenviar enlace (<span id="resend-countdown">60</span>s)</button>
+      <div id="turnstile-verify-wrap" style="display:flex;justify-content:center;margin-top:16px;"></div>
+      <p class="auth-error" id="resend-error" style="margin-top:14px;"></p>
       <p class="auth-note">¿No lo ves? Revisa spam o promociones.<br><a href="#" onclick="backToRegister(event)">Corregir mi correo</a></p>
     </div>
   </div>
@@ -378,7 +380,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 const CONFIG={
   SUPABASE_URL:'https://ccblugfdfdtddvmpapzy.supabase.co',
   SUPABASE_ANON_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNjYmx1Z2ZkZmR0ZGR2bXBhcHp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3NzA2MTksImV4cCI6MjEwNzM0NjYxOX0.bEaxfyoV5gXPMwd8Ccsk4IJPYV3eMssI7ygxu1Uc_7w',
-  TURNSTILE_SITE_KEY:'TU_TURNSTILE_SITE_KEY', // clave pública de Cloudflare Turnstile
+  TURNSTILE_SITE_KEY:'0x4AAAAAAFURYy4gybRwL6ci', // clave pública de Cloudflare Turnstile
   EDGE_SUBSCRIBE_URL:'',                    // ej. https://ccblugdfdftdvmpapzy.supabase.co/functions/v1/subscribe (vacío = desactivado)
   CONSENT_VERSION:'v1-2026-09-25',
 };
@@ -568,15 +570,40 @@ function initAuth(){
   });
 }
 
-function mountTurnstile(){
-  if(!CONFIG.TURNSTILE_SITE_KEY||CONFIG.TURNSTILE_SITE_KEY.indexOf('TU_')===0)return;
-  const wrap=document.getElementById('turnstile-wrap');
+/* ── Turnstile (anti-bots): dormido hasta que se ponga la site key real ── */
+let turnstileToken=null,turnstileScriptLoaded=false;
+window.onTurnstileToken=function(t){turnstileToken=t;};
+window.onTurnstileExpired=function(){turnstileToken=null;};
+
+function turnstileEnabled(){return Boolean(CONFIG.TURNSTILE_SITE_KEY)&&CONFIG.TURNSTILE_SITE_KEY.indexOf('TU_')!==0;}
+
+function mountTurnstile(containerId){
+  if(!turnstileEnabled())return;
+  const wrap=document.getElementById(containerId||'turnstile-wrap');
+  if(!wrap||wrap.querySelector('.cf-turnstile'))return;
   const div=document.createElement('div');
-  div.className='cf-turnstile';div.dataset.sitekey=CONFIG.TURNSTILE_SITE_KEY;
+  div.className='cf-turnstile';
+  div.dataset.sitekey=CONFIG.TURNSTILE_SITE_KEY;
+  div.dataset.callback='onTurnstileToken';
+  div.dataset.expiredCallback='onTurnstileExpired';
   wrap.appendChild(div);
-  const s=document.createElement('script');
-  s.src='https://challenges.cloudflare.com/turnstile/v0/api.js';s.async=true;s.defer=true;
-  document.head.appendChild(s);
+  if(!turnstileScriptLoaded){
+    turnstileScriptLoaded=true;
+    const s=document.createElement('script');
+    s.src='https://challenges.cloudflare.com/turnstile/v0/api.js';s.async=true;s.defer=true;
+    document.head.appendChild(s);
+  }else if(window.turnstile){
+    // widget añadido después de que el script ya cargó: render explícito
+    window.turnstile.render(div);
+  }
+}
+
+function resetTurnstile(){
+  if(!turnstileEnabled())return;
+  turnstileToken=null;
+  if(window.turnstile){
+    document.querySelectorAll('.cf-turnstile').forEach(el=>{try{window.turnstile.reset(el);}catch(e){}});
+  }
 }
 
 function validEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v||'').trim());}
@@ -592,20 +619,21 @@ async function handleRegister(ev){
   if(nombre.length<2){authError('Cuéntanos tu nombre (mínimo 2 letras).');return;}
   if(!validEmail(email)){authError('Revisa tu correo: parece incompleto.');return;}
   if(!consent){authError('Para continuar necesitas aceptar el tratamiento de datos.');return;}
+  if(turnstileEnabled()&&!turnstileToken){authError('Espera a que se verifique que no eres un robot.');return;}
   if(Date.now()-lastSendAt()<60000){authError('Espera un minuto antes de pedir otro enlace.');return;}
   const btn=document.getElementById('btn-register');
   btn.disabled=true;btn.textContent='Enviando…';
   try{
-    const {error}=await supaClient.auth.signInWithOtp({
-      email,
-      options:{data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname}
-    });
+    const otpOptions={data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname};
+    if(turnstileEnabled())otpOptions.captchaToken=turnstileToken;
+    const {error}=await supaClient.auth.signInWithOtp({email,options:otpOptions});
     if(error)throw error;
     markSend();
     subscribeMailchimp(nombre,email); // no bloquea: si falla, el acceso igual funciona
     document.getElementById('verify-text').textContent='Enviamos un enlace de acceso a '+email+'. Ábrelo para entrar al diagnóstico.';
     showScreen('verify');startResendTimer();
   }catch(e){authError('No pudimos enviar el enlace. Revisa tu conexión e inténtalo de nuevo.');}
+  resetTurnstile();
   btn.disabled=false;btn.textContent='Enviarme el enlace →';
 }
 
@@ -617,16 +645,28 @@ function startResendTimer(){
   clearInterval(resendTimer);
   resendTimer=setInterval(()=>{
     secs--;cd.textContent=String(Math.max(secs,0));
-    if(secs<=0){clearInterval(resendTimer);btn.disabled=false;btn.innerHTML='Reenviar enlace →';}
+    if(secs<=0){clearInterval(resendTimer);btn.disabled=false;btn.innerHTML='Reenviar enlace →';mountTurnstile('turnstile-verify-wrap');}
   },1000);
 }
 
 async function resendLink(){
+  const errEl=document.getElementById('resend-error');
+  errEl.classList.remove('show');
   const email=document.getElementById('reg-email').value.trim().toLowerCase();
   const nombre=document.getElementById('reg-nombre').value.trim();
   if(!validEmail(email))return;
+  if(turnstileEnabled()&&!turnstileToken){errEl.textContent='Espera a que se verifique que no eres un robot.';errEl.classList.add('show');return;}
   markSend();
-  try{await supaClient.auth.signInWithOtp({email,options:{data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname}});}catch(e){}
+  try{
+    const opts={data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname};
+    if(turnstileEnabled())opts.captchaToken=turnstileToken;
+    const {error}=await supaClient.auth.signInWithOtp({email,options:opts});
+    if(error)throw error;
+  }catch(e){
+    errEl.textContent='No se pudo reenviar. Inténtalo de nuevo en unos segundos.';
+    errEl.classList.add('show');
+  }
+  resetTurnstile();
   startResendTimer();
 }
 

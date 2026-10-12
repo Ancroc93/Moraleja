@@ -632,7 +632,7 @@ async function handleRegister(ev){
     subscribeMailchimp(nombre,email); // no bloquea: si falla, el acceso igual funciona
     document.getElementById('verify-text').textContent='Enviamos un enlace de acceso a '+email+'. Ábrelo para entrar al diagnóstico.';
     showScreen('verify');startResendTimer();
-  }catch(e){authError('No pudimos enviar el enlace. Revisa tu conexión e inténtalo de nuevo.');}
+  }catch(e){console.error('OTP register error:',e);authError('No pudimos enviar el enlace. '+(e&&e.message?e.message:'Revisa tu conexión e inténtalo de nuevo.'));}
   resetTurnstile();
   btn.disabled=false;btn.textContent='Enviarme el enlace →';
 }
@@ -663,7 +663,8 @@ async function resendLink(){
     const {error}=await supaClient.auth.signInWithOtp({email,options:opts});
     if(error)throw error;
   }catch(e){
-    errEl.textContent='No se pudo reenviar. Inténtalo de nuevo en unos segundos.';
+    console.error('OTP resend error:',e);
+    errEl.textContent='No se pudo reenviar. '+(e&&e.message?e.message:'Inténtalo de nuevo en unos segundos.');
     errEl.classList.add('show');
   }
   resetTurnstile();

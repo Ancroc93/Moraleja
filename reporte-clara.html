@@ -252,7 +252,7 @@
       const personName=String((saved.nombre||saved.name||payload.nombre||'')).trim();
       const when=new Date(saved.fecha||payload.completedAt||'');
       const dateStr=isNaN(when)?'':when.toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});
-      const shareUrl=`www.moraleja.co/resultados/${ARCH_SLUGS[type]||'la-exploradora'}.html`;
+      const shareUrl=`ancroc93.github.io/Moraleja/resultados/${ARCH_SLUGS[type]||'la-exploradora'}.html`;
       const TOTAL=5;
 
       applyTheme(type);

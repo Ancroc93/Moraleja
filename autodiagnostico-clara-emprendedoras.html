@@ -1273,7 +1273,7 @@ function toggleTool(item){
 
 function resultShareUrl(type){
   const slugs={chispa:'la-chispa',artesana:'la-artesana',conectora:'la-conectora',voz:'la-voz-valiosa',capitana:'la-capitana',exploradora:'la-exploradora',brujula:'la-brujula'};
-  return `${location.origin}/resultados/${slugs[type]||'la-exploradora'}.html`;
+  return new URL(`resultados/${slugs[type]||'la-exploradora'}.html`,location.href).href;
 }
 
 function openReport(){

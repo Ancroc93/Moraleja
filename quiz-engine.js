@@ -197,8 +197,8 @@
     {
       id: "r-app-1", dim: "relaciones", kind: "applied", type: "selectTwo",
       stage: "Reconoce tu tendencia",
-      text: "Estás atascada con algo de tu negocio: una tarea, una decisión o un cliente difícil. Elige dos opciones que se parecen más a lo que normalmente te dices y haces.",
-      prompt: "Selecciona las dos más parecidas a lo que sueles hacer, no a lo que te gustaría hacer.",
+      text: "Estás atascada con algo de tu negocio: una tarea, una decisión o un cliente difícil. Elige dos opciones que se parezcan más a lo que normalmente te dices y haces.",
+      prompt: "No hay respuestas correctas: piensa en lo que de verdad sueles hacer, no en lo que te gustaría hacer.",
       options: [
         { id: "solo", text: "Me digo «si no lo hago yo, nadie lo hará bien» y lo resuelvo sola, aunque me quite horas de descanso.", score: 0 },
         { id: "should-alone", text: "Me digo «ya debería poder manejar esto sola» y lo intento un tiempo más antes de pedir.", score: 1 },
@@ -210,8 +210,8 @@
     {
       id: "ac-app-1", dim: "accion", kind: "applied", type: "selectTwo",
       stage: "Reconoce tu tendencia",
-      text: "Piensa en algo que quieres hacer (diseñar un nuevo servicio, subir precios, empezar a publicar). Elige dos opciones que se parecen mucho a cómo sueles empezar.",
-      prompt: "Selecciona las dos que de verdad te pasan, no las que crees que deberían pasar.",
+      text: "Piensa en algo que quieres hacer (diseñar un nuevo servicio, subir precios, empezar a publicar). Elige dos opciones que se parezcan mucho a cómo sueles empezar.",
+      prompt: "No hay respuestas correctas: piensa en lo que de verdad te pasa, no en lo que crees que debería pasar.",
       options: [
         { id: "vague-cue", text: "Espero a sentirme completamente lista para empezar.", score: 0 },
         { id: "clear-cue", text: "Separo un día y una hora en mi agenda, y empiezo ese día.", score: 2 },

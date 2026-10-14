@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi guía · Autodiagnóstico Moraleja</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&family=Montserrat:wght@500;600&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#2B0E17;--ink2:#5C2A38;--muted:rgba(43,14,23,.68);--line:rgba(43,14,23,.09);
+      --a-bg:#F7C4BA;--a-bg2:#FCF1EA;--a-deep:#A3203F;--a-shadow:rgba(163,32,63,.33);--a-tint:rgba(163,32,63,.08);}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body{background:#E9E3E1;color:var(--ink);font-family:'Raleway',sans-serif;-webkit-font-smoothing:antialiased}
+    img{display:block}
+
+    /* ── Toolbar (solo pantalla) ── */
+    .toolbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 28px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .toolbar-hint{font-size:12px;color:var(--muted)}
+    .toolbar-actions{display:flex;gap:10px;flex-wrap:wrap}
+    .tb-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;border:1.5px solid var(--a-deep);font:600 10.5px 'Montserrat',sans-serif;letter-spacing:2.2px;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:transform .2s ease}
+    .tb-btn:hover{transform:translateY(-1px)}
+    .tb-btn:focus-visible{outline:2px solid var(--a-deep);outline-offset:3px}
+    .tb-btn.solid{background:var(--a-deep);color:#fff;box-shadow:0 12px 26px -14px var(--a-deep)}
+    .tb-btn.ghost{background:transparent;color:var(--a-deep)}
+
+    /* ── Marca ── */
+    .brand{display:flex;flex-direction:column;line-height:1.1}
+    .brand b{font:600 15px 'Montserrat',sans-serif;letter-spacing:-.5px;color:var(--ink)}
+    .brand i{font:italic 400 9px 'Cormorant Garamond',serif;letter-spacing:2.5px;text-transform:uppercase;color:var(--a-deep)}
+
+    /* ── Página A4 ── */
+    .report{width:210mm;margin:28px auto 40px}
+    .page{--k:1;position:relative;width:210mm;height:297mm;margin:0 auto 12mm;padding:13mm 15mm 10mm;display:flex;flex-direction:column;overflow:hidden;background:var(--a-bg2);font-size:calc(13px * var(--k));box-shadow:0 30px 60px -36px rgba(43,14,23,.35);page-break-after:always;break-after:page}
+    .page:last-child{page-break-after:auto;break-after:auto}
+    .page>*{flex-shrink:0}
+    .pg-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8mm}
+    .pg-tag{font:600 8.5px 'Montserrat',sans-serif;letter-spacing:2.6px;text-transform:uppercase;color:var(--a-deep);opacity:.8}
+    .pg-foot{margin-top:auto;padding-top:4mm;display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);font:500 8px 'Montserrat',sans-serif;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+    .pg-foot b{font-weight:600;color:var(--a-deep)}
+
+    .kicker{display:inline-flex;align-items:center;gap:10px;font:600 .68em/1 'Montserrat',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--a-deep);margin-bottom:1.2em}
+    .kicker::before{content:'';width:26px;height:1.5px;background:currentColor}
+    .h2{font:400 2.55em/1.1 'Raleway',sans-serif;letter-spacing:-.022em;color:var(--ink);margin-bottom:.45em}
+    .h2 em{font-style:normal;color:var(--a-deep)}
+    .intro{font-size:.98em;line-height:1.65;color:var(--ink2);max-width:150mm}
+
+    .card{background:#fff;border-radius:24px;padding:5.5mm 6mm 6mm;border:1px solid rgba(43,14,23,.06);box-shadow:0 22px 44px -34px var(--a-shadow)}
+    .card.tinted{background:var(--a-bg);border-color:transparent;box-shadow:none}
+    .tag{display:inline-block;background:var(--a-tint);color:var(--a-deep);padding:.62em 1.05em;border-radius:999px;font:600 .62em/1 'Montserrat',sans-serif;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1em}
+    .tinted .tag{background:rgba(255,255,255,.62)}
+    .card-title{font:500 1.3em/1.2 'Raleway',sans-serif;letter-spacing:-.008em;color:var(--ink);margin-bottom:.75em}
+    ul.dash{list-style:none;display:flex;flex-direction:column;gap:.6em}
+    ul.dash li{display:flex;gap:.7em;align-items:flex-start;font-size:.9em;line-height:1.6;color:var(--ink2)}
+    ul.dash li::before{content:'—';color:var(--a-deep);flex-shrink:0}
+
+    .arch{position:relative;border-radius:999px 999px 34px 34px;overflow:hidden;background:var(--a-bg);box-shadow:0 0 0 9px #fff,0 40px 70px -36px var(--a-shadow)}
+    .arch img{width:100%;height:100%;object-fit:cover;transform:scale(1.06)}
+    .arch.sm{border-radius:999px 999px 14px 14px;box-shadow:0 0 0 5px #fff,0 18px 30px -18px var(--a-shadow)}
+
+    .lines{display:flex;flex-direction:column}
+    .lines span{display:block;height:2.55em;border-bottom:1px solid rgba(43,14,23,.2)}
+    .ws-label{font:600 .6em/1 'Montserrat',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--a-deep);margin-bottom:.4em}
+
+    /* ── 1 · Portada ── */
+    .p-cover{background:radial-gradient(110% 60% at 85% 6%,rgba(255,255,255,.62) 0%,transparent 55%),linear-gradient(180deg,var(--a-bg) 0%,var(--a-bg) 38%,var(--a-bg2) 100%)}
+    .p-cover .brand b{font-size:19px}
+    .p-cover .brand i{font-size:10.5px}
+    .cv-eyebrow{display:inline-flex;align-items:center;gap:12px;font:600 .72em/1 'Montserrat',sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--a-deep);margin-bottom:1.3em}
+    .cv-eyebrow::before{content:'';width:30px;height:1.5px;background:currentColor}
+    .cv-eres{font:300 2.2em/1 'Raleway',sans-serif;letter-spacing:-.01em;color:var(--ink2)}
+    .cv-name{font:400 5.7em/.98 'Raleway',sans-serif;letter-spacing:-.035em;color:var(--a-deep);margin:.1em 0 .28em}
+    .cv-sub{font:400 1.22em/1.55 'Raleway',sans-serif;color:var(--ink2);max-width:128mm}
+    .cv-stage{position:relative;flex:1 1 auto;flex-shrink:1;min-height:96mm;margin-top:4mm}
+    .cv-archwrap{position:absolute;top:7mm;bottom:3mm;right:6mm;aspect-ratio:3/4}
+    .cv-ring{position:absolute;inset:0;border:1.5px solid var(--a-deep);opacity:.24;border-radius:999px 999px 34px 34px;transform:translate(6mm,-6mm)}
+    .cv-archwrap .arch{position:absolute;inset:0}
+    .cv-dot{position:absolute;border-radius:50%;background:var(--a-deep);opacity:.16}
+    .cv-dot.d1{width:13px;height:13px;top:6%;left:46%}
+    .cv-dot.d2{width:8px;height:8px;top:22%;left:40%}
+    .cv-dot.d3{width:20px;height:20px;bottom:4%;left:52%;opacity:.1}
+    .cv-voice{position:absolute;left:0;bottom:12mm;width:86mm;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:12mm}
+    .cv-bubble{position:relative;width:100%;padding:6mm 7mm 6.5mm;background:rgba(255,255,255,.9);border:1px solid #fff;border-radius:26px;font:italic 400 2.05em/1.2 'Cormorant Garamond',serif;color:var(--ink);box-shadow:0 26px 50px -28px var(--a-shadow)}
+    .cv-bubble::before,.cv-bubble::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.9);border:1px solid #fff}
+    .cv-bubble::before{width:18px;height:18px;right:-9mm;top:-3mm}
+    .cv-bubble::after{width:10px;height:10px;right:-15mm;top:-8mm}
+    .cv-bubble-label{display:block;font:normal 600 .3em/1 'Montserrat',sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--a-deep);margin-bottom:1.1em}
+    .chip{display:inline-flex;align-items:center;gap:6px;font:500 .78em/1 'Montserrat',sans-serif;letter-spacing:.03em;color:var(--ink2);background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.95);border-radius:999px;padding:.85em 1.3em}
+    .chip strong{font-weight:600;color:var(--a-deep)}
+    .cv-meta{display:flex;gap:10mm;margin-top:6mm;padding-top:5mm;border-top:1px solid rgba(43,14,23,.1)}
+    .cv-meta div{display:flex;flex-direction:column;gap:5px}
+    .cv-meta span{font:600 7.5px 'Montserrat',sans-serif;letter-spacing:2.2px;text-transform:uppercase;color:var(--a-deep)}
+    .cv-meta strong{font:500 12px 'Raleway',sans-serif;color:var(--ink)}
+
+    /* ── 2 · Diálogo interno ── */
+    .dl-grid{display:grid;grid-template-columns:minmax(0,1fr) 60mm;gap:6mm;align-items:start}
+    .lead{font:400 1.4em/1.45 'Cormorant Garamond',serif;font-style:normal;color:var(--ink);margin-bottom:5mm}
+    ul.voices{list-style:none;display:flex;flex-wrap:wrap;gap:.6em}
+    ul.voices li{font:italic 400 1.42em/1.28 'Cormorant Garamond',serif;color:var(--ink);background:rgba(255,255,255,.72);border-radius:16px;padding:.5em .85em}
+    .facts{background:#fff;border-radius:28px;overflow:hidden;border:1px solid rgba(43,14,23,.06);box-shadow:0 30px 60px -40px var(--a-shadow)}
+    .fact{padding:5mm 5.5mm;border-bottom:1px solid var(--line)}
+    .fact:last-child{border-bottom:none}
+    .fact-label{font:600 .62em/1 'Montserrat',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--a-deep);margin-bottom:.9em}
+    .fact-value{font:500 1.15em/1.3 'Raleway',sans-serif;color:var(--ink)}
+    .fact-note{font-size:.84em;line-height:1.6;color:var(--muted);margin-top:.45em}
+    .fact.highlight{background:var(--a-deep);border-bottom:none}
+    .fact.highlight .fact-label{color:rgba(255,255,255,.75)}
+    .fact.highlight .fact-value{font:italic 400 1.75em/1.2 'Cormorant Garamond',serif;color:#fff}
+    .ally{display:flex;gap:4mm;align-items:center;margin-bottom:.6em}
+    .ally .arch{width:17mm;height:22.7mm;flex-shrink:0}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:5mm}
+
+    /* ── 3 · Mapa ── */
+    .p-map{background:#fff}
+    .map-top{display:grid;grid-template-columns:minmax(0,1fr) 34mm;gap:8mm;align-items:end;margin-bottom:6mm}
+    .map-top .arch{width:34mm;height:45.3mm;transform:rotate(3deg)}
+    .map-focus{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-bottom:5mm}
+    .map-focus .card{padding:4.5mm 5.5mm}
+    .map-focus .fact-value{font-size:1.2em}
+    .dim{display:grid;grid-template-columns:14mm 47mm minmax(0,1fr);gap:6mm;align-items:center;padding:6mm 0;border-top:1px solid var(--line)}
+    .dim:last-of-type{border-bottom:1px solid var(--line)}
+    .dim-letter{width:13mm;height:13mm;border-radius:50%;display:grid;place-items:center;background:var(--a-bg);color:var(--a-deep);font:600 1.95em/1 'Cormorant Garamond',serif}
+    .dim-name{font:600 .74em/1 'Montserrat',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--ink);margin-bottom:.55em}
+    .dim-band{font:italic 400 1.45em/1.1 'Cormorant Garamond',serif;color:var(--a-deep)}
+    .dim-bar{height:2mm;border-radius:999px;background:var(--a-tint);overflow:hidden;margin-bottom:.8em}
+    .dim-bar span{display:block;height:100%;border-radius:999px;background:var(--a-deep)}
+    .dim-insight{font-size:.88em;line-height:1.6;color:var(--muted)}
+    .legend{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:6mm}
+    .legend div{background:var(--a-bg2);border-radius:18px;padding:4mm 4.5mm}
+    .legend b{display:block;font:italic 600 1.2em/1.2 'Cormorant Garamond',serif;color:var(--a-deep);margin-bottom:.3em}
+    .legend p{font-size:.8em;line-height:1.55;color:var(--ink2)}
+
+    /* ── 4 · Ruta práctica ── */
+    .p-route{background:linear-gradient(180deg,var(--a-bg2) 0%,var(--a-bg2) 45%,var(--a-bg) 100%)}
+    .tools{display:flex;flex-direction:column;gap:4.5mm;margin-top:5mm}
+    .tool{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:6mm;padding:5.5mm 6mm}
+    .tool-head{display:flex;gap:4mm;align-items:flex-start;margin-bottom:.8em}
+    .tool-num{font:italic 400 2.9em/.9 'Cormorant Garamond',serif;color:var(--a-deep);opacity:.4}
+    .tool-label{font:600 .62em/1 'Montserrat',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--a-deep);margin-bottom:.6em}
+    .tool-name{font:500 1.3em/1.2 'Raleway',sans-serif;letter-spacing:-.008em;color:var(--ink)}
+    .tool-sub{font-size:.74em;letter-spacing:.05em;color:var(--muted);margin-top:.35em}
+    .tool-intro{font-size:.88em;line-height:1.6;color:var(--ink2);margin-bottom:.8em}
+    ol.steps{list-style:none;display:flex;flex-direction:column;gap:.55em}
+    ol.steps li{display:flex;gap:.75em;align-items:flex-start;font-size:.86em;line-height:1.5;color:var(--ink2)}
+    .step-dot{width:1.85em;height:1.85em;border-radius:50%;background:var(--a-bg);color:var(--a-deep);font:600 .82em/1 'Montserrat',sans-serif;display:grid;place-items:center;flex-shrink:0}
+    .ws{background:var(--a-bg2);border-radius:18px;padding:4mm 4.5mm}
+    .tracker{display:flex;flex-direction:column}
+    .tracker div{display:grid;grid-template-columns:auto 1.25em 1fr;gap:.7em;align-items:end;height:2.35em}
+    .tracker b{font:600 .62em/1.6 'Montserrat',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--a-deep);width:3.8em}
+    .tracker i{width:1.15em;height:1.15em;border:1.5px solid var(--a-deep);border-radius:50%;opacity:.6;margin-bottom:.15em}
+    .tracker u{display:block;border-bottom:1px solid rgba(43,14,23,.2);height:100%}
+    .script{background:var(--a-bg);border-radius:18px;padding:4.5mm 5mm;font:italic 400 1.38em/1.42 'Cormorant Garamond',serif;color:var(--ink)}
+
+    /* ── 5 · Cierre ── */
+    .p-close{background:linear-gradient(180deg,var(--a-bg2) 0%,var(--a-bg2) 40%,var(--a-bg) 100%)}
+    .growth{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:3mm}
+    .growth .card{padding:5mm 5mm 5.5mm}
+    .growth p{font-size:.92em;line-height:1.6;color:var(--ink2)}
+    .growth .growth-num{font:italic 400 2.7em/1 'Cormorant Garamond',serif;color:var(--a-deep);opacity:.45;margin-bottom:.3em}
+    .reflect{margin-top:4.5mm;display:grid;grid-template-columns:1fr 1fr;gap:4mm 7mm}
+    .reflect .card-title{grid-column:1/-1;margin-bottom:0}
+    .reflect .q{font-size:.88em;line-height:1.5;color:var(--ink2);font-weight:500}
+    .reflect .wide{grid-column:1/-1}
+    .commit{font:italic 400 1.28em/1.9 'Cormorant Garamond',serif;color:var(--ink)}
+    .share{margin-top:4.5mm;display:grid;grid-template-columns:36mm minmax(0,1fr);gap:7mm;align-items:center}
+    .share .arch{width:36mm;height:48mm;transform:rotate(-3deg);box-shadow:0 0 0 6px var(--a-bg2),0 24px 40px -24px var(--a-shadow)}
+    .share p{font-size:.88em;line-height:1.6;color:var(--ink2)}
+    .share .share-title{font:400 1.75em/1.12 'Raleway',sans-serif;letter-spacing:-.018em;color:var(--ink);margin-bottom:.4em}
+    .share-title em{font-style:normal;color:var(--a-deep)}
+    .cta{margin-top:4.5mm;display:flex;justify-content:space-between;align-items:center;gap:6mm;background:var(--a-deep);color:#fff;border-radius:24px;padding:5.5mm 6.5mm}
+    .cta-title{font:italic 400 1.6em/1.2 'Cormorant Garamond',serif;margin-bottom:.2em}
+    .cta-text{font-size:.82em;line-height:1.5;color:rgba(255,255,255,.82)}
+    .cta-links{display:flex;flex-direction:column;align-items:flex-end;gap:.5em;font:600 .68em/1.2 'Montserrat',sans-serif;letter-spacing:.14em;white-space:nowrap}
+    .cta-links span:last-child{font-weight:500;letter-spacing:.06em;color:rgba(255,255,255,.82)}
+    .decision{margin-top:5mm;display:grid;grid-template-columns:auto minmax(0,1fr);gap:5mm;align-items:center;background:#fff;border-radius:24px;padding:5mm 6mm;border:1px solid rgba(43,14,23,.06);border-left:4px solid var(--a-deep)}
+    .decision .tag{margin-bottom:0}
+    .decision p{font-size:.92em;line-height:1.6;color:var(--ink2)}
+    .share-links{display:flex;flex-wrap:wrap;gap:2.5mm;margin-top:3.5mm}
+    .pill{display:inline-flex;align-items:center;gap:.5em;padding:.75em 1.15em;border-radius:999px;font:600 .64em/1 'Montserrat',sans-serif;letter-spacing:.12em;color:var(--a-deep);background:var(--a-tint);text-decoration:none}
+    .pill.solid{background:var(--a-deep);color:#fff}
+    .disclaimer{margin-top:4mm;font-size:.72em;line-height:1.6;color:var(--muted)}
+
+    /* ── Sin resultado ── */
+    .p-empty{justify-content:center;align-items:flex-start;background:linear-gradient(180deg,var(--a-bg) 0%,var(--a-bg2) 100%)}
+
+    @media print{
+      @page{size:A4;margin:0}
+      html,body{background:#fff}
+      .toolbar{display:none!important}
+      .report{width:210mm;margin:0;zoom:1!important}
+      .page{margin:0;box-shadow:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar" id="toolbar">
+    <div class="brand"><b>Moraleja</b><i>Comunicación Consciente</i></div>
+    <span class="toolbar-hint">Para descargar, elige «Guardar como PDF» en el cuadro de impresión.</span>
+    <div class="toolbar-actions">
+      <button class="tb-btn solid" type="button" onclick="window.print()">Descargar PDF</button>
+      <button class="tb-btn ghost" type="button" onclick="window.print()">Imprimir</button>
+    </div>
+  </div>
+  <main class="report" id="report"></main>
+  <script src="quiz-engine.js?v=2.1.2"></script>
+  <script>
+    const ARCH_SLUGS={chispa:'la-chispa',artesana:'la-artesana',conectora:'la-conectora',voz:'la-voz-valiosa',capitana:'la-capitana',exploradora:'la-exploradora',brujula:'la-brujula'};
+    const ARCH_THEMES={
+      chispa:{bg:'#F7C4BA',bg2:'#FCF1EA',deep:'#A3203F'},
+      artesana:{bg:'#F5CDB6',bg2:'#FCF2EA',deep:'#9C4524'},
+      conectora:{bg:'#F6E3A8',bg2:'#FCF7EA',deep:'#7E5A0E'},
+      voz:{bg:'#DCCDEE',bg2:'#F7F2F8',deep:'#5B3D8C'},
+      capitana:{bg:'#F5C6D2',bg2:'#FCF1F3',deep:'#A3385C'},
+      exploradora:{bg:'#CDE4D4',bg2:'#F3F7F1',deep:'#2E6A4E'},
+      brujula:{bg:'#CCDDEF',bg2:'#F3F5F9',deep:'#2C4B77'}
+    };
+    const characterSrc=(type)=>`images/characters/${ARCH_SLUGS[type]||'la-exploradora'}.jpg`;
+    const esc=(v)=>String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const report=document.getElementById('report');
+
+    function applyTheme(type){
+      const theme=ARCH_THEMES[type]||ARCH_THEMES.exploradora,style=document.documentElement.style;
+      style.setProperty('--a-bg',theme.bg);
+      style.setProperty('--a-bg2',theme.bg2);
+      style.setProperty('--a-deep',theme.deep);
+      style.setProperty('--a-shadow',theme.deep+'55');
+      style.setProperty('--a-tint',theme.deep+'14');
+    }
+
+    let saved=null;
+    try{saved=JSON.parse(localStorage.getItem('moraleja_last_result')||'null');}catch(e){saved=null;}
+    const payload=saved&&saved.puntajes&&saved.puntajes.instrumentVersion?saved.puntajes:null;
+
+    if(!payload){
+      document.getElementById('toolbar').querySelector('.toolbar-actions').style.display='none';
+      report.innerHTML=`
+        <section class="page p-empty">
+          <div class="brand" style="margin-bottom:18mm"><b>Moraleja</b><i>Comunicación Consciente</i></div>
+          <p class="kicker">Autodiagnóstico Moraleja</p>
+          <h1 class="h2">No encontramos un <em>resultado compatible</em></h1>
+          <p class="intro" style="margin-bottom:8mm">Completa la versión actual del autodiagnóstico antes de abrir tu guía.</p>
+          <a class="tb-btn solid" href="autodiagnostico-clara-emprendedoras.html">Ir al autodiagnóstico</a>
+        </section>`;
+    }else{
+      const type=payload.primary;
+      const prof={...(payload.archetype||{}),...(CLARA.archetypes[type]||{})};
+      const secondary=payload.secondaryArchetype||(payload.secondary?CLARA.archetypes[payload.secondary]:null);
+      const ally=prof.ally?CLARA.archetypes[prof.ally]:null;
+      const tools=payload.tools||CLARA.toolsByDimension[payload.practiceDimension]||CLARA.toolsByDimension.consciencia;
+      const metaFor=(dim)=>(payload.dimensionMeta&&payload.dimensionMeta[dim])||CLARA.dimensions[dim];
+      const personName=String((saved.nombre||saved.name||payload.nombre||'')).trim();
+      const when=new Date(saved.fecha||payload.completedAt||'');
+      const dateStr=isNaN(when)?'':when.toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'});
+      const shareUrl=`www.moraleja.co/resultados/${ARCH_SLUGS[type]||'la-exploradora'}.html`;
+      const TOTAL=5;
+
+      applyTheme(type);
+      document.title=`${prof.name} · Autodiagnóstico Moraleja`;
+
+      const dash=(arr)=>`<ul class="dash">${(arr||[]).filter(Boolean).map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`;
+      const lines=(n)=>`<div class="lines">${'<span></span>'.repeat(n)}</div>`;
+      const steps=(arr)=>`<ol class="steps">${(arr||[]).map((s,i)=>`<li><span class="step-dot">${i+1}</span><span>${esc(s)}</span></li>`).join('')}</ol>`;
+      const head=(label)=>`<header class="pg-head"><div class="brand"><b>Moraleja</b><i>Comunicación Consciente</i></div><span class="pg-tag">${esc(label)}</span></header>`;
+      const foot=(n)=>`<footer class="pg-foot"><span>Autodiagnóstico Moraleja · <b>${esc(prof.name)}</b>${personName?` · ${esc(personName)}`:''}</span><span>${String(n).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}</span></footer>`;
+      const arch=(t,cls,alt)=>`<div class="arch ${cls||''}"><img src="${characterSrc(t)}" alt="${esc(alt||'')}"></div>`;
+
+      const voices=(prof.innerVoiceMore||[]).filter(Boolean);
+      const showsUp=prof.showsUp&&prof.showsUp.length?prof.showsUp:[prof.autopilot,prof.decision];
+      const strengths=prof.strengths&&prof.strengths.length?prof.strengths:[prof.resource];
+      const growth=prof.growth&&prof.growth.length?prof.growth:[prof.decision];
+
+      const coverMeta=[];
+      if(personName)coverMeta.push(['Preparada para',personName]);
+      if(dateStr)coverMeta.push(['Fecha',dateStr]);
+      coverMeta.push(['Incluye','Perfil · Mapa · Ruta práctica']);
+
+      const bandsLegend=[
+        ['Recurso disponible','Aparece con facilidad, incluso cuando hay presión. Apóyate en ella.'],
+        ['En práctica','Aparece a veces. Con práctica constante se vuelve hábito.'],
+        ['En exploración','Es tu mayor oportunidad de crecimiento en este momento.']
+      ];
+
+      report.innerHTML=`
+        <section class="page p-cover">
+          <header class="pg-head"><div class="brand"><b>Moraleja</b><i>Comunicación Consciente</i></div><span class="pg-tag">Tu guía personal · Autodiagnóstico Moraleja</span></header>
+          <p class="cv-eyebrow">Tu personaje Moraleja</p>
+          <p class="cv-eres">Eres</p>
+          <h1 class="cv-name">${esc(prof.name)}</h1>
+          <p class="cv-sub">${esc(prof.subtitle)}</p>
+          <div class="cv-stage">
+            <span class="cv-dot d1"></span><span class="cv-dot d2"></span><span class="cv-dot d3"></span>
+            <div class="cv-archwrap"><div class="cv-ring"></div>${arch(type,'',`Personaje de ${prof.name}`)}</div>
+            <div class="cv-voice">
+              ${prof.innerVoice?`<div class="cv-bubble"><span class="cv-bubble-label">Tu voz interna dice</span>“${esc(prof.innerVoice)}”</div>`:''}
+              ${secondary?`<span class="chip">Con influencia de <strong>${esc(secondary.name)}</strong></span>`:''}
+            </div>
+          </div>
+          <div class="cv-meta">${coverMeta.map(([k,v])=>`<div><span>${esc(k)}</span><strong>${esc(v)}</strong></div>`).join('')}</div>
+        </section>
+
+        <section class="page p-dialog">
+          ${head('01 · Tu diálogo interno')}
+          <p class="kicker">Tu patrón al comunicar y decidir</p>
+          <h2 class="h2">Así funciona tu <em>diálogo interno</em></h2>
+          <div class="dl-grid">
+            <div>
+              ${prof.desc?`<p class="lead">${esc(prof.desc)}</p>`:''}
+              ${voices.length?`<div class="card tinted"><span class="tag">En tu cabeza</span><p class="card-title">También puedes escucharte decir</p><ul class="voices">${voices.map(v=>`<li>“${esc(v)}”</li>`).join('')}</ul></div>`:''}
+            </div>
+            <aside class="facts">
+              ${prof.newPhrase?`<div class="fact highlight"><p class="fact-label">Tu frase nueva</p><p class="fact-value">“${esc(prof.newPhrase)}”</p></div>`:''}
+              ${ally?`<div class="fact"><p class="fact-label">Tu aliada</p><div class="ally">${arch(prof.ally,'sm','')}<p class="fact-value">${esc(ally.name)}</p></div>${prof.allyWhy?`<p class="fact-note">${esc(prof.allyWhy)}</p>`:''}</div>`:''}
+              ${tools&&tools.now?`<div class="fact"><p class="fact-label">Tu práctica de hoy</p><p class="fact-value">${esc(tools.now.name)}</p><p class="fact-note">${esc(tools.now.duration)} · está en tu ruta práctica.</p></div>`:''}
+            </aside>
+          </div>
+          <div class="two">
+            <div class="card"><span class="tag">Hacia afuera</span><p class="card-title">Cómo se nota al comunicar</p>${dash(showsUp)}</div>
+            <div class="card"><span class="tag">Tu recurso</span><p class="card-title">Lo que ya haces bien</p>${dash(strengths)}</div>
+          </div>
+          ${prof.decision?`<div class="decision"><span class="tag">Dónde se activa más</span><p>${esc(prof.decision)}</p></div>`:''}
+          ${foot(2)}
+        </section>
+
+        <section class="page p-map">
+          ${head('02 · Tu mapa')}
+          <div class="map-top">
+            <div>
+              <p class="kicker">Cinco dimensiones</p>
+              <h2 class="h2">Tu mapa <em>CLARA</em></h2>
+              <p class="intro">Cada letra muestra cómo tu diálogo interno se traduce hoy en comunicación y decisiones. No es una nota: es una foto de este momento, y cambia con la práctica.</p>
+            </div>
+            ${arch(type,'sm','')}
+          </div>
+          <div class="map-focus">
+            ${payload.resourceDimension?`<div class="card tinted"><span class="tag">Tu mayor recurso</span><p class="fact-value">${esc(metaFor(payload.resourceDimension).label)}</p></div>`:''}
+            ${payload.practiceDimension?`<div class="card"><span class="tag">Tu dimensión para practicar</span><p class="fact-value">${esc(metaFor(payload.practiceDimension).label)}</p></div>`:''}
+          </div>
+          ${CLARA.DIMS.map((dim,i)=>{
+            const meta=metaFor(dim),score=Math.max(0,Math.min(100,Number(payload.scores&&payload.scores[dim])||0));
+            const band=(payload.bands&&payload.bands[dim])||CLARA.bandFor(score);
+            return `<div class="dim"><div class="dim-letter" aria-hidden="true">${'CLARA'[i]}</div><div><p class="dim-name">${esc(meta.label)}</p><p class="dim-band">${esc(band.label)}</p></div><div><div class="dim-bar"><span style="width:${score}%"></span></div><p class="dim-insight">${esc(meta.short)}</p></div></div>`;
+          }).join('')}
+          <div class="legend">${bandsLegend.map(([b,p])=>`<div><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join('')}</div>
+          ${foot(3)}
+        </section>
+
+        <section class="page p-route">
+          ${head('03 · Ruta práctica')}
+          <p class="kicker">Del darte cuenta a la conversación</p>
+          <h2 class="h2">Tu ruta <em>práctica</em></h2>
+          <p class="intro">Tres pasos para llevar tu frase nueva a la vida real. Imprime esta hoja, escríbele encima y vuelve a ella cuando la necesites.</p>
+          <div class="tools">
+            <div class="card tool">
+              <div>
+                <div class="tool-head"><span class="tool-num">01</span><div><p class="tool-label">Hazlo ahora</p><p class="tool-name">${esc(tools.now.name)}</p><p class="tool-sub">${esc(tools.now.duration)} · práctica inmediata</p></div></div>
+                <p class="tool-intro">${esc(tools.now.intro)}</p>
+                ${steps(tools.now.steps)}
+              </div>
+              <div class="ws"><p class="ws-label">Tus notas</p>${lines(6)}</div>
+            </div>
+            <div class="card tool">
+              <div>
+                <div class="tool-head"><span class="tool-num">02</span><div><p class="tool-label">Practica durante 7 días</p><p class="tool-name">${esc(tools.challenge.name)}</p><p class="tool-sub">Reto breve · constancia</p></div></div>
+                <p class="tool-intro">${esc(tools.challenge.intro)}</p>
+                ${steps(tools.challenge.steps)}
+              </div>
+              <div class="ws"><p class="ws-label">Tu registro de 7 días</p><div class="tracker">${[1,2,3,4,5,6,7].map(d=>`<div><b>Día ${d}</b><i></i><u></u></div>`).join('')}</div></div>
+            </div>
+            <div class="card tool">
+              <div>
+                <div class="tool-head"><span class="tool-num">03</span><div><p class="tool-label">Para tu próxima conversación</p><p class="tool-name">Tu guion CLARA</p><p class="tool-sub">Lenguaje listo para adaptar</p></div></div>
+                <div class="script">${esc(tools.script)}</div>
+              </div>
+              <div class="ws"><p class="ws-label">Tu versión, con tus palabras</p>${lines(4)}</div>
+            </div>
+          </div>
+          ${foot(4)}
+        </section>
+
+        <section class="page p-close">
+          ${head('04 · Tu evolución')}
+          <p class="kicker">Tu evolución</p>
+          <h2 class="h2">Prácticas para <em>cambiar la conversación</em></h2>
+          <div class="growth">${growth.map((g,i)=>`<div class="card"><p class="growth-num">0${i+1}</p><p>${esc(g)}</p></div>`).join('')}</div>
+          <div class="card reflect">
+            <p class="card-title">Un momento para ti</p>
+            <div><p class="q">¿Qué frase interna quiero notar esta semana?</p>${lines(2)}</div>
+            <div><p class="q">¿Qué haré distinto en mi próxima conversación?</p>${lines(2)}</div>
+            <div class="wide"><p class="ws-label">Mi compromiso</p><p class="commit">Si aparece ___________________, entonces haré ___________________<br>antes de ___________________.</p></div>
+          </div>
+          <div class="card share">
+            ${arch(type,'',`Personaje de ${prof.name}`)}
+            <div>
+              <span class="tag">Comparte tu personaje</span>
+              <p class="share-title">¿Te viste en <em>${esc(prof.name)}</em>?</p>
+              <p>Compártelo con otras emprendedoras: nombrar lo que te dices por dentro es el primer paso para cambiar la conversación. Vuelve a hacer el autodiagnóstico después de practicar con constancia; tu resultado más reciente quedará disponible en tu cuenta.</p>
+              <div class="share-links"><span class="pill">${esc(shareUrl)}</span></div>
+            </div>
+          </div>
+          <div class="cta">
+            <div><p class="cta-title">Sigue la conversación con Moraleja</p><p class="cta-text">Acompañamiento en comunicación consciente para emprendedoras que quieren decidir y hablar desde su criterio.</p></div>
+            <div class="cta-links"><span>www.moraleja.co</span><span>holamoraleja.co@gmail.com</span></div>
+          </div>
+          <p class="disclaimer">Este patrón describe tu momento actual y puede cambiar con la práctica. Este autodiagnóstico es una herramienta orientativa de reflexión; no constituye una evaluación psicológica.</p>
+          ${foot(5)}
+        </section>`;
+    }
+
+    function fitPages(){
+      document.querySelectorAll('.page').forEach(page=>{
+        let k=1;page.style.setProperty('--k','1');
+        while(page.scrollHeight>page.clientHeight+1&&k>.72){k-=.02;page.style.setProperty('--k',k.toFixed(2));}
+      });
+    }
+    function scaleForScreen(){
+      const avail=document.documentElement.clientWidth-16,pageW=210*96/25.4;
+      report.style.zoom=avail<pageW?String(avail/pageW):'';
+    }
+    function layout(){scaleForScreen();fitPages();}
+    const imgs=[...report.querySelectorAll('img')].map(img=>img.complete?null:new Promise(r=>{img.onload=img.onerror=r;})).filter(Boolean);
+    Promise.all([document.fonts&&document.fonts.ready,...imgs]).then(()=>{layout();document.body.dataset.ready='1';});
+    layout();
+    window.addEventListener('resize',scaleForScreen);
+    window.addEventListener('beforeprint',fitPages);
+  </script>
+</body>
+</html>

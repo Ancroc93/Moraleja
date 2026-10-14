@@ -3,8 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Autodiagnóstico de Comunicación · Moraleja</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="description" content="Descubre cómo tu diálogo interno influye en la forma en que comunicas y tomas decisiones en tu emprendimiento con el Autodiagnóstico Moraleja.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Autodiagnóstico Moraleja · Descubre tu personaje">
+<meta property="og:description" content="Reconoce cómo te hablas, cómo comunicas y qué práctica puede ayudarte a tomar decisiones más conscientes en tu emprendimiento.">
+<meta property="og:url" content="https://www.moraleja.co/autodiagnostico-clara-emprendedoras.html">
+<meta property="og:image" content="https://www.moraleja.co/images/og-clara.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Autodiagnóstico Moraleja de Comunicación Consciente para emprendedoras">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.moraleja.co/autodiagnostico-clara-emprendedoras.html">
+<title>Autodiagnóstico Moraleja · Descubre tu personaje</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Montserrat:wght@400;500;600;700&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --rust:    #BF2048;
@@ -41,6 +52,23 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .intro-orb::after{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--bg);}
 .intro-orb-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:34px;z-index:2;}
 @keyframes spin{to{transform:rotate(360deg);}}
+.intro-cast{position:relative;width:min(94vw,680px);height:230px;margin:0 auto 18px;}
+.cast-arch{position:absolute;bottom:0;left:50%;width:124px;aspect-ratio:3/4;border-radius:999px 999px 18px 18px;overflow:hidden;box-shadow:0 0 0 5px rgba(255,255,255,.7),0 24px 40px -24px rgba(91,30,50,.45);animation:castIn .9s cubic-bezier(.2,.8,.2,1) both;}
+.cast-arch img{width:100%;height:100%;object-fit:cover;display:block;animation:rImgFloat 7s ease-in-out infinite;}
+.cast-arch.c0{--x:-282px;--r:-16deg;--s:.7;z-index:0;animation-delay:.35s;}
+.cast-arch.c1{--x:-196px;--r:-10deg;--s:.8;z-index:1;animation-delay:.25s;}
+.cast-arch.c2{--x:-106px;--r:-5deg;--s:.9;z-index:2;animation-delay:.15s;}
+.cast-arch.c3{--x:0px;--r:0deg;--s:1.18;z-index:3;}
+.cast-arch.c4{--x:106px;--r:5deg;--s:.9;z-index:2;animation-delay:.15s;}
+.cast-arch.c5{--x:196px;--r:10deg;--s:.8;z-index:1;animation-delay:.25s;}
+.cast-arch.c6{--x:282px;--r:16deg;--s:.7;z-index:0;animation-delay:.35s;}
+.cast-arch.c0 img,.cast-arch.c6 img{animation-delay:4.2s;}
+.cast-arch{transform:translateX(calc(-50% + var(--x))) rotate(var(--r)) scale(var(--s));transform-origin:bottom center;}
+.cast-arch.c2 img,.cast-arch.c4 img{animation-delay:1.4s;}
+.cast-arch.c1 img,.cast-arch.c5 img{animation-delay:2.8s;}
+@keyframes castIn{from{opacity:0;transform:translateX(-50%) translateY(30px) scale(.7);}to{opacity:1;transform:translateX(calc(-50% + var(--x))) rotate(var(--r)) scale(var(--s));}}
+.intro-cast-caption{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--ink2);margin-bottom:34px;}
+@media(max-width:560px){.intro-cast{height:170px;}.cast-arch{width:78px;}.cast-arch.c0{--x:-142px;}.cast-arch.c1{--x:-100px;}.cast-arch.c2{--x:-54px;}.cast-arch.c4{--x:54px;}.cast-arch.c5{--x:100px;}.cast-arch.c6{--x:142px;}}
 .intro-tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--rust);margin-bottom:18px;font-weight:600;font-family:'Montserrat',sans-serif;}
 .intro-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5.6vw,72px);font-weight:300;line-height:1.1;margin-bottom:22px;color:var(--ink);}
 .intro-title em{font-style:italic;color:var(--rust);}
@@ -61,7 +89,9 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 /* ── QUIZ ── */
 #screen-quiz{padding:0;background:var(--bg);}
 .quiz-header{position:sticky;top:0;z-index:100;background:rgba(250,233,235,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);padding:18px 44px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
-.quiz-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--rust);white-space:nowrap;font-weight:600;}
+.quiz-logo,.r-brand{display:flex;flex-direction:column;gap:2px;white-space:nowrap;line-height:1.1;}
+.quiz-logo .moraleja-logo,.r-brand .moraleja-logo{font-size:17px;font-style:normal;}
+.quiz-logo .moraleja-tagline,.r-brand .moraleja-tagline{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;font-weight:400;}
 .progress-wrap{flex:1;max-width:420px;}
 .progress-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
 .progress-bar{height:2px;background:var(--muted2);border-radius:4px;overflow:hidden;}
@@ -81,6 +111,21 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .option-btn.selected{border-color:var(--rust);background:rgba(191,32,72,0.05);}
 .opt-letter{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--muted);flex-shrink:0;margin-top:2px;transition:all .22s ease;font-family:'Montserrat',sans-serif;}
 .option-btn.selected .opt-letter,.option-btn:hover .opt-letter{border-color:var(--rust);color:var(--rust);background:rgba(191,32,72,0.09);}
+.interaction-help{display:flex;gap:12px;align-items:flex-start;font-size:15px;font-weight:500;color:var(--ink2);line-height:1.6;margin:-24px 0 20px;padding:14px 18px;background:rgba(255,255,255,.7);border:1px solid var(--border2);border-left:3px solid var(--rust);border-radius:4px;}
+.interaction-help::before{content:'✦';color:var(--rust);font-size:13px;line-height:1.85;flex-shrink:0;}
+.option-btn[aria-pressed="true"]{border-color:var(--rust);background:rgba(191,32,72,0.06);}
+.classify-list,.builder-list{display:flex;flex-direction:column;gap:12px;}
+.classify-item,.builder-group{background:var(--surface);border:1.5px solid var(--border2);padding:18px;border-radius:3px;}
+.classify-text,.builder-label{font-size:14px;line-height:1.6;color:var(--ink2);margin-bottom:12px;}
+.mini-options{display:flex;gap:8px;flex-wrap:wrap;}
+.mini-option{border:1.5px solid var(--border2);background:var(--surface2);color:var(--muted);border-radius:999px;padding:9px 14px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;cursor:pointer;}
+.mini-option.selected{border-color:var(--rust);color:var(--rust);background:rgba(191,32,72,.08);}
+.sequence-slots{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.sequence-slot{display:flex;gap:12px;align-items:center;background:var(--surface);border:1.5px solid var(--border2);padding:13px 15px;text-align:left;color:var(--ink2);cursor:pointer;}
+.sequence-num{width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:rgba(191,32,72,.1);color:var(--rust);font:600 11px 'Montserrat',sans-serif;flex-shrink:0;}
+.sequence-available{display:flex;flex-direction:column;gap:8px;}
+.sequence-choice{background:transparent;border:1.5px dashed var(--border2);padding:13px 15px;text-align:left;color:var(--muted);font:400 14px 'Raleway',sans-serif;cursor:pointer;}
+.selection-count{font:600 10px 'Montserrat',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--rust);margin-bottom:10px;}
 .q-nav{display:flex;justify-content:flex-end;margin-top:32px;}
 .btn-next{background:transparent;border:1.5px solid var(--border2);color:var(--muted);padding:12px 32px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .25s ease;}
 .btn-next:not(:disabled):hover,.btn-next.ready{border-color:var(--rust);color:var(--rust);}
@@ -98,80 +143,163 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .loading-text{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:var(--ink2);}
 .loading-sub{font-size:12px;color:var(--muted);margin-top:8px;letter-spacing:2px;text-transform:uppercase;font-family:'Montserrat',sans-serif;}
 
-/* ── RESULTS HERO ── */
-#screen-results{background:var(--bg);}
-.results-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 52px;position:relative;overflow:hidden;}
-.results-hero::before{content:'';position:absolute;top:0;right:0;width:45%;height:100%;background:linear-gradient(135deg,var(--surface2) 0%,transparent 65%);pointer-events:none;}
-.results-content{max-width:980px;width:100%;display:grid;grid-template-columns:1fr 320px;gap:72px;align-items:center;position:relative;z-index:1;}
-.result-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--rust);margin-bottom:14px;font-weight:600;animation:fadeUp .6s ease both;font-family:'Montserrat',sans-serif;}
-.result-type-name{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,7vw,92px);font-weight:300;line-height:1;margin-bottom:8px;animation:fadeUp .6s .1s ease both;}
-.result-type-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,2vw,23px);font-style:italic;color:var(--muted);margin-bottom:28px;animation:fadeUp .6s .2s ease both;}
-.result-desc{font-size:15px;color:var(--ink2);line-height:1.9;max-width:560px;animation:fadeUp .6s .3s ease both;}
-.radar-wrap{animation:fadeUp .6s .4s ease both;}
-.radar-title{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;text-align:center;font-family:'Montserrat',sans-serif;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+/* ── RESULTS ── */
+#screen-results{--a-bg:#F7C4BA;--a-bg2:#FCF1EA;--a-deep:#A3203F;--a-shadow:rgba(163,32,63,.33);--a-tint:rgba(163,32,63,.08);background:var(--a-bg2);color:var(--ink);}
+.r-hero{position:relative;min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(120% 80% at 80% 10%,rgba(255,255,255,.55) 0%,transparent 55%),linear-gradient(180deg,var(--a-bg) 0%,var(--a-bg2) 100%);overflow:hidden;}
+.r-topbar{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 52px;position:relative;z-index:2;}
+.r-brand .moraleja-tagline{color:var(--a-deep);}
+.r-topbar-tag{font:600 10px 'Montserrat',sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--a-deep);opacity:.75;}
+.r-hero-inner{flex:1;max-width:1180px;width:100%;margin:0 auto;padding:8px 52px 96px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px;align-items:center;position:relative;z-index:1;}
+.r-reveal{animation:rReveal .9s var(--d,0s) cubic-bezier(.2,.8,.2,1) both;}
+@keyframes rReveal{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+.r-eyebrow{display:inline-flex;align-items:center;gap:12px;font:600 11px 'Montserrat',sans-serif;letter-spacing:4px;text-transform:uppercase;color:var(--a-deep);margin-bottom:22px;}
+.r-eyebrow::before{content:'';width:30px;height:1.5px;background:currentColor;}
+.r-eres{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(30px,3.4vw,44px);color:var(--ink2);line-height:1;}
+.result-type-name{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(62px,9.2vw,132px);line-height:.9;letter-spacing:-.02em;color:var(--a-deep);margin:6px 0 22px;}
+.result-type-subtitle{font-family:'Raleway',sans-serif;font-size:clamp(16px,1.5vw,19px);font-weight:400;color:var(--ink2);line-height:1.6;max-width:500px;margin-bottom:34px;}
+.result-inner-voice{position:relative;max-width:540px;margin-bottom:50px;padding:24px 30px 26px;background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.9);border-radius:26px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(25px,2.6vw,34px);line-height:1.22;color:var(--ink);box-shadow:0 24px 48px -30px var(--a-shadow);}
+.result-inner-voice::before,.result-inner-voice::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.9);}
+.result-inner-voice::before{width:18px;height:18px;left:42px;bottom:-24px;}
+.result-inner-voice::after{width:10px;height:10px;left:30px;bottom:-40px;}
+.result-inner-voice:empty{display:none;}
+.result-inner-voice-label{display:block;font:600 10px 'Montserrat',sans-serif;font-style:normal;letter-spacing:3px;text-transform:uppercase;color:var(--a-deep);margin-bottom:10px;}
+.result-secondary{display:inline-flex;align-items:center;gap:8px;font:500 12px 'Montserrat',sans-serif;letter-spacing:.5px;color:var(--ink2);background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.85);border-radius:999px;padding:8px 16px;margin-top:6px;}
+.result-secondary:empty{display:none;}
+.result-secondary strong{font-weight:600;color:var(--a-deep);}
+.r-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;}
+.r-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;border:1.5px solid var(--a-deep);font:600 11px 'Montserrat',sans-serif;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,background .25s ease;}
+.r-btn.solid{background:var(--a-deep);color:#fff;box-shadow:0 14px 30px -14px var(--a-deep);}
+.r-btn.ghost{background:rgba(255,255,255,.35);color:var(--a-deep);}
+.r-btn:hover{transform:translateY(-2px);}
+.r-btn.ghost:hover{background:rgba(255,255,255,.7);}
+.r-btn:focus-visible,.r-scroll:focus-visible,.r-restart:focus-visible{outline:2px solid var(--a-deep);outline-offset:3px;}
+.r-stage{position:relative;display:flex;justify-content:center;align-items:center;}
+.r-stage::before{content:'';position:absolute;top:0;left:50%;width:min(100%,460px);aspect-ratio:3/4;border:1.5px solid var(--a-deep);opacity:.22;border-radius:999px 999px 34px 34px;transform:translate(calc(-50% + 24px),-24px);animation:rRing 1.4s .5s cubic-bezier(.2,.8,.2,1) both;}
+@keyframes rRing{from{opacity:0;transform:translate(-50%,0);}to{opacity:.22;transform:translate(calc(-50% + 24px),-24px);}}
+.r-arch{position:relative;width:min(100%,460px);aspect-ratio:3/4;border-radius:999px 999px 34px 34px;overflow:hidden;background:var(--a-bg);box-shadow:0 0 0 10px rgba(255,255,255,.5),0 50px 90px -40px var(--a-shadow);animation:rArch 1.1s cubic-bezier(.2,.8,.2,1) both;}
+@keyframes rArch{from{opacity:0;transform:translateY(48px) scale(.94);}to{opacity:1;transform:none;}}
+.r-arch img{width:100%;height:100%;object-fit:cover;display:block;animation:rChar 1.5s .2s cubic-bezier(.2,.8,.2,1) both,rImgFloat 7s 1.8s ease-in-out infinite;}
+@keyframes rChar{from{opacity:0;transform:scale(1.18) translateY(30px);}to{opacity:1;transform:scale(1.06);}}
+@keyframes rFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+@keyframes rImgFloat{0%,100%{transform:scale(1.06) translateY(0);}50%{transform:scale(1.06) translateY(-2.5%);}}
+.r-arch-tag{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);white-space:nowrap;background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:10px 20px;border-radius:999px;font:600 10px 'Montserrat',sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--a-deep);}
+.r-dot{position:absolute;border-radius:50%;background:var(--a-deep);opacity:.16;animation:rFloat 6s ease-in-out infinite;}
+.r-dot.d1{width:14px;height:14px;top:8%;left:4%;}
+.r-dot.d2{width:8px;height:8px;top:30%;right:2%;animation-delay:1.2s;}
+.r-dot.d3{width:22px;height:22px;bottom:10%;left:0;opacity:.1;animation-delay:2.4s;}
+.r-scroll{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font:600 10px 'Montserrat',sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--a-deep);opacity:.8;}
+.r-scroll span{font-size:16px;animation:rFloat 2.4s ease-in-out infinite;}
 
-/* ── WAVE ── */
-.wave-divider{height:3px;background:linear-gradient(to right,var(--salmon),var(--gold),var(--blush));opacity:.5;}
+.r-kicker{display:inline-flex;align-items:center;gap:12px;font:600 11px 'Montserrat',sans-serif;letter-spacing:4px;text-transform:uppercase;color:var(--a-deep);margin-bottom:22px;}
+.r-kicker::before{content:'';width:30px;height:1.5px;background:currentColor;}
 
-/* ── DIMENSIONS ── */
-.dimensions-section{padding:80px 60px;max-width:1040px;margin:0 auto;}
-.dim-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);font-weight:300;margin-bottom:36px;color:var(--ink);}
-.dim-title em{font-style:italic;color:var(--rust);}
-.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.dim-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:3px;padding:28px;animation:fadeUp .5s ease both;transition:box-shadow .25s ease;}
-.dim-card:hover{box-shadow:0 6px 28px rgba(191,32,72,0.09);}
-.dim-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.dim-name{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);font-weight:500;font-family:'Montserrat',sans-serif;}
-.dim-score-label{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;}
-.dim-bar-bg{height:3px;background:var(--muted2);border-radius:4px;overflow:hidden;margin-bottom:14px;}
-.dim-bar-fill{height:100%;border-radius:4px;transition:width 1.3s cubic-bezier(.4,0,.2,1);}
-.dim-insight{font-size:13px;color:var(--muted);line-height:1.75;}
+.r-profile{background:var(--a-bg2);padding:110px 52px 80px;}
+.r-profile-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.6fr);gap:56px;align-items:start;}
+.result-desc{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.2vw,28px);font-weight:400;line-height:1.48;color:var(--ink);max-width:700px;margin-bottom:48px;}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.profile-card{background:#fff;border-radius:26px;padding:28px 28px 30px;border:1px solid rgba(43,14,23,.06);box-shadow:0 24px 48px -36px var(--a-shadow);}
+.profile-card.wide{grid-column:1/-1;}
+.profile-card.tinted{background:var(--a-bg);border-color:transparent;}
+.profile-card-tag{display:inline-block;background:var(--a-tint);color:var(--a-deep);padding:7px 13px;border-radius:999px;font:600 10px 'Montserrat',sans-serif;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.profile-card.tinted .profile-card-tag{background:rgba(255,255,255,.6);}
+.profile-card-title{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;line-height:1.15;color:var(--ink);margin-bottom:16px;}
+.profile-card ul{list-style:none;display:flex;flex-direction:column;gap:11px;}
+.profile-card ul li{font-size:14.5px;color:var(--ink2);line-height:1.65;display:flex;gap:10px;align-items:flex-start;}
+.profile-card ul li::before{content:'—';color:var(--a-deep);flex-shrink:0;}
+.profile-card ul.voices{flex-direction:row;flex-wrap:wrap;gap:10px;}
+.profile-card ul.voices li{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.3;color:var(--ink);background:rgba(255,255,255,.7);border-radius:18px;padding:12px 18px;}
+.profile-card ul.voices li::before{content:none;}
+.r-facts{position:sticky;top:28px;background:#fff;border-radius:30px;overflow:hidden;border:1px solid rgba(43,14,23,.06);box-shadow:0 30px 60px -40px var(--a-shadow);}
+.r-facts:empty{display:none;}
+.r-fact{padding:24px 28px;border-bottom:1px solid rgba(43,14,23,.07);}
+.r-fact:last-child{border-bottom:none;}
+.r-fact-label{font:600 10px 'Montserrat',sans-serif;letter-spacing:2.5px;text-transform:uppercase;color:var(--a-deep);margin-bottom:10px;}
+.r-fact-value{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;line-height:1.2;color:var(--ink);}
+.r-fact-note{font-size:13.5px;color:var(--muted);line-height:1.65;margin-top:6px;}
+.r-fact.highlight{background:var(--a-deep);border-bottom:none;}
+.r-fact.highlight .r-fact-label{color:rgba(255,255,255,.75);}
+.r-fact.highlight .r-fact-value{color:#fff;font-style:italic;font-weight:400;font-size:28px;}
+.r-ally{display:flex;gap:16px;align-items:center;}
+.r-ally img{width:64px;height:86px;object-fit:cover;border-radius:999px 999px 12px 12px;flex-shrink:0;}
+.result-scope{max-width:1180px;margin:56px auto 0;font-size:12px;color:var(--muted);line-height:1.7;}
 
-/* ── PROFILE CARDS ── */
-.profile-section{padding:0 60px 72px;max-width:1040px;margin:0 auto;}
-.profile-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
-.profile-card{background:var(--surface);border:1.5px solid var(--border2);border-radius:3px;padding:28px;border-top:3px solid var(--gold);}
-.profile-card.warning{border-top-color:#a83a3a;}
-.profile-card.growth{border-top-color:#4a8a6a;}
-.profile-card-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-family:'Montserrat',sans-serif;}
-.profile-card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--ink);margin-bottom:16px;}
-.profile-card ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.profile-card ul li{font-size:13px;color:var(--ink2);line-height:1.65;display:flex;gap:10px;align-items:flex-start;}
-.profile-card ul li::before{content:'—';color:var(--gold);flex-shrink:0;}
-.profile-card.warning ul li::before{color:#a83a3a;}
-.profile-card.growth ul li::before{color:#4a8a6a;}
+.r-map{background:#fff;}
+.dimensions-section{padding:100px 52px;max-width:1180px;margin:0 auto;}
+.dim-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.2vw,54px);font-weight:300;line-height:1.08;margin-bottom:44px;color:var(--ink);max-width:760px;}
+.dim-title em{font-style:italic;color:var(--a-deep);}
+.dim-grid{display:flex;flex-direction:column;}
+.dim-card{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1.6fr);gap:28px;align-items:center;padding:26px 0;border-top:1px solid rgba(43,14,23,.08);animation:fadeUp .6s ease both;}
+.dim-card:last-child{border-bottom:1px solid rgba(43,14,23,.08);}
+.dim-letter{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--a-bg);color:var(--a-deep);font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;}
+.dim-name{font:600 12px 'Montserrat',sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--ink);margin-bottom:6px;}
+.dim-band{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--a-deep);}
+.dim-bar-bg{height:6px;background:var(--a-tint);border-radius:999px;overflow:hidden;margin-bottom:12px;}
+.dim-bar-fill{height:100%;border-radius:999px;background:var(--a-deep);transition:width 1.4s cubic-bezier(.4,0,.2,1);}
+.dim-insight{font-size:14px;color:var(--muted);line-height:1.7;}
 
 /* ── TOOLS ── */
-.tools-section{padding:80px 60px;background:var(--surface2);border-top:1.5px solid var(--border2);}
-.tools-inner{max-width:960px;margin:0 auto;}
-.tools-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--rust);margin-bottom:12px;font-weight:600;font-family:'Montserrat',sans-serif;}
-.tools-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);font-weight:300;color:var(--ink);margin-bottom:40px;}
-.tools-title em{font-style:italic;color:var(--rust);}
-.tools-list{display:flex;flex-direction:column;gap:12px;}
-.tool-item{background:var(--surface);border:1.5px solid var(--border2);border-radius:3px;padding:26px 30px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:start;cursor:pointer;transition:all .22s ease;position:relative;overflow:hidden;}
-.tool-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--rust);transform:scaleY(0);transform-origin:bottom;transition:transform .28s ease;}
-.tool-item:hover::before,.tool-item.expanded::before{transform:scaleY(1);}
-.tool-item:hover{border-color:rgba(191,32,72,0.3);box-shadow:0 4px 20px rgba(191,32,72,0.07);}
-.tool-item.expanded{border-color:rgba(191,32,72,0.3);}
-.tool-num{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:rgba(191,32,72,0.14);line-height:1;min-width:52px;}
-.tool-name{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:4px;font-family:'Montserrat',sans-serif;}
+.tools-section{padding:100px 52px;background:linear-gradient(180deg,var(--a-bg2) 0%,var(--a-bg) 100%);}
+.tools-inner{max-width:980px;margin:0 auto;}
+.tools-tag{display:inline-flex;align-items:center;gap:12px;font:600 11px 'Montserrat',sans-serif;letter-spacing:4px;text-transform:uppercase;color:var(--a-deep);margin-bottom:22px;}
+.tools-tag::before{content:'';width:30px;height:1.5px;background:currentColor;}
+.tools-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.2vw,54px);font-weight:300;color:var(--ink);margin-bottom:40px;line-height:1.08;}
+.tools-title em{font-style:italic;color:var(--a-deep);}
+.tools-list{display:flex;flex-direction:column;gap:14px;}
+.tool-route-label{font:600 10px 'Montserrat',sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--a-deep);margin-bottom:6px;}
+.tool-item{background:#fff;border:1px solid rgba(43,14,23,.06);border-radius:26px;padding:28px 32px;display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:start;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease;box-shadow:0 20px 44px -36px var(--a-shadow);}
+.tool-item:hover{transform:translateY(-2px);box-shadow:0 26px 50px -32px var(--a-shadow);}
+.tool-item:focus-visible{outline:2px solid var(--a-deep);outline-offset:3px;}
+.tool-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--a-deep);opacity:.35;line-height:1;min-width:56px;}
+.tool-item.expanded .tool-num{opacity:1;}
+.tool-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.15;}
 .tool-subtitle{font-size:12px;color:var(--muted);letter-spacing:1px;}
-.tool-detail{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:14px;color:var(--ink2);line-height:1.8;}
+.tool-detail{display:none;margin-top:18px;padding-top:18px;border-top:1px solid rgba(43,14,23,.08);font-size:15px;color:var(--ink2);line-height:1.8;}
 .tool-detail.show{display:block;}
 .tool-steps{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:10px;}
-.tool-steps li{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted);}
-.step-dot{width:20px;height:20px;border-radius:50%;background:rgba(191,32,72,0.1);color:var(--rust);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-.tool-toggle{font-size:24px;color:var(--muted);transition:transform .28s ease,color .22s ease;flex-shrink:0;margin-top:4px;font-weight:300;line-height:1;}
-.tool-item.expanded .tool-toggle{transform:rotate(45deg);color:var(--rust);}
+.tool-steps li{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--ink2);}
+.step-dot{width:24px;height:24px;border-radius:50%;background:var(--a-bg);color:var(--a-deep);font:600 11px 'Montserrat',sans-serif;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.tool-toggle{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--a-tint);font-size:20px;color:var(--a-deep);transition:transform .28s ease;flex-shrink:0;font-weight:300;line-height:1;}
+.tool-item.expanded .tool-toggle{transform:rotate(45deg);}
 
-/* ── CTA ── */
-.cta-section{padding:80px 40px;text-align:center;border-top:1.5px solid var(--border2);background:var(--bg);}
-.cta-logo{margin-bottom:22px;}
-.cta-text{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,38px);font-style:italic;color:var(--muted);max-width:560px;margin:0 auto 36px;line-height:1.45;}
-.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+/* ── SHARE / CTA ── */
+.cta-section{padding:100px 52px 90px;text-align:center;background:var(--a-bg);}
+.r-share-card{max-width:1040px;margin:0 auto;background:#fff;border-radius:36px;padding:44px;display:grid;grid-template-columns:260px 1fr;gap:52px;align-items:center;text-align:left;box-shadow:0 40px 80px -50px var(--a-shadow);}
+.r-share-arch{width:100%;aspect-ratio:3/4;border-radius:999px 999px 24px 24px;overflow:hidden;background:var(--a-bg);transform:rotate(-3deg);box-shadow:0 0 0 8px var(--a-bg2),0 30px 60px -34px var(--a-shadow);}
+.r-share-arch img{width:100%;height:100%;object-fit:cover;display:block;}
+.r-share-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,3.8vw,48px);font-weight:300;line-height:1.08;color:var(--ink);margin-bottom:14px;}
+.r-share-title em{font-style:italic;color:var(--a-deep);}
+.r-share-text{font-size:15px;color:var(--ink2);line-height:1.75;margin-bottom:26px;max-width:520px;}
+.cta-actions{display:flex;gap:10px;flex-wrap:wrap;}
+.r-share .btn-outline{border-radius:999px;border-color:var(--a-deep);color:var(--a-deep);padding:13px 22px;font-size:11px;}
+.r-share .btn-outline:hover{background:var(--a-tint);}
+.r-share .btn-outline.solid{background:var(--a-deep);color:#fff;}
+.cta-text{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3vw,38px);font-style:italic;color:var(--ink2);max-width:640px;margin:72px auto 22px;line-height:1.4;}
+.r-restart{background:none;border:none;cursor:pointer;font:600 11px 'Montserrat',sans-serif;letter-spacing:2.5px;text-transform:uppercase;color:var(--a-deep);text-decoration:underline;text-underline-offset:6px;}
 .btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--muted);padding:14px 32px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .25s ease;}
 .btn-outline:hover{border-color:var(--rust);color:var(--rust);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:900px){
+  .r-topbar{padding:20px 24px;}
+  .r-topbar-tag{display:none;}
+  .r-hero-inner{grid-template-columns:1fr;gap:44px;padding:0 24px 96px;}
+  .r-stage{order:-1;}
+  .r-arch,.r-stage::before{width:min(76vw,360px);}
+  .r-profile{padding:80px 24px 64px;}
+  .r-profile-inner{grid-template-columns:1fr;gap:36px;}
+  .r-facts{position:static;}
+  .profile-grid{grid-template-columns:1fr;}
+  .dimensions-section,.tools-section{padding:80px 24px;}
+  .dim-card{grid-template-columns:56px 1fr;gap:16px 20px;}
+  .dim-card>:last-child{grid-column:1/-1;}
+  .tool-item{grid-template-columns:1fr auto;padding:24px;}
+  .tool-num{display:none;}
+  .cta-section{padding:80px 20px 72px;}
+  .r-share-card{grid-template-columns:1fr;padding:32px 24px;gap:32px;text-align:center;}
+  .r-share-arch{max-width:200px;margin:0 auto;}
+  .r-share-text{margin-left:auto;margin-right:auto;}
+  .cta-actions{justify-content:center;}
+}
 
 /* ── AUTH (registro y verificación) ── */
 #screen-register,#screen-verify{align-items:center;justify-content:center;padding:70px 24px 80px;text-align:center;}
@@ -201,6 +329,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 #btn-last-result.show{display:inline-block;}
 #save-note{display:none;font-size:13px;color:var(--muted);margin-top:18px;line-height:1.7;}
 #save-note.show{display:block;}
+.share-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.share-preview{display:none;}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
+}
 
 @media(max-width:860px){
   .results-content{grid-template-columns:1fr;gap:40px;}
@@ -214,6 +348,21 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 @media print{
   .quiz-header,.btn-primary,.btn-outline,.cta-section,.btn-next{display:none!important;}
 }
+
+/* ── Títulos en Raleway ── */
+.intro-title,.q-text,.auth-title,.result-type-name,.r-eres,.dim-title,.tools-title,.r-share-title,.profile-card-title,.tool-name,.r-fact-value,.loading-text{font-family:'Raleway',sans-serif;font-style:normal;}
+.intro-title{font-weight:400;font-size:clamp(34px,4.8vw,62px);line-height:1.12;letter-spacing:-.015em;}
+.q-text{font-weight:400;font-size:clamp(21px,2.8vw,30px);line-height:1.4;letter-spacing:-.005em;}
+.auth-title{font-weight:400;font-size:clamp(26px,3.4vw,34px);letter-spacing:-.01em;}
+.result-type-name{font-weight:400;font-size:clamp(52px,7.6vw,108px);line-height:.98;letter-spacing:-.03em;}
+.r-eres{font-weight:300;font-size:clamp(22px,2.4vw,30px);letter-spacing:-.01em;}
+.dim-title,.tools-title,.r-share-title{font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.15;letter-spacing:-.015em;}
+.profile-card-title{font-weight:500;font-size:20px;letter-spacing:-.005em;}
+.tool-name{font-weight:500;font-size:21px;letter-spacing:-.005em;}
+.r-fact-value{font-weight:500;font-size:19px;line-height:1.3;}
+.r-fact.highlight .r-fact-value{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:28px;}
+.loading-text{font-weight:600;font-size:22px;}
+.intro-title em,.dim-title em,.tools-title em,.r-share-title em,.auth-title em{font-style:normal;}
 </style>
 </head>
 <body>
@@ -241,7 +390,11 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div id="turnstile-wrap"></div>
         <label class="consent">
           <input type="checkbox" id="reg-consent" />
-          <span>Acepto el tratamiento de mis datos según la <a href="politica-datos.html" target="_blank" rel="noopener">política de tratamiento de datos</a>, y que Moraleja me contacte con contenidos y ofertas relacionados.</span>
+          <span>Acepto el tratamiento de mis datos para crear mi acceso, procesar y guardar mi resultado según la <a href="politica-datos.html" target="_blank" rel="noopener">política de tratamiento de datos</a>.</span>
+        </label>
+        <label class="consent">
+          <input type="checkbox" id="reg-marketing" />
+          <span>Quiero recibir contenidos, recursos y ofertas de Moraleja relacionados con comunicación consciente. Esta autorización es opcional.</span>
         </label>
         <button class="btn-primary" type="submit" id="btn-register">Enviarme el enlace →</button>
       </form>
@@ -275,24 +428,20 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <div class="moraleja-logo intro-logo">Moraleja</div>
     <div class="moraleja-tagline intro-logo-tag">Comunicación Consciente</div>
   </div>
-  <div class="intro-orb"><div class="intro-orb-inner">🌱</div></div>
-  <p class="intro-tag">Herramienta de Autodiagnóstico · Comunicación Consciente para Emprendedoras</p>
-  <h1 class="intro-title">Descubre cómo estás comunicando hoy<br><em>y qué está frenando el crecimiento de tu marca</em></h1>
-  <p class="intro-desc">Antes de comunicar hacia afuera, toda emprendedora comunica hacia adentro. Este autodiagnóstico te revela cómo tus creencias y tu diálogo interno están moldeando tu forma de mostrarte, vender y construir tu marca — para que puedas comunicar desde la consciencia, no desde el miedo. Responde con honestidad. No hay respuestas correctas.</p>
-  <div class="intro-clara">
-    <div class="clara-letter"><div class="clara-circle" style="background:#BF2048">1</div><div class="clara-word">Consciencia</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#DD793B">2</div><div class="clara-word">Lenguaje</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#EDB548">3</div><div class="clara-word">Alineación</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#E68199">4</div><div class="clara-word">Relaciones</div></div>
-    <div class="clara-letter"><div class="clara-circle" style="background:#8C3D5A">5</div><div class="clara-word">Acción</div></div>
+  <div class="intro-cast" aria-hidden="true">
+    <div class="cast-arch c0"><img src="images/characters/la-capitana.jpg" alt="" width="864" height="1152"></div>
+    <div class="cast-arch c1"><img src="images/characters/la-conectora.jpg" alt="" width="864" height="1152"></div>
+    <div class="cast-arch c2"><img src="images/characters/la-artesana.jpg" alt="" width="864" height="1152"></div>
+    <div class="cast-arch c3"><img src="images/characters/la-chispa.jpg" alt="" width="864" height="1152"></div>
+    <div class="cast-arch c4"><img src="images/characters/la-voz-valiosa.jpg" alt="" width="864" height="1152"></div>
+    <div class="cast-arch c5"><img src="images/characters/la-exploradora.jpg" alt="" width="864" height="1152"></div>
+    <div class="cast-arch c6"><img src="images/characters/la-brujula.jpg" alt="" width="864" height="1152"></div>
   </div>
-  <div class="intro-stats">
-    <div class="stat"><span class="stat-num">20</span><span class="stat-label">Preguntas</span></div>
-    <div class="stat"><span class="stat-num">5</span><span class="stat-label">Dimensiones</span></div>
-    <div class="stat"><span class="stat-num">7</span><span class="stat-label">Perfiles</span></div>
-    <div class="stat"><span class="stat-num">~8</span><span class="stat-label">Minutos</span></div>
-  </div>
-  <button class="btn-primary" onclick="startQuiz()">Comenzar diagnóstico →</button>
+  <p class="intro-cast-caption">¿Cuál de los siete personajes eres hoy?</p>
+  <p class="intro-tag">Mapa orientativo · Comunicación Consciente para Emprendedoras</p>
+  <h1 class="intro-title">Descubre cómo tu diálogo interno influye<br><em>en la forma en que comunicas y decides</em></h1>
+  <p class="intro-desc">CLARA te ayuda a reconocer cómo te hablas, cómo expresas tu valor y cómo esos patrones aparecen en las decisiones de tu emprendimiento. Responde pensando en lo que hiciste durante las últimas cuatro semanas, no en lo que te gustaría hacer. No hay respuestas correctas.</p>
+  <button class="btn-primary" onclick="startQuiz()">Descubrir mi personaje →</button>
   <div><button class="btn-outline" id="btn-last-result" onclick="showLastResult()">Ver mi último resultado →</button></div>
   <p id="auth-info">Sesión: <span id="auth-email"></span> · <a onclick="signOut()">Salir</a></p>
 </div>
@@ -300,7 +449,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <!-- QUIZ -->
 <div id="screen-quiz" class="screen">
   <div class="quiz-header">
-    <div class="quiz-logo">Moraleja</div>
+    <div class="quiz-logo"><span class="moraleja-logo">Moraleja</span><span class="moraleja-tagline">Comunicación Consciente</span></div>
     <div class="progress-wrap">
       <div class="progress-label"><span>Progreso</span><span id="progress-text">0 / 20</span></div>
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
@@ -311,8 +460,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <div class="question-card" id="question-card">
       <div class="q-dimension" id="q-dimension"></div>
       <div class="q-number" id="q-number"></div>
-      <div class="q-text" id="q-text"></div>
-      <div class="options-grid" id="options-grid"></div>
+      <h2 class="q-text" id="q-text" tabindex="-1"></h2>
+      <div class="options-grid" id="options-grid" role="group" aria-labelledby="q-text"></div>
       <div class="q-nav"><button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Siguiente →</button></div>
     </div>
   </div>
@@ -331,48 +480,87 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 <!-- RESULTS -->
 <div id="screen-results" class="screen">
-  <div class="results-hero">
-    <div class="results-content">
-      <div>
-        <p class="result-eyebrow">Tu perfil de comunicación consciente</p>
-        <h2 class="result-type-name" id="result-name"></h2>
-        <p class="result-type-subtitle" id="result-subtitle"></p>
-        <p class="result-desc" id="result-desc"></p>
+  <section class="r-hero">
+    <header class="r-topbar">
+      <span class="r-brand"><span class="moraleja-logo">Moraleja</span><span class="moraleja-tagline">Comunicación Consciente</span></span>
+      <span class="r-topbar-tag">Autodiagnóstico Moraleja · Tu resultado</span>
+    </header>
+    <div class="r-hero-inner">
+      <div class="r-copy">
+        <p class="r-eyebrow r-reveal" style="--d:.15s">Tu patrón dominante hoy</p>
+        <p class="r-eres r-reveal" style="--d:.25s">Eres</p>
+        <h2 class="result-type-name r-reveal" id="result-name" style="--d:.32s"></h2>
+        <p class="result-type-subtitle r-reveal" id="result-subtitle" style="--d:.45s"></p>
+        <p class="result-inner-voice r-reveal" id="result-inner-voice" style="--d:.6s"></p>
+        <p class="result-secondary r-reveal" id="result-secondary" style="--d:.75s"></p>
+        <div class="r-actions r-reveal" style="--d:.85s">
+          <button class="r-btn solid" type="button" onclick="openReport()">Descargar mi guía</button>
+          <button class="r-btn ghost" type="button" onclick="shareResult()">Compartir mi personaje</button>
+        </div>
       </div>
-      <div class="radar-wrap">
-        <p class="radar-title">Tu mapa de comunicación</p>
-        <canvas id="radarChart" width="300" height="300"></canvas>
+      <div class="r-stage">
+        <span class="r-dot d1" aria-hidden="true"></span>
+        <span class="r-dot d2" aria-hidden="true"></span>
+        <span class="r-dot d3" aria-hidden="true"></span>
+        <div class="r-arch">
+          <img id="result-character" src="" alt="" width="864" height="1152">
+          <span class="r-arch-tag" id="result-arch-tag" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="wave-divider"></div>
-  <div class="dimensions-section">
-    <h3 class="dim-title">Tu mapa <em>detallado</em></h3>
-    <div class="dim-grid" id="dim-grid"></div>
-  </div>
-  <div class="profile-section">
-    <div class="profile-grid" id="profile-grid"></div>
-  </div>
+    <button class="r-scroll" type="button" onclick="document.getElementById('r-profile').scrollIntoView({behavior:'smooth'})">Conoce tu perfil <span aria-hidden="true">↓</span></button>
+  </section>
+
+  <section class="r-profile" id="r-profile">
+    <div class="r-profile-inner">
+      <div class="r-story">
+        <p class="r-kicker">Así funciona tu diálogo interno</p>
+        <p class="result-desc" id="result-desc"></p>
+        <div class="profile-grid" id="profile-grid"></div>
+      </div>
+      <aside class="r-facts" id="profile-extra" aria-label="Tu ficha CLARA"></aside>
+    </div>
+    <p class="result-scope">Este patrón describe tu momento actual y puede cambiar con la práctica. CLARA es una herramienta orientativa de reflexión; no constituye una evaluación psicológica.</p>
+  </section>
+
+  <section class="r-map">
+    <div class="dimensions-section">
+      <p class="r-kicker">Tu mapa CLARA</p>
+      <h3 class="dim-title">Cinco dimensiones de cómo <em>te hablas, decides y te relacionas</em></h3>
+      <div class="dim-grid" id="dim-grid"></div>
+    </div>
+  </section>
+
   <div class="tools-section">
     <div class="tools-inner">
-      <p class="tools-tag">Plan de Desarrollo Personalizado</p>
-      <h3 class="tools-title">Herramientas <em>para ti</em></h3>
+      <p class="tools-tag">Ruta práctica personalizada</p>
+      <h3 class="tools-title">Tu siguiente paso, <em>con claridad</em></h3>
       <div class="tools-list" id="tools-list"></div>
     </div>
   </div>
-  <div class="cta-section">
-    <div class="moraleja-logo cta-logo" style="font-size:16px;">Moraleja</div>
-    <p class="cta-text">"Antes de comunicar hacia afuera, revisa lo que te dices hacia adentro."</p>
-    <div class="cta-actions">
-      <button class="btn-outline" onclick="window.print()">⬇ Guardar mi diagnóstico</button>
-      <button class="btn-primary" onclick="restartQuiz()">Volver a comenzar</button>
+
+  <section class="cta-section r-share">
+    <div class="r-share-card">
+      <div class="r-share-arch"><img id="result-share-img" src="" alt="" width="864" height="1152"></div>
+      <div class="r-share-copy">
+        <p class="r-kicker">Comparte tu personaje</p>
+        <h3 class="r-share-title">¿Y a ti, <em>qué te dice tu voz interna?</em></h3>
+        <p class="r-share-text">Descarga tu tarjeta e invita a otras emprendedoras a descubrir su personaje Moraleja.</p>
+        <div class="cta-actions">
+          <button class="btn-outline solid" type="button" onclick="downloadSocialCard('story')">Descargar mi tarjeta</button>
+          <button class="btn-outline" type="button" onclick="shareResult()">Compartir</button>
+          <button class="btn-outline" type="button" onclick="openReport()">Guardar mi guía</button>
+        </div>
+        <p id="save-note"></p>
+      </div>
     </div>
-    <p id="save-note"></p>
-  </div>
+    <p class="cta-text">“Antes de comunicar hacia afuera, revisa lo que te dices hacia adentro.”</p>
+    <button class="r-restart" type="button" onclick="restartQuiz()">Hacer el test de nuevo</button>
+  </section>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="quiz-engine.js?v=2.1.2"></script>
 <script>
 /* ═════════ CONFIGURACIÓN — completar al activar ═════════
    Mientras SUPABASE_URL no sea una URL real, el test funciona
@@ -382,9 +570,10 @@ const CONFIG={
   SUPABASE_ANON_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNjYmx1Z2ZkZmR0ZGR2bXBhcHp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3NzA2MTksImV4cCI6MjEwNzM0NjYxOX0.bEaxfyoV5gXPMwd8Ccsk4IJPYV3eMssI7ygxu1Uc_7w',
   TURNSTILE_SITE_KEY:'0x4AAAAAAFURYy4gybRwL6ci', // clave pública de Cloudflare Turnstile
   EDGE_SUBSCRIBE_URL:'https://ccblugfdfdtddvmpapzy.supabase.co/functions/v1/super-worker', // (vacío = desactivado)
-  CONSENT_VERSION:'v1-2026-09-25',
+  CONSENT_VERSION:'v2-2026-10-13',
 };
 const AUTH_ENABLED=typeof CONFIG.SUPABASE_URL==='string'&&CONFIG.SUPABASE_URL.indexOf('http')===0&&typeof window.supabase!=='undefined';
+const LOCAL_PREVIEW=(location.hostname==='localhost'||location.hostname==='127.0.0.1')&&new URLSearchParams(location.search).get('preview')==='1';
 let supaClient=null,lastSavedResult=null;
 
 const DIMS=['consciencia','lenguaje','alineacion','relaciones','accion'];
@@ -542,12 +731,12 @@ const dimInsights={
   accion:{high:'Tus creencias se traducen en acción consistente — avanzas incluso con el miedo presente.',mid:'Actúas, pero con más fricción interna de la necesaria antes de decidirte.',low:'El miedo o la duda frecuentemente detienen la acción, o te empujan a actuar de forma impulsiva.'}
 };
 
-let currentQ=0,selectedAnswer=null;
-let scores={consciencia:0,lenguaje:0,alineacion:0,relaciones:0,accion:0};
+let currentQ=0,selectedAnswer=null,quizStartedAt=null,currentResultPayload=null,radarChartInstance=null;
+let answers={},optionOrders={};
 
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0);}
-function startQuiz(){currentQ=0;selectedAnswer=null;scores={consciencia:0,lenguaje:0,alineacion:0,relaciones:0,accion:0};showScreen('quiz');renderQuestion();}
-function restartQuiz(){startQuiz();}
+function startQuiz(){currentQ=0;selectedAnswer=null;answers={};optionOrders={};quizStartedAt=Date.now();currentResultPayload=null;showScreen('quiz');renderQuestion();}
+function restartQuiz(){if(window.confirm('¿Quieres comenzar de nuevo? Tu resultado actual seguirá guardado, pero perderás cualquier respuesta sin finalizar.'))startQuiz();}
 
 /* ── AUTH: registro, enlace mágico y guardado ── */
 function authError(msg){
@@ -557,6 +746,7 @@ function authError(msg){
 function clearAuthError(){document.getElementById('register-error').classList.remove('show');}
 
 function initAuth(){
+  if(LOCAL_PREVIEW){showScreen('intro');return;} // revisión local: nunca disponible en producción
   if(!AUTH_ENABLED){showScreen('intro');return;} // MODO ABIERTO temporal
   try{
     supaClient=window.supabase.createClient(CONFIG.SUPABASE_URL,CONFIG.SUPABASE_ANON_KEY);
@@ -616,6 +806,7 @@ async function handleRegister(ev){
   const nombre=document.getElementById('reg-nombre').value.trim();
   const email=document.getElementById('reg-email').value.trim().toLowerCase();
   const consent=document.getElementById('reg-consent').checked;
+  const marketingConsent=document.getElementById('reg-marketing').checked;
   if(nombre.length<2){authError('Cuéntanos tu nombre (mínimo 2 letras).');return;}
   if(!validEmail(email)){authError('Revisa tu correo: parece incompleto.');return;}
   if(!consent){authError('Para continuar necesitas aceptar el tratamiento de datos.');return;}
@@ -624,12 +815,12 @@ async function handleRegister(ev){
   const btn=document.getElementById('btn-register');
   btn.disabled=true;btn.textContent='Enviando…';
   try{
-    const otpOptions={data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname};
+    const otpOptions={data:{nombre,consent_version:CONFIG.CONSENT_VERSION,marketing_consent:marketingConsent},emailRedirectTo:location.origin+location.pathname};
     if(turnstileEnabled())otpOptions.captchaToken=turnstileToken;
     const {error}=await supaClient.auth.signInWithOtp({email,options:otpOptions});
     if(error)throw error;
     markSend();
-    subscribeMailchimp(nombre,email); // no bloquea: si falla, el acceso igual funciona
+    if(marketingConsent)subscribeMailchimp(nombre,email); // el acceso nunca depende de marketing
     document.getElementById('verify-text').textContent='Enviamos un enlace de acceso a '+email+'. Ábrelo para entrar al diagnóstico.';
     showScreen('verify');startResendTimer();
   }catch(e){console.error('OTP register error:',e);authError('No pudimos enviar el enlace. '+(e&&e.message?e.message:'Revisa tu conexión e inténtalo de nuevo.'));}
@@ -654,11 +845,12 @@ async function resendLink(){
   errEl.classList.remove('show');
   const email=document.getElementById('reg-email').value.trim().toLowerCase();
   const nombre=document.getElementById('reg-nombre').value.trim();
+  const marketingConsent=document.getElementById('reg-marketing').checked;
   if(!validEmail(email))return;
   if(turnstileEnabled()&&!turnstileToken){errEl.textContent='Espera a que se verifique que no eres un robot.';errEl.classList.add('show');return;}
   markSend();
   try{
-    const opts={data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname};
+    const opts={data:{nombre,consent_version:CONFIG.CONSENT_VERSION,marketing_consent:marketingConsent},emailRedirectTo:location.origin+location.pathname};
     if(turnstileEnabled())opts.captchaToken=turnstileToken;
     const {error}=await supaClient.auth.signInWithOtp({email,options:opts});
     if(error)throw error;
@@ -704,10 +896,15 @@ function subscribeMailchimp(nombre,email){
 }
 
 /* ── Guardado y recuperación del perfil ── */
-async function saveResult(type,norm){
+async function saveResult(result,payload){
   const note=document.getElementById('save-note');
-  const payload={perfil:type,puntajes:norm,fecha:new Date().toISOString()};
-  try{localStorage.setItem('moraleja_last_result',JSON.stringify(payload));}catch(e){}
+  const stored={
+    perfil:result.primary,
+    puntajes:{...payload,responses:answers,displayOrder:optionOrders,durationMs:quizStartedAt?Date.now()-quizStartedAt:null},
+    fecha:new Date().toISOString()
+  };
+  try{localStorage.setItem('moraleja_last_result',JSON.stringify(stored));}catch(e){}
+  lastSavedResult=stored;
   if(AUTH_ENABLED&&supaClient){
     try{
       const {data:{user}}=await supaClient.auth.getUser();
@@ -715,7 +912,7 @@ async function saveResult(type,norm){
         await supaClient.from('resultados').insert({
           user_id:user.id,email:user.email,
           nombre:(user.user_metadata&&user.user_metadata.nombre)||'',
-          perfil:type,puntajes:norm,consent_version:CONFIG.CONSENT_VERSION
+          perfil:result.primary,puntajes:stored.puntajes,consent_version:CONFIG.CONSENT_VERSION
         });
         note.textContent='✓ Guardado en tu cuenta. Podrás consultarlo cuando quieras, desde cualquier dispositivo.';
         note.classList.add('show');return;
@@ -735,7 +932,7 @@ async function loadLastResult(){
       .select('perfil,puntajes,created_at').eq('user_id',user.id)
       .order('created_at',{ascending:false}).limit(1);
     if(error||!data||!data.length)return;
-    lastSavedResult={type:data[0].perfil,norm:data[0].puntajes};
+    lastSavedResult={perfil:data[0].perfil,puntajes:data[0].puntajes,fecha:data[0].created_at};
     const btn=document.getElementById('btn-last-result');
     btn.classList.add('show');
   }catch(e){}
@@ -746,16 +943,27 @@ function showLastResult(){
   if(!saved){
     try{saved=JSON.parse(localStorage.getItem('moraleja_last_result')||'null');}catch(e){saved=null;}
   }
-  if(!saved||!saved.type||!profiles[saved.type]){startQuiz();return;}
-  const prof=profiles[saved.type];
+  if(saved&&saved.puntajes&&saved.puntajes.instrumentVersion){
+    currentResultPayload=saved.puntajes;
+    renderResultPayload(saved.puntajes);
+    showScreen('results');
+    return;
+  }
+  const legacyType=saved&&(saved.type||saved.perfil);
+  const legacyNorm=saved&&(saved.norm||saved.puntajes);
+  if(!legacyType||!profiles[legacyType]){startQuiz();return;}
+  const prof=profiles[legacyType];
+  const legacyArchetype={volcanico:'chispa',muralla:'artesana',espejo:'conectora',modesta:'voz',autosuficiente:'capitana',exploradora:'exploradora',arquitecto:'brujula'}[legacyType];
+  applyArchetypeTheme(legacyArchetype,prof.name);
   document.getElementById('result-name').textContent=prof.name;
-  document.getElementById('result-name').style.color=prof.color;
   document.getElementById('result-subtitle').textContent=prof.subtitle;
+  document.getElementById('result-inner-voice').textContent='';
   document.getElementById('result-desc').textContent=prof.desc;
-  buildRadar(saved.norm,prof.color);
-  buildDimensions(saved.norm);
+  document.getElementById('result-secondary').textContent='Resultado de una versión anterior de CLARA';
+  document.getElementById('profile-extra').innerHTML='';
+  buildLegacyDimensions(legacyNorm);
   buildProfileCards(prof);
-  buildTools(saved.type);
+  buildTools(legacyType);
   showScreen('results');
 }
 
@@ -765,91 +973,279 @@ document.addEventListener('DOMContentLoaded',()=>{
   initAuth();
 });
 
+document.addEventListener('keydown',(event)=>{
+  if(event.key!=='Enter'||event.repeat||event.isComposing)return;
+  const quiz=document.getElementById('screen-quiz');
+  const next=document.getElementById('btn-next');
+  if(!quiz.classList.contains('active')||next.disabled)return;
+  const target=event.target;
+  if(target.matches('input, textarea, select, [contenteditable="true"]'))return;
+  event.preventDefault();
+  nextQuestion();
+});
+
 function renderQuestion(){
-  selectedAnswer=null;
-  const q=questions[currentQ],total=questions.length;
-  document.getElementById('q-dimension').textContent=q.dimLabel;
+  const q=CLARA.interactions[currentQ],total=CLARA.interactions.length;
+  selectedAnswer=q.type==='classify'||q.type==='builder'?{}:q.type==='selectTwo'||q.type==='sequence'?[]:null;
+  document.getElementById('q-dimension').textContent=q.stage;
   document.getElementById('q-number').textContent=`Pregunta ${currentQ+1} de ${total}`;
   document.getElementById('q-text').textContent=q.text;
-  document.getElementById('section-badge').textContent=`Dimensión ${q.dimNum} de 5`;
-  document.getElementById('progress-fill').style.width=(currentQ/total*100)+'%';
-  document.getElementById('progress-text').textContent=`${currentQ} / ${total}`;
+  const stageNum=q.kind==='behavior'?1:q.kind==='situation'?2:3;
+  document.getElementById('section-badge').textContent=`Etapa ${stageNum} de 3`;
+  document.getElementById('progress-fill').style.width=((currentQ+1)/total*100)+'%';
+  document.getElementById('progress-text').textContent=`${currentQ+1} / ${total}`;
   const grid=document.getElementById('options-grid');
   grid.innerHTML='';
+  if(q.prompt){
+    const help=document.createElement('p');help.className='interaction-help';help.textContent=q.prompt;grid.appendChild(help);
+  }
+  if(q.type==='scale'||q.type==='choice'){
+    const letters=['A','B','C','D','E'];
+    if(!optionOrders[q.id]){
+      optionOrders[q.id]=q.options.map((_,i)=>i);
+      if(q.type==='choice'){
+        for(let i=optionOrders[q.id].length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[optionOrders[q.id][i],optionOrders[q.id][j]]=[optionOrders[q.id][j],optionOrders[q.id][i]];}
+      }
+    }
+    optionOrders[q.id].forEach((originalIndex,displayIndex)=>{
+      const option=q.options[originalIndex];
+      const btn=document.createElement('button');
+      btn.type='button';btn.className='option-btn';btn.setAttribute('aria-pressed','false');
+      btn.innerHTML=`<span class="opt-letter">${q.type==='scale'?displayIndex+1:letters[displayIndex]}</span><span>${option.text}</span>`;
+      btn.onclick=()=>selectOption(originalIndex,btn);
+      grid.appendChild(btn);
+    });
+  }else if(q.type==='classify'){
+    const list=document.createElement('div');list.className='classify-list';
+    q.items.forEach(item=>{
+      const row=document.createElement('div');row.className='classify-item';
+      row.innerHTML=`<div class="classify-text">${item.text}</div><div class="mini-options"></div>`;
+      const opts=row.querySelector('.mini-options');
+      [['observation','Observación'],['interpretation','Interpretación']].forEach(([value,label])=>{
+        const btn=document.createElement('button');btn.type='button';btn.className='mini-option';btn.textContent=label;btn.setAttribute('aria-pressed','false');
+        btn.onclick=()=>{selectedAnswer[item.id]=value;opts.querySelectorAll('button').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});btn.classList.add('selected');btn.setAttribute('aria-pressed','true');updateNextState(Object.keys(selectedAnswer).length===q.items.length);};
+        opts.appendChild(btn);
+      });
+      list.appendChild(row);
+    });
+    grid.appendChild(list);
+  }else if(q.type==='selectTwo'){
+    const count=document.createElement('div');count.className='selection-count';count.textContent='0 de 2 seleccionadas';grid.appendChild(count);
+    q.options.forEach((option,i)=>{
+      const btn=document.createElement('button');btn.type='button';btn.className='option-btn';btn.setAttribute('aria-pressed','false');
+      btn.innerHTML=`<span class="opt-letter">${i+1}</span><span>${option.text}</span>`;
+      btn.onclick=()=>{
+        const pos=selectedAnswer.indexOf(option.id);
+        if(pos>=0)selectedAnswer.splice(pos,1);
+        else if(selectedAnswer.length<2)selectedAnswer.push(option.id);
+        btn.classList.toggle('selected',selectedAnswer.includes(option.id));btn.setAttribute('aria-pressed',String(selectedAnswer.includes(option.id)));
+        count.textContent=`${selectedAnswer.length} de 2 seleccionadas`;updateNextState(selectedAnswer.length===2);
+      };
+      grid.appendChild(btn);
+    });
+  }else if(q.type==='sequence'){
+    const slots=document.createElement('div');slots.className='sequence-slots';
+    const available=document.createElement('div');available.className='sequence-available';
+    const redraw=()=>{
+      slots.innerHTML='';
+      selectedAnswer.forEach((id,i)=>{
+        const item=q.items.find(x=>x.id===id),btn=document.createElement('button');
+        btn.type='button';btn.className='sequence-slot';btn.innerHTML=`<span class="sequence-num">${i+1}</span><span>${item.text}</span>`;
+        btn.title='Quitar este paso';btn.onclick=()=>{selectedAnswer=selectedAnswer.filter(x=>x!==id);redraw();};
+        slots.appendChild(btn);
+      });
+      available.innerHTML='';
+      q.items.filter(item=>!selectedAnswer.includes(item.id)).forEach(item=>{
+        const btn=document.createElement('button');btn.type='button';btn.className='sequence-choice';btn.textContent=item.text;
+        btn.onclick=()=>{selectedAnswer.push(item.id);redraw();};available.appendChild(btn);
+      });
+      updateNextState(selectedAnswer.length===q.items.length);
+    };
+    grid.appendChild(slots);grid.appendChild(available);redraw();
+  }else if(q.type==='builder'){
+    const list=document.createElement('div');list.className='builder-list';
+    q.groups.forEach(group=>{
+      const wrap=document.createElement('div');wrap.className='builder-group';
+      wrap.innerHTML=`<div class="builder-label">${group.label}</div><div class="mini-options"></div>`;
+      const opts=wrap.querySelector('.mini-options');
+      group.options.forEach(option=>{
+        const btn=document.createElement('button');btn.type='button';btn.className='mini-option';btn.textContent=option.text;btn.setAttribute('aria-pressed','false');
+        btn.onclick=()=>{selectedAnswer[group.id]=option.id;opts.querySelectorAll('button').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});btn.classList.add('selected');btn.setAttribute('aria-pressed','true');updateNextState(Object.keys(selectedAnswer).length===q.groups.length);};
+        opts.appendChild(btn);
+      });
+      list.appendChild(wrap);
+    });
+    grid.appendChild(list);
+  }
+  const nb=document.getElementById('btn-next');
+  nb.disabled=true;nb.classList.remove('ready');
+  nb.textContent=currentQ<total-1?'Continuar →':'Ver mi resultado →';
+  const card=document.getElementById('question-card');
+  card.style.animation='none';card.offsetHeight;card.style.animation='fadeQ .5s ease both';
+  setTimeout(()=>document.getElementById('q-text').focus({preventScroll:true}),20);
+}
+
+function updateNextState(ready){
+  const nb=document.getElementById('btn-next');nb.disabled=!ready;nb.classList.toggle('ready',ready);
+}
+
+function selectOption(idx,btn){
+  document.querySelectorAll('.option-btn').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});
+  btn.classList.add('selected');btn.setAttribute('aria-pressed','true');selectedAnswer=idx;updateNextState(true);
+}
+
+function nextQuestion(){
+  if(document.getElementById('btn-next').disabled)return;
+  const q=CLARA.interactions[currentQ];
+  answers[q.id]=JSON.parse(JSON.stringify(selectedAnswer));
+  currentQ++;
+  if(currentQ>=CLARA.interactions.length){finishQuiz();}else{renderQuestion();}
+}
+
+function finishQuiz(){buildResults();showScreen('results');}
+
+function buildResults(){
+  const result=CLARA.calculateResult(answers);
+  const payload=CLARA.buildResultPayload(result);
+  currentResultPayload=payload;
+  renderResultPayload(payload);
+  saveResult(result,payload);
+}
+
+function renderResultPayload(payload){
+  const prof={...(payload.archetype||{}),...(CLARA.archetypes[payload.primary]||{})};
+  applyArchetypeTheme(payload.primary,prof.name);
+  document.getElementById('result-name').textContent=prof.name;
+  document.getElementById('result-subtitle').textContent=prof.subtitle;
+  const innerVoiceEl=document.getElementById('result-inner-voice');
+  if(prof.innerVoice){
+    innerVoiceEl.innerHTML='<span class="result-inner-voice-label">Tu voz interna suele decir</span>';
+    innerVoiceEl.appendChild(document.createTextNode(`“${prof.innerVoice}”`));
+  }else{innerVoiceEl.textContent='';}
+  document.getElementById('result-desc').textContent=prof.desc||[prof.resource,prof.autopilot,prof.decision].filter(Boolean).join(' ');
+  const secondary=payload.secondaryArchetype||(payload.secondary?CLARA.archetypes[payload.secondary]:null);
+  const secondaryEl=document.getElementById('result-secondary');
+  secondaryEl.textContent='';
+  if(secondary){secondaryEl.append('Con influencia de ');const strong=document.createElement('strong');strong.textContent=secondary.name;secondaryEl.appendChild(strong);}
+  buildDimensions(payload.scores,payload.bands,payload.dimensionMeta);
+  buildNewProfileCards(payload,prof);
+  buildToolRoute(payload.tools);
+}
+
+function buildArchetypeVisual(type,color){
+  const variants={
+    chispa:`<path d="M58 5 70 40 106 28 78 57 108 80 70 72 60 108 48 74 12 88 40 58 9 34 48 42Z"/>`,
+    artesana:`<path d="M15 104V55C15 28 35 10 60 10s45 18 45 45v49H83V57c0-15-9-25-23-25S37 42 37 57v47Z"/><circle cx="60" cy="58" r="10"/>`,
+    conectora:`<circle cx="60" cy="60" r="18"/><circle cx="60" cy="13" r="9"/><circle cx="104" cy="58" r="9"/><circle cx="62" cy="106" r="9"/><circle cx="15" cy="62" r="9"/><path d="M60 22v20m35 16H78m-16 30V78M24 62h18"/>`,
+    voz:`<path d="M13 35h58c19 0 35 15 35 34S90 103 71 103H46L20 116l8-23C18 87 13 79 13 68Z"/><path d="M39 57h42M39 73h30"/>`,
+    capitana:`<circle cx="60" cy="60" r="45"/><circle cx="60" cy="60" r="14"/><path d="M60 5v41m0 28v41M5 60h41m28 0h41M27 27l23 23m20 20 23 23M93 27 70 50M50 70 27 93"/>`,
+    exploradora:`<path d="M12 102C28 78 37 88 49 64S69 48 78 28 95 20 108 12"/><circle cx="12" cy="102" r="8"/><circle cx="49" cy="64" r="8"/><circle cx="78" cy="28" r="8"/><path d="m97 10 12 2-3 12"/>`,
+    brujula:`<circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="34"/><path d="m60 16 12 32 32 12-32 12-12 32-12-32-32-12 32-12Z"/><circle cx="60" cy="60" r="7"/>`
+  };
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Símbolo abstracto del arquetipo" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${variants[type]||variants.exploradora}</svg>`;
+}
+
+/* Compatibilidad con resultados de CLARA 1 */
+function legacyRenderQuestion(){
+  const q=questions[currentQ],total=questions.length;
   ['A','B','C','D'].forEach((l,i)=>{
     const btn=document.createElement('button');
     btn.className='option-btn';
     btn.innerHTML=`<span class="opt-letter">${l}</span><span>${q.options[i].text}</span>`;
     btn.onclick=()=>selectOption(i,btn);
-    grid.appendChild(btn);
+    document.getElementById('options-grid').appendChild(btn);
   });
-  const nb=document.getElementById('btn-next');
-  nb.disabled=true;nb.classList.remove('ready');
-  nb.textContent=currentQ<total-1?'Siguiente →':'Ver mi diagnóstico →';
-  const card=document.getElementById('question-card');
-  card.style.animation='none';card.offsetHeight;card.style.animation='fadeQ .5s ease both';
 }
 
-function selectOption(idx,btn){
-  document.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');selectedAnswer=idx;
-  const nb=document.getElementById('btn-next');nb.disabled=false;nb.classList.add('ready');
+const ARCH_SLUGS={chispa:'la-chispa',artesana:'la-artesana',conectora:'la-conectora',voz:'la-voz-valiosa',capitana:'la-capitana',exploradora:'la-exploradora',brujula:'la-brujula'};
+const ARCH_THEMES={
+  chispa:{bg:'#F7C4BA',bg2:'#FCF1EA',deep:'#A3203F'},
+  artesana:{bg:'#F5CDB6',bg2:'#FCF2EA',deep:'#9C4524'},
+  conectora:{bg:'#F6E3A8',bg2:'#FCF7EA',deep:'#7E5A0E'},
+  voz:{bg:'#DCCDEE',bg2:'#F7F2F8',deep:'#5B3D8C'},
+  capitana:{bg:'#F5C6D2',bg2:'#FCF1F3',deep:'#A3385C'},
+  exploradora:{bg:'#CDE4D4',bg2:'#F3F7F1',deep:'#2E6A4E'},
+  brujula:{bg:'#CCDDEF',bg2:'#F3F5F9',deep:'#2C4B77'}
+};
+const characterSrc=(type)=>`images/characters/${ARCH_SLUGS[type]||'la-exploradora'}.jpg`;
+
+function applyArchetypeTheme(type,name){
+  const theme=ARCH_THEMES[type]||ARCH_THEMES.exploradora;
+  const style=document.getElementById('screen-results').style;
+  style.setProperty('--a-bg',theme.bg);
+  style.setProperty('--a-bg2',theme.bg2);
+  style.setProperty('--a-deep',theme.deep);
+  style.setProperty('--a-shadow',theme.deep+'55');
+  style.setProperty('--a-tint',theme.deep+'14');
+  const img=document.getElementById('result-character');
+  img.src=characterSrc(type);img.alt=`Personaje de ${name}`;
+  img.style.animation='none';img.offsetHeight;img.style.animation='';
+  const share=document.getElementById('result-share-img');
+  share.src=characterSrc(type);share.alt=`Tarjeta de ${name}`;
+  document.getElementById('result-arch-tag').textContent=`Personaje Moraleja`;
 }
 
-function nextQuestion(){
-  if(selectedAnswer===null)return;
-  const s=questions[currentQ].options[selectedAnswer].s;
-  for(const[d,v]of Object.entries(s))scores[d]=(scores[d]||0)+v;
-  currentQ++;
-  if(currentQ>=questions.length){finishQuiz();}else{renderQuestion();}
-}
-
-function finishQuiz(){showScreen('loading');setTimeout(()=>{buildResults();showScreen('results');},2200);}
-
-function determineProfile(){
-  const max=20,norm={};
-  for(const d of DIMS)norm[d]=Math.min(100,Math.round((scores[d]/max)*100));
-  const{consciencia:c,lenguaje:l,alineacion:al,relaciones:r,accion:ac}=norm;
-  const avg=(c+l+al+r+ac)/5;
-  if(avg>=70)return{type:'arquitecto',norm};
-  const minVal=Math.min(c,l,al,r,ac);
-  if(minVal>50)return{type:'exploradora',norm};
-  const lowest=DIMS.reduce((a,b)=>norm[a]<=norm[b]?a:b);
-  if(lowest==='consciencia')return{type:'volcanico',norm};
-  if(lowest==='lenguaje')return{type:'modesta',norm};
-  if(lowest==='alineacion')return{type:'espejo',norm};
-  if(lowest==='relaciones')return{type:'autosuficiente',norm};
-  return{type:'muralla',norm};
-}
-
-function buildResults(){
-  const{type,norm}=determineProfile();
-  const prof=profiles[type];
-  document.getElementById('result-name').textContent=prof.name;
-  document.getElementById('result-name').style.color=prof.color;
-  document.getElementById('result-subtitle').textContent=prof.subtitle;
-  document.getElementById('result-desc').textContent=prof.desc;
-  buildRadar(norm,prof.color);
-  buildDimensions(norm);
-  buildProfileCards(prof);
-  buildTools(type);
-  saveResult(type,norm);
-}
-
-function buildRadar(norm,color){
-  const ctx=document.getElementById('radarChart').getContext('2d');
-  new Chart(ctx,{type:'radar',data:{labels:DIM_LABELS,datasets:[{data:DIMS.map(d=>norm[d]),backgroundColor:color+'28',borderColor:color,borderWidth:2,pointBackgroundColor:color,pointRadius:4}]},options:{responsive:false,scales:{r:{min:0,max:100,ticks:{display:false,stepSize:25},grid:{color:'rgba(43,14,23,0.08)'},angleLines:{color:'rgba(43,14,23,0.08)'},pointLabels:{color:'rgba(43,14,23,0.5)',font:{family:'Montserrat',size:11,weight:'500'}}}},plugins:{legend:{display:false}}}});
-}
-
-function buildDimensions(norm){
+function buildDimensions(norm,bands,dimensionMeta){
   const grid=document.getElementById('dim-grid');grid.innerHTML='';
+  const letters=['C','L','A','R','A'];
+  CLARA.DIMS.forEach((dim,i)=>{
+    const meta=(dimensionMeta&&dimensionMeta[dim])||CLARA.dimensions[dim],band=(bands&&bands[dim])||CLARA.bandFor(norm[dim]);
+    grid.appendChild(dimensionRow(letters[i],meta.label,band.label,norm[dim],meta.short,i));
+  });
+  setTimeout(()=>{document.querySelectorAll('.dim-bar-fill').forEach(b=>b.style.width=b.dataset.w+'%');},200);
+}
+
+function dimensionRow(letter,label,band,value,insight,i){
+  const card=document.createElement('div');card.className='dim-card';card.style.animationDelay=(i*.08)+'s';
+  card.innerHTML=`<div class="dim-letter" aria-hidden="true">${letter}</div><div><div class="dim-name">${label}</div><div class="dim-band">${band}</div></div><div><div class="dim-bar-bg"><div class="dim-bar-fill" style="width:0%" data-w="${value}"></div></div><div class="dim-insight">${insight}</div></div>`;
+  return card;
+}
+
+function buildLegacyDimensions(norm){
+  const grid=document.getElementById('dim-grid');grid.innerHTML='';
+  const letters=['C','L','A','R','A'];
   DIMS.forEach((dim,i)=>{
     const v=norm[dim],lvl=v>=70?'high':v>=45?'mid':'low';
-    const card=document.createElement('div');card.className='dim-card';card.style.animationDelay=(i*.1)+'s';
-    card.innerHTML=`<div class="dim-card-header"><div class="dim-name">${DIM_LABELS[i]}</div><div class="dim-score-label" style="color:${DIM_COLORS[i]}">${v}</div></div><div class="dim-bar-bg"><div class="dim-bar-fill" style="width:0%;background:${DIM_COLORS[i]}" data-w="${v}"></div></div><div class="dim-insight">${dimInsights[dim][lvl]}</div>`;
-    grid.appendChild(card);
+    grid.appendChild(dimensionRow(letters[i],DIM_LABELS[i],CLARA.bandFor(v).label,v,dimInsights[dim][lvl],i));
   });
   setTimeout(()=>{document.querySelectorAll('.dim-bar-fill').forEach(b=>b.style.width=b.dataset.w+'%');},300);
+}
+
+function buildNewProfileCards(payload,prof){
+  const list=(items)=>(items||[]).filter(Boolean).map(s=>`<li>${s}</li>`).join('');
+  const moreVoices=(prof.innerVoiceMore||[]).filter(Boolean).map(v=>`“${v}”`);
+  const showsUp=prof.showsUp&&prof.showsUp.length?prof.showsUp:[prof.autopilot,prof.decision];
+  const strengths=prof.strengths&&prof.strengths.length?prof.strengths:[prof.resource];
+  const cards=[];
+  if(moreVoices.length)cards.push(`<div class="profile-card wide tinted"><div class="profile-card-tag">En tu cabeza</div><div class="profile-card-title">También puedes escucharte decir</div><ul class="voices">${list(moreVoices)}</ul></div>`);
+  cards.push(`<div class="profile-card"><div class="profile-card-tag">Hacia afuera</div><div class="profile-card-title">Cómo se nota al comunicar</div><ul>${list(showsUp)}</ul></div>`);
+  cards.push(`<div class="profile-card"><div class="profile-card-tag">Tu recurso</div><div class="profile-card-title">Lo que ya haces bien</div><ul>${list(strengths)}</ul></div>`);
+  if(prof.growth&&prof.growth.length)cards.push(`<div class="profile-card wide"><div class="profile-card-tag">Tu evolución</div><div class="profile-card-title">Prácticas para cambiar la conversación</div><ul>${list(prof.growth)}</ul></div>`);
+  document.getElementById('profile-grid').innerHTML=cards.join('');
+  const ally=prof.ally?CLARA.archetypes[prof.ally]:null;
+  const facts=[];
+  if(prof.newPhrase)facts.push(`<div class="r-fact highlight"><div class="r-fact-label">Tu frase nueva</div><div class="r-fact-value">“${prof.newPhrase}”</div></div>`);
+  if(ally)facts.push(`<div class="r-fact"><div class="r-fact-label">Tu aliada</div><div class="r-ally"><img src="${characterSrc(prof.ally)}" alt="" width="64" height="86"><div><div class="r-fact-value">${ally.name}</div>${prof.allyWhy?`<div class="r-fact-note">${prof.allyWhy}</div>`:''}</div></div></div>`);
+  if(payload.tools&&payload.tools.now)facts.push(`<div class="r-fact"><div class="r-fact-label">Tu práctica de hoy</div><div class="r-fact-value">${payload.tools.now.name}</div><div class="r-fact-note">${payload.tools.now.duration} · la encuentras en tu ruta práctica.</div></div>`);
+  document.getElementById('profile-extra').innerHTML=facts.join('');
+}
+
+function buildToolRoute(tools){
+  const list=document.getElementById('tools-list');list.innerHTML='';
+  const route=[
+    {label:'Hazlo ahora',name:tools.now.name,subtitle:`${tools.now.duration} · práctica inmediata`,detail:tools.now.intro,steps:tools.now.steps},
+    {label:'Practica durante 7 días',name:tools.challenge.name,subtitle:'Reto breve · constancia',detail:tools.challenge.intro,steps:tools.challenge.steps},
+    {label:'Para tu próxima conversación',name:'Tu guion CLARA',subtitle:'Lenguaje listo para adaptar',detail:tools.script,steps:[]}
+  ];
+  route.forEach((tool,i)=>{
+    const item=document.createElement('div');item.className='tool-item';item.onclick=()=>toggleTool(item);
+    item.setAttribute('role','button');item.setAttribute('tabindex','0');item.setAttribute('aria-expanded',String(i===0));
+    item.onkeydown=(ev)=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();toggleTool(item);}};
+    const steps=tool.steps.length?`<ol class="tool-steps">${tool.steps.map((s,n)=>`<li><span class="step-dot">${n+1}</span><span>${s}</span></li>`).join('')}</ol>`:'';
+    item.innerHTML=`<div class="tool-num">0${i+1}</div><div class="tool-main"><div class="tool-route-label">${tool.label}</div><div class="tool-name">${tool.name}</div><div class="tool-subtitle">${tool.subtitle}</div><div class="tool-detail${i===0?' show':''}"><p>${tool.detail}</p>${steps}</div></div><div class="tool-toggle">${i===0?'×':'+'}</div>`;
+    if(i===0)item.classList.add('expanded');
+    list.appendChild(item);
+  });
 }
 
 function buildProfileCards(prof){
@@ -871,8 +1267,151 @@ function buildTools(type){
 
 function toggleTool(item){
   const detail=item.querySelector('.tool-detail'),wasExp=item.classList.contains('expanded');
-  document.querySelectorAll('.tool-item').forEach(i=>{i.classList.remove('expanded');i.querySelector('.tool-detail').classList.remove('show');});
-  if(!wasExp){item.classList.add('expanded');detail.classList.add('show');}
+  document.querySelectorAll('.tool-item').forEach(i=>{i.classList.remove('expanded');i.setAttribute('aria-expanded','false');i.querySelector('.tool-detail').classList.remove('show');const t=i.querySelector('.tool-toggle');if(t)t.textContent='+';});
+  if(!wasExp){item.classList.add('expanded');item.setAttribute('aria-expanded','true');detail.classList.add('show');item.querySelector('.tool-toggle').textContent='×';}
+}
+
+function resultShareUrl(type){
+  const slugs={chispa:'la-chispa',artesana:'la-artesana',conectora:'la-conectora',voz:'la-voz-valiosa',capitana:'la-capitana',exploradora:'la-exploradora',brujula:'la-brujula'};
+  return `${location.origin}/resultados/${slugs[type]||'la-exploradora'}.html`;
+}
+
+function openReport(){
+  if(!currentResultPayload){alert('Primero completa el mapa para generar tu guía.');return;}
+  window.open('reporte-clara.html','_blank','noopener');
+}
+
+function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight,maxLines){
+  const words=String(text||'').split(/\s+/);let line='',lines=[];
+  words.forEach(word=>{const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word;}else line=test;});
+  if(line)lines.push(line);
+  lines.slice(0,maxLines||lines.length).forEach((value,index)=>ctx.fillText(value,x,y+index*lineHeight));
+  return y+Math.min(lines.length,maxLines||lines.length)*lineHeight;
+}
+
+function archPath(ctx,x,y,w,h,br){
+  const r=w/2;
+  ctx.beginPath();
+  ctx.moveTo(x,y+r);
+  ctx.arc(x+r,y+r,r,Math.PI,0);
+  ctx.lineTo(x+w,y+h-br);
+  ctx.arcTo(x+w,y+h,x+w-br,y+h,br);
+  ctx.lineTo(x+br,y+h);
+  ctx.arcTo(x,y+h,x,y+h-br,br);
+  ctx.closePath();
+}
+
+function roundRectPath(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+
+function canvasLines(ctx,text,maxWidth){
+  const words=String(text||'').split(/\s+/);let line='';const lines=[];
+  words.forEach(word=>{const test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word;}else line=test;});
+  if(line)lines.push(line);
+  return lines;
+}
+
+function loadImage(src){
+  return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=src;});
+}
+
+async function createSocialCardBlob(){
+  if(!currentResultPayload)throw new Error('No hay un resultado disponible');
+  const type=currentResultPayload.primary;
+  const prof={...(currentResultPayload.archetype||{}),...(CLARA.archetypes[type]||{})};
+  const secondary=currentResultPayload.secondaryArchetype||(currentResultPayload.secondary?CLARA.archetypes[currentResultPayload.secondary]:null);
+  const theme=ARCH_THEMES[type]||ARCH_THEMES.exploradora;
+  if(document.fonts){
+    await Promise.all(['300 48px Raleway','400 120px Raleway','italic 400 52px "Cormorant Garamond"','600 24px Montserrat'].map(f=>document.fonts.load(f).catch(()=>null)));
+  }
+  const character=await loadImage(characterSrc(type));
+  const W=1080,H=1920,canvas=document.createElement('canvas');
+  canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d');
+
+  const bg=ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,theme.bg);bg.addColorStop(.62,theme.bg2);bg.addColorStop(1,theme.bg);
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  const glow=ctx.createRadialGradient(W/2,760,60,W/2,760,820);
+  glow.addColorStop(0,'rgba(255,255,255,.7)');glow.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+
+  ctx.fillStyle=theme.deep;
+  [[110,330,10,.18],[960,420,7,.2],[90,980,16,.1],[985,1120,12,.14],[180,1290,6,.2],[930,250,5,.25]].forEach(([x,y,r,o])=>{ctx.globalAlpha=o;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();});
+  ctx.globalAlpha=1;
+
+  ctx.textAlign='center';ctx.textBaseline='alphabetic';
+  ctx.fillStyle='#2B0E17';ctx.font='600 34px Montserrat, sans-serif';ctx.letterSpacing='0px';
+  ctx.fillText('Moraleja',W/2,118);
+  ctx.fillStyle=theme.deep;ctx.font='italic 400 26px "Cormorant Garamond", serif';ctx.letterSpacing='3px';
+  ctx.fillText('COMUNICACIÓN CONSCIENTE',W/2,156);
+
+  const aw=850,ah=Math.round(aw*4/3),ax=(W-aw)/2,ay=204,abr=52;
+  ctx.save();ctx.globalAlpha=.28;ctx.strokeStyle=theme.deep;ctx.lineWidth=3;
+  archPath(ctx,ax+34,ay-34,aw,ah,abr);ctx.stroke();ctx.restore();
+  ctx.save();ctx.shadowColor=theme.deep+'66';ctx.shadowBlur=90;ctx.shadowOffsetY=50;
+  ctx.fillStyle='rgba(255,255,255,.75)';archPath(ctx,ax-16,ay-16,aw+32,ah+32,abr+16);ctx.fill();ctx.restore();
+  ctx.save();archPath(ctx,ax,ay,aw,ah,abr);ctx.clip();
+  const scale=1.04,iw=aw*scale,ih=ah*scale;
+  ctx.drawImage(character,ax-(iw-aw)/2,ay-(ih-ah)/2+8,iw,ih);
+  ctx.restore();
+
+  ctx.font='600 22px Montserrat, sans-serif';ctx.letterSpacing='5px';
+  const tag='MI PERSONAJE MORALEJA',tw=ctx.measureText(tag).width+64,ty=ay+ah-26;
+  ctx.fillStyle='rgba(255,255,255,.92)';roundRectPath(ctx,(W-tw)/2,ty-30,tw,60,30);ctx.fill();
+  ctx.fillStyle=theme.deep;ctx.fillText(tag,W/2+2.5,ty+8);
+
+  let y=ay+ah+86;
+  ctx.letterSpacing='0px';ctx.fillStyle='#5C2A38';ctx.font='300 42px Raleway, sans-serif';
+  ctx.fillText('Soy',W/2,y);
+  y+=106;
+  let size=124;ctx.font=`400 ${size}px Raleway, sans-serif`;ctx.letterSpacing='-3px';
+  while(ctx.measureText(prof.name).width>W-120&&size>70){size-=4;ctx.font=`400 ${size}px Raleway, sans-serif`;}
+  ctx.fillStyle=theme.deep;ctx.fillText(prof.name,W/2,y);
+  ctx.letterSpacing='0px';
+
+  if(prof.innerVoice){
+    ctx.font='italic 400 52px "Cormorant Garamond", serif';
+    const lines=canvasLines(ctx,`“${prof.innerVoice}”`,800).slice(0,3);
+    const cardW=900,cardH=104+lines.length*62,cardX=(W-cardW)/2,cardY=y+60;
+    ctx.save();ctx.shadowColor=theme.deep+'33';ctx.shadowBlur=50;ctx.shadowOffsetY=24;
+    ctx.fillStyle='rgba(255,255,255,.82)';roundRectPath(ctx,cardX,cardY,cardW,cardH,44);ctx.fill();ctx.restore();
+    ctx.fillStyle='rgba(255,255,255,.82)';
+    ctx.beginPath();ctx.arc(cardX+110,cardY-26,18,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.arc(cardX+80,cardY-58,10,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle=theme.deep;ctx.font='600 21px Montserrat, sans-serif';ctx.letterSpacing='5px';
+    ctx.fillText('MI VOZ INTERNA DICE',W/2+2.5,cardY+56);
+    ctx.letterSpacing='0px';ctx.fillStyle='#2B0E17';ctx.font='italic 400 52px "Cormorant Garamond", serif';
+    lines.forEach((line,i)=>ctx.fillText(line,W/2,cardY+124+i*62));
+  }
+
+  ctx.fillStyle=theme.deep;ctx.font='600 23px Montserrat, sans-serif';ctx.letterSpacing='4px';
+  ctx.fillText('¿Y TÚ? DESCUBRE TU PERSONAJE EN MORALEJA.CO',W/2,H-58);
+  return new Promise(resolve=>canvas.toBlob(resolve,'image/png',.95));
+}
+
+async function downloadSocialCard(format){
+  try{
+    const blob=await createSocialCardBlob(format),a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download=`moraleja-${currentResultPayload.primary}-${format}.png`;a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  }catch(e){alert('Primero completa el mapa para generar tu tarjeta.');}
+}
+
+async function shareResult(){
+  if(!currentResultPayload)return;
+  const prof=currentResultPayload.archetype||CLARA.archetypes[currentResultPayload.primary];
+  const secondary=currentResultPayload.secondaryArchetype||(currentResultPayload.secondary?CLARA.archetypes[currentResultPayload.secondary]:null);
+  const text=`Mi patrón dominante hoy es ${prof.name}${secondary?`, con influencia de ${secondary.name}`:''}. ${prof.subtitle}`;
+  const url=resultShareUrl(currentResultPayload.primary);
+  try{
+    const blob=await createSocialCardBlob('story'),file=new File([blob],`moraleja-${currentResultPayload.primary}.png`,{type:'image/png'});
+    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Mi personaje Moraleja',text,url,files:[file]});return;}
+    if(navigator.share){await navigator.share({title:'Mi personaje Moraleja',text,url});return;}
+    await navigator.clipboard.writeText(`${text} ${url}`);alert('Enlace y mensaje copiados.');
+  }catch(e){if(e&&e.name!=='AbortError'){try{await navigator.clipboard.writeText(`${text} ${url}`);alert('Enlace y mensaje copiados.');}catch(_){}}}
 }
 </script>
 </body>

@@ -6,3 +6,6 @@ Desktop.ini
 node_modules/
 dist/
 build/
+
+# Entorno local para generate-social-assets.py
+tools/.venv/

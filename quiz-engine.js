@@ -415,7 +415,7 @@
       growth: [
         "Haz una revisión semanal de diez minutos: ¿qué decidí desde la claridad y qué desde el miedo?",
         "Anota tus avances para no medirte solo por lo que falta.",
-        "Elige una dimensión CLARA y practícala durante 30 días.",
+        "Elige una dimensión de tu mapa y practícala durante 30 días.",
       ],
       newPhrase: "Volver al camino también es avanzar.",
       ally: "artesana",
@@ -488,7 +488,7 @@
     },
     alineacion: {
       now: {
-        name: "Filtro de decisión CLARA",
+        name: "Filtro de decisión Moraleja",
         duration: "5 minutos",
         intro: "Revisa una oportunidad pendiente antes de responder desde la urgencia.",
         steps: ["Nombra el objetivo que esta oportunidad apoyaría.", "Revisa un valor y un límite no negociable.", "Confirma capacidad real de tiempo y energía.", "Formula las condiciones necesarias para decir que sí."],

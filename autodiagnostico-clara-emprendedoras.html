@@ -390,11 +390,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div id="turnstile-wrap"></div>
         <label class="consent">
           <input type="checkbox" id="reg-consent" />
-          <span>Acepto el tratamiento de mis datos para crear mi acceso, procesar y guardar mi resultado según la <a href="politica-datos.html" target="_blank" rel="noopener">política de tratamiento de datos</a>.</span>
-        </label>
-        <label class="consent">
-          <input type="checkbox" id="reg-marketing" />
-          <span>Quiero recibir contenidos, recursos y ofertas de Moraleja relacionados con comunicación consciente. Esta autorización es opcional.</span>
+          <span>Acepto el tratamiento de mis datos según la <a href="politica-datos.html" target="_blank" rel="noopener">política de tratamiento de datos</a>, y que Moraleja me contacte con contenidos y ofertas relacionados.</span>
         </label>
         <button class="btn-primary" type="submit" id="btn-register">Enviarme el enlace →</button>
       </form>
@@ -570,7 +566,7 @@ const CONFIG={
   SUPABASE_ANON_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNjYmx1Z2ZkZmR0ZGR2bXBhcHp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE3NzA2MTksImV4cCI6MjEwNzM0NjYxOX0.bEaxfyoV5gXPMwd8Ccsk4IJPYV3eMssI7ygxu1Uc_7w',
   TURNSTILE_SITE_KEY:'0x4AAAAAAFURYy4gybRwL6ci', // clave pública de Cloudflare Turnstile
   EDGE_SUBSCRIBE_URL:'https://ccblugfdfdtddvmpapzy.supabase.co/functions/v1/super-worker', // (vacío = desactivado)
-  CONSENT_VERSION:'v2-2026-10-13',
+  CONSENT_VERSION:'v1-2026-09-25',
 };
 const AUTH_ENABLED=typeof CONFIG.SUPABASE_URL==='string'&&CONFIG.SUPABASE_URL.indexOf('http')===0&&typeof window.supabase!=='undefined';
 const LOCAL_PREVIEW=(location.hostname==='localhost'||location.hostname==='127.0.0.1')&&new URLSearchParams(location.search).get('preview')==='1';
@@ -806,7 +802,6 @@ async function handleRegister(ev){
   const nombre=document.getElementById('reg-nombre').value.trim();
   const email=document.getElementById('reg-email').value.trim().toLowerCase();
   const consent=document.getElementById('reg-consent').checked;
-  const marketingConsent=document.getElementById('reg-marketing').checked;
   if(nombre.length<2){authError('Cuéntanos tu nombre (mínimo 2 letras).');return;}
   if(!validEmail(email)){authError('Revisa tu correo: parece incompleto.');return;}
   if(!consent){authError('Para continuar necesitas aceptar el tratamiento de datos.');return;}
@@ -815,12 +810,12 @@ async function handleRegister(ev){
   const btn=document.getElementById('btn-register');
   btn.disabled=true;btn.textContent='Enviando…';
   try{
-    const otpOptions={data:{nombre,consent_version:CONFIG.CONSENT_VERSION,marketing_consent:marketingConsent},emailRedirectTo:location.origin+location.pathname};
+    const otpOptions={data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname};
     if(turnstileEnabled())otpOptions.captchaToken=turnstileToken;
     const {error}=await supaClient.auth.signInWithOtp({email,options:otpOptions});
     if(error)throw error;
     markSend();
-    if(marketingConsent)subscribeMailchimp(nombre,email); // el acceso nunca depende de marketing
+    subscribeMailchimp(nombre,email); // no bloquea: si falla, el acceso igual funciona
     document.getElementById('verify-text').textContent='Enviamos un enlace de acceso a '+email+'. Ábrelo para entrar al diagnóstico.';
     showScreen('verify');startResendTimer();
   }catch(e){console.error('OTP register error:',e);authError('No pudimos enviar el enlace. '+(e&&e.message?e.message:'Revisa tu conexión e inténtalo de nuevo.'));}
@@ -845,12 +840,11 @@ async function resendLink(){
   errEl.classList.remove('show');
   const email=document.getElementById('reg-email').value.trim().toLowerCase();
   const nombre=document.getElementById('reg-nombre').value.trim();
-  const marketingConsent=document.getElementById('reg-marketing').checked;
   if(!validEmail(email))return;
   if(turnstileEnabled()&&!turnstileToken){errEl.textContent='Espera a que se verifique que no eres un robot.';errEl.classList.add('show');return;}
   markSend();
   try{
-    const opts={data:{nombre,consent_version:CONFIG.CONSENT_VERSION,marketing_consent:marketingConsent},emailRedirectTo:location.origin+location.pathname};
+    const opts={data:{nombre,consent_version:CONFIG.CONSENT_VERSION},emailRedirectTo:location.origin+location.pathname};
     if(turnstileEnabled())opts.captchaToken=turnstileToken;
     const {error}=await supaClient.auth.signInWithOtp({email,options:opts});
     if(error)throw error;

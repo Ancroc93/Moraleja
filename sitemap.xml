@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.moraleja.co/</loc></url>
-  <url><loc>https://www.moraleja.co/servicios</loc></url>
-  <url><loc>https://www.moraleja.co/metodologia</loc></url>
-  <url><loc>https://www.moraleja.co/sobre-mi</loc></url>
-  <url><loc>https://www.moraleja.co/recursos</loc></url>
-  <url><loc>https://www.moraleja.co/contacto</loc></url>
-  <url><loc>https://www.moraleja.co/autodiagnostico-clara-emprendedoras.html</loc></url>
-  <url><loc>https://www.moraleja.co/resultados/la-chispa.html</loc></url>
-  <url><loc>https://www.moraleja.co/resultados/la-artesana.html</loc></url>
-  <url><loc>https://www.moraleja.co/resultados/la-conectora.html</loc></url>
-  <url><loc>https://www.moraleja.co/resultados/la-voz-valiosa.html</loc></url>
-  <url><loc>https://www.moraleja.co/resultados/la-capitana.html</loc></url>
-  <url><loc>https://www.moraleja.co/resultados/la-exploradora.html</loc></url>
-  <url><loc>https://www.moraleja.co/resultados/la-brujula.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/autodiagnostico-clara-emprendedoras.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/resultados/la-chispa.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/resultados/la-artesana.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/resultados/la-conectora.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/resultados/la-voz-valiosa.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/resultados/la-capitana.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/resultados/la-exploradora.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/resultados/la-brujula.html</loc></url>
+  <url><loc>https://ancroc93.github.io/Moraleja/politica-datos.html</loc></url>
 </urlset>

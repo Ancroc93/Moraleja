@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.moraleja.co/sitemap.xml
+Sitemap: https://ancroc93.github.io/Moraleja/sitemap.xml

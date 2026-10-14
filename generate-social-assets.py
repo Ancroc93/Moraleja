@@ -271,7 +271,7 @@ def page_html(key, arch, archetypes, themes, slugs):
 <main>
   <section class="hero">
     <header class="top">
-      <a class="brand" href="../index.html" aria-label="Moraleja, Comunicación Consciente"><span class="brand-name">Moraleja</span><span class="brand-tag">Comunicación Consciente</span></a>
+      <a class="brand" href="../autodiagnostico-clara-emprendedoras.html" aria-label="Moraleja, Comunicación Consciente"><span class="brand-name">Moraleja</span><span class="brand-tag">Comunicación Consciente</span></a>
       <a class="top-tag" href="../autodiagnostico-clara-emprendedoras.html">Autodiagnóstico Moraleja</a>
     </header>
     <div class="inner">
@@ -304,7 +304,7 @@ def page_html(key, arch, archetypes, themes, slugs):
       </ul>
       <footer class="foot">
         <span>Cada personaje describe un momento actual y puede cambiar con la práctica.</span>
-        <span><a href="../index.html">Moraleja</a> · Comunicación Consciente · <a href="../politica-datos.html">Tratamiento de datos</a></span>
+        <span>Moraleja · Comunicación Consciente · <a href="../politica-datos.html">Tratamiento de datos</a></span>
       </footer>
     </div>
   </section>
@@ -378,7 +378,7 @@ body{{background:radial-gradient(90% 90% at 78% 0%,rgba(255,255,255,.6) 0%,trans
     <div class="name" data-fit="610">{esc(arch['name'])}</div>
     <div class="voice"><small>Mi voz interna dice</small><q>{esc(arch['innerVoice'])}</q></div>
   </div>
-  <div class="foot"><div class="wordmark"><b>Moraleja</b><i>Comunicación Consciente</i></div><span class="sep"></span><span class="site">moraleja.co</span></div>
+  <div class="foot"><div class="wordmark"><b>Moraleja</b><i>Comunicación Consciente</i></div><span class="sep"></span><span class="site">Descubre tu personaje</span></div>
 </div>
 <span class="dot" style="width:14px;height:14px;right:520px;top:96px;opacity:.16"></span>
 <span class="dot" style="width:9px;height:9px;right:56px;top:300px;opacity:.18"></span>
@@ -429,7 +429,7 @@ p{{margin-top:10px;font:italic 500 38px/1.1 'Cormorant Garamond',serif;color:#A3
 .fan img{{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transform-origin:50% 40%}}
 </style></head><body>
 {blobs}
-<div class="top"><div class="wordmark"><b>Moraleja</b><i>Comunicación Consciente</i></div><span class="site">moraleja.co</span></div>
+<div class="top"><div class="wordmark"><b>Moraleja</b><i>Comunicación Consciente</i></div><span class="site">Autodiagnóstico gratuito</span></div>
 <div class="head"><div class="label">Autodiagnóstico Moraleja</div><h1>¿Qué te dice tu voz interna?</h1><p>Descubre tu personaje Moraleja</p></div>
 {''.join(arches)}
 {FIT_SCRIPT}</body></html>"""

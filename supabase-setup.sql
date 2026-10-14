@@ -8,7 +8,7 @@
 --
 -- Requisito previo: en Authentication → Sign In / Up, activar "Email" provider
 -- (Magic Link / OTP por email) y registrar como Redirect URL la URL pública del test,
--- ej. https://www.moraleja.co/autodiagnostico-clara-emprendedoras.html
+-- ej. https://ancroc93.github.io/Moraleja/autodiagnostico-clara-emprendedoras.html
 
 create table if not exists public.resultados (
   id uuid primary key default gen_random_uuid(),

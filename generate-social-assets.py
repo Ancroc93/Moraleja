@@ -118,7 +118,7 @@ a{color:inherit}
 .top{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 52px;position:relative;z-index:2}
 .brand{display:flex;flex-direction:column;gap:3px;text-decoration:none;line-height:1.1;white-space:nowrap}
 .brand-name{font:600 17px 'Montserrat',sans-serif;letter-spacing:-.5px;color:var(--ink)}
-.brand-tag{font:italic 400 12px 'Cormorant Garamond',serif;letter-spacing:1.5px;color:var(--deep)}
+.brand-tag{font:500 10.5px 'Raleway',sans-serif;letter-spacing:.2px;color:var(--deep)}
 .top-tag{font:600 10px 'Montserrat',sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--deep);opacity:.75;text-decoration:none}
 .top-tag:hover{opacity:1}
 .inner{flex:1;max-width:1180px;width:100%;margin:0 auto;padding:4px 52px 64px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px;align-items:center;position:relative;z-index:1}
@@ -327,7 +327,7 @@ html,body{{width:{OG_W}px;height:{OG_H}px;overflow:hidden}}
 body{{position:relative;font-family:'Raleway',sans-serif;color:{INK};-webkit-font-smoothing:antialiased}}
 .wordmark{{display:flex;flex-direction:column;gap:2px;line-height:1.05}}
 .wordmark b{{font:600 27px 'Montserrat',sans-serif;letter-spacing:-.6px;color:{INK}}}
-.wordmark i{{font:italic 500 20px 'Cormorant Garamond',serif;letter-spacing:.3px}}
+.wordmark i{{font:normal 500 15px 'Raleway',sans-serif;letter-spacing:.2px}}
 .site{{font:600 15px 'Montserrat',sans-serif;letter-spacing:2.5px;text-transform:uppercase}}
 """
 

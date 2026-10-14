@@ -41,13 +41,13 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 /* ── LOGO (text-based Moraleja wordmark) ── */
 .moraleja-logo{font-family:'Montserrat',sans-serif;font-weight:600;letter-spacing:-0.5px;color:var(--ink);}
-.moraleja-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--rust);}
+.moraleja-tagline{font-family:'Raleway',sans-serif;font-style:normal;font-weight:500;letter-spacing:.2px;text-transform:none;color:var(--rust);}
 
 /* ── INTRO ── */
 #screen-intro{align-items:center;justify-content:center;padding:70px 24px 80px;text-align:center;}
 .intro-logo-wrap{margin-bottom:38px;}
 .intro-logo{font-size:22px;margin-bottom:6px;}
-.intro-logo-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;}
+.intro-logo-tag{font-size:10.5px;}
 .intro-orb{width:110px;height:110px;border-radius:50%;background:conic-gradient(from 0deg,#BF2048,#EDB548,#E68199,#DD793B,#BF2048);margin:0 auto 44px;animation:spin 14s linear infinite;position:relative;}
 .intro-orb::after{content:'';position:absolute;inset:5px;border-radius:50%;background:var(--bg);}
 .intro-orb-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:34px;z-index:2;}
@@ -91,7 +91,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .quiz-header{position:sticky;top:0;z-index:100;background:rgba(250,233,235,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border2);padding:18px 44px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
 .quiz-logo,.r-brand{display:flex;flex-direction:column;gap:2px;white-space:nowrap;line-height:1.1;}
 .quiz-logo .moraleja-logo,.r-brand .moraleja-logo{font-size:17px;font-style:normal;}
-.quiz-logo .moraleja-tagline,.r-brand .moraleja-tagline{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;font-weight:400;}
+.quiz-logo .moraleja-tagline,.r-brand .moraleja-tagline{font-size:8.5px;}
 .progress-wrap{flex:1;max-width:420px;}
 .progress-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
 .progress-bar{height:2px;background:var(--muted2);border-radius:4px;overflow:hidden;}
@@ -436,7 +436,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <div class="cast-arch c6"><img src="images/characters/la-brujula.jpg" alt="" width="864" height="1152"></div>
   </div>
   <p class="intro-cast-caption">¿Cuál de los siete personajes eres hoy?</p>
-  <p class="intro-tag">Mapa orientativo · Comunicación Consciente para Emprendedoras</p>
+  <p class="intro-tag">Autodiagnóstico comunicacional · Comunicación Consciente para Emprendedoras</p>
   <h1 class="intro-title">Descubre cómo tu diálogo interno influye<br><em>en la forma en que comunicas y decides</em></h1>
   <p class="intro-desc">Este autodiagnóstico te ayuda a reconocer cómo te hablas, cómo expresas tu valor y cómo esos patrones aparecen en las decisiones de tu emprendimiento. Responde pensando en lo que hiciste durante las últimas cuatro semanas, no en lo que te gustaría hacer. No hay respuestas correctas.</p>
   <button class="btn-primary" id="btn-start" onclick="startOrResume()">Descubrir mi personaje →</button>
@@ -559,7 +559,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="quiz-engine.js?v=2.1.3"></script>
+<script src="quiz-engine.js?v=2.1.4"></script>
 <script>
 /* ═════════ CONFIGURACIÓN — completar al activar ═════════
    Mientras SUPABASE_URL no sea una URL real, el test funciona
@@ -1374,8 +1374,8 @@ async function createSocialCardBlob(){
   ctx.textAlign='center';ctx.textBaseline='alphabetic';
   ctx.fillStyle='#2B0E17';ctx.font='600 34px Montserrat, sans-serif';ctx.letterSpacing='0px';
   ctx.fillText('Moraleja',W/2,118);
-  ctx.fillStyle=theme.deep;ctx.font='italic 400 26px "Cormorant Garamond", serif';ctx.letterSpacing='3px';
-  ctx.fillText('COMUNICACIÓN CONSCIENTE',W/2,156);
+  ctx.fillStyle=theme.deep;ctx.font='500 19px Raleway, sans-serif';ctx.letterSpacing='0.4px';
+  ctx.fillText('Comunicación Consciente',W/2,148);
 
   const aw=850,ah=Math.round(aw*4/3),ax=(W-aw)/2,ay=204,abr=52;
   ctx.save();ctx.globalAlpha=.28;ctx.strokeStyle=theme.deep;ctx.lineWidth=3;

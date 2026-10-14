@@ -63,7 +63,7 @@
     {
       id: "r-beh-1", dim: "relaciones", kind: "behavior", type: "scale",
       stage: "Reconoce tus patrones",
-      text: "En las últimas cuatro semanas, hice sola algo que podía delegar o pedir, porque pensé «si no lo hago yo, nadie lo hará bien».",
+      text: "En las últimas cuatro semanas, evité pedir ayuda porque pensé «yo tengo que poder con todo».",
       options: frequencyOptions.map((option) => ({ text: option.text, score: 4 - option.score })),
     },
     {
@@ -81,7 +81,7 @@
     {
       id: "l-beh-2", dim: "lenguaje", kind: "behavior", type: "scale",
       stage: "Reconoce tus patrones",
-      text: "En las últimas cuatro semanas, cuando me equivoqué, me hablé como le hablaría a alguien que aprecio: nombré lo que pasó y lo que podía corregir, sin insultarme.",
+      text: "En las últimas cuatro semanas, cuando me equivoqué, me hablé como le hablaría a alguien que quiero mucho.",
       options: frequencyOptions,
     },
     {
@@ -184,7 +184,7 @@
     {
       id: "al-app-1", dim: "alineacion", kind: "applied", type: "selectTwo",
       stage: "Reconoce tu tendencia",
-      text: "Te ofrecen un proyecto urgente. ¿Qué dos frases pesan más en tu cabeza cuando decides si aceptarlo?",
+      text: "Te ofrecen un proyecto urgente. ¿Cuáles dos frases pesan más en tu cabeza al tomar la decisión de aceptar o no?",
       prompt: "Selecciona las dos que de verdad aparecen en ti, no las que crees que deberían aparecer.",
       options: [
         { id: "values", text: "«¿Esto me acerca al negocio que quiero tener, o solo me llena la semana?»", score: 2 },
@@ -197,20 +197,20 @@
     {
       id: "r-app-1", dim: "relaciones", kind: "applied", type: "selectTwo",
       stage: "Reconoce tu tendencia",
-      text: "Estás atascada con algo de tu negocio: una tarea, una decisión o un cliente difícil. ¿Qué dos cosas se parecen más a lo que te dices y haces?",
+      text: "Estás atascada con algo de tu negocio: una tarea, una decisión o un cliente difícil. Elige dos opciones que se parecen más a lo que normalmente te dices y haces.",
       prompt: "Selecciona las dos más parecidas a lo que sueles hacer, no a lo que te gustaría hacer.",
       options: [
         { id: "solo", text: "Me digo «si no lo hago yo, nadie lo hará bien» y lo resuelvo sola, aunque me quite horas de descanso.", score: 0 },
         { id: "should-alone", text: "Me digo «ya debería poder manejar esto sola» y lo intento un tiempo más antes de pedir.", score: 1 },
         { id: "ask", text: "Le pido a una persona concreta lo que necesito, con detalle y fecha.", score: 2 },
         { id: "share", text: "Le cuento a alguien de confianza dónde estoy atascada, aunque todavía no tenga nada resuelto.", score: 2 },
-        { id: "apologize", text: "Me digo «no quiero molestar» y pido, pero disculpándome y aceptando lo que me den.", score: 1 },
+        { id: "apologize", text: "Me digo: «no quiero molestar» y pido ayuda. Al final acepto el resultado así no sea lo que esperaba.", score: 1 },
       ],
     },
     {
       id: "ac-app-1", dim: "accion", kind: "applied", type: "selectTwo",
       stage: "Reconoce tu tendencia",
-      text: "Piensa en una idea que quieres mover (un servicio nuevo, subir precios, empezar a publicar). ¿Qué dos cosas se parecen más a cómo suele arrancar?",
+      text: "Piensa en algo que quieres hacer (diseñar un nuevo servicio, subir precios, empezar a publicar). Elige dos opciones que se parecen mucho a cómo sueles empezar.",
       prompt: "Selecciona las dos que de verdad te pasan, no las que crees que deberían pasar.",
       options: [
         { id: "vague-cue", text: "Espero a sentirme completamente lista para empezar.", score: 0 },

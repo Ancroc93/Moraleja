@@ -325,6 +325,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 #auth-info{display:none;margin-top:26px;font-size:12px;color:var(--muted);}
 #auth-info.show{display:block;}
 #auth-info a{color:var(--rust);cursor:pointer;}
+.btn-link{background:none;border:0;margin-top:14px;padding:6px 4px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;letter-spacing:1px;color:var(--muted);text-decoration:underline;text-underline-offset:4px;cursor:pointer;}
+.btn-link:hover{color:var(--text,#2a1a1f);}
 #btn-last-result{display:none;margin-top:16px;}
 #btn-last-result.show{display:inline-block;}
 #save-note{display:none;font-size:13px;color:var(--muted);margin-top:18px;line-height:1.7;}
@@ -437,7 +439,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   <p class="intro-tag">Mapa orientativo · Comunicación Consciente para Emprendedoras</p>
   <h1 class="intro-title">Descubre cómo tu diálogo interno influye<br><em>en la forma en que comunicas y decides</em></h1>
   <p class="intro-desc">Este autodiagnóstico te ayuda a reconocer cómo te hablas, cómo expresas tu valor y cómo esos patrones aparecen en las decisiones de tu emprendimiento. Responde pensando en lo que hiciste durante las últimas cuatro semanas, no en lo que te gustaría hacer. No hay respuestas correctas.</p>
-  <button class="btn-primary" onclick="startQuiz()">Descubrir mi personaje →</button>
+  <button class="btn-primary" id="btn-start" onclick="startOrResume()">Descubrir mi personaje →</button>
+  <div><button class="btn-link" id="btn-start-over" onclick="startQuiz()" hidden>Empezar de nuevo</button></div>
   <div><button class="btn-outline" id="btn-last-result" onclick="showLastResult()">Ver mi último resultado →</button></div>
   <p id="auth-info">Sesión: <span id="auth-email"></span> · <a onclick="signOut()">Salir</a></p>
 </div>
@@ -730,8 +733,36 @@ const dimInsights={
 let currentQ=0,selectedAnswer=null,quizStartedAt=null,currentResultPayload=null,radarChartInstance=null;
 let answers={},optionOrders={};
 
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0);}
-function startQuiz(){currentQ=0;selectedAnswer=null;answers={};optionOrders={};quizStartedAt=Date.now();currentResultPayload=null;showScreen('quiz');renderQuestion();}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');window.scrollTo(0,0);if(id==='intro')updateResumeUI();}
+function startQuiz(){clearProgress();currentQ=0;selectedAnswer=null;answers={};optionOrders={};quizStartedAt=Date.now();currentResultPayload=null;showScreen('quiz');renderQuestion();}
+
+/* ── Progreso en curso: sobrevive si el navegador recarga la pestaña ── */
+const PROGRESS_KEY='moraleja_quiz_progress';
+const PROGRESS_MAX_AGE=7*24*60*60*1000;
+function saveProgress(){
+  try{localStorage.setItem(PROGRESS_KEY,JSON.stringify({v:CLARA.VERSION,currentQ,answers,optionOrders,quizStartedAt,savedAt:Date.now()}));}catch(e){}
+}
+function clearProgress(){try{localStorage.removeItem(PROGRESS_KEY);}catch(e){}}
+function loadProgress(){
+  try{
+    const p=JSON.parse(localStorage.getItem(PROGRESS_KEY)||'null');
+    if(!p||p.v!==CLARA.VERSION||Date.now()-p.savedAt>PROGRESS_MAX_AGE)return null;
+    if(!(p.currentQ>0&&p.currentQ<CLARA.interactions.length))return null;
+    return p;
+  }catch(e){return null;}
+}
+function updateResumeUI(){
+  const p=loadProgress();
+  document.getElementById('btn-start').textContent=p?`Continuar donde ibas · pregunta ${p.currentQ+1} de ${CLARA.interactions.length} →`:'Descubrir mi personaje →';
+  document.getElementById('btn-start-over').hidden=!p;
+}
+function startOrResume(){
+  const p=loadProgress();
+  if(!p){startQuiz();return;}
+  currentQ=p.currentQ;answers=p.answers||{};optionOrders=p.optionOrders||{};quizStartedAt=p.quizStartedAt||Date.now();
+  selectedAnswer=null;currentResultPayload=null;
+  showScreen('quiz');renderQuestion();
+}
 function restartQuiz(){if(window.confirm('¿Quieres comenzar de nuevo? Tu resultado actual seguirá guardado, pero perderás cualquier respuesta sin finalizar.'))startQuiz();}
 
 /* ── AUTH: registro, enlace mágico y guardado ── */
@@ -748,12 +779,13 @@ function initAuth(){
     supaClient=window.supabase.createClient(CONFIG.SUPABASE_URL,CONFIG.SUPABASE_ANON_KEY);
   }catch(e){showScreen('intro');return;}
   mountTurnstile();
-  supaClient.auth.onAuthStateChange((_ev,session)=>{
-    if(session){enterApp(session);}else{showScreen('register');}
-  });
-  supaClient.auth.getSession().then(({data})=>{
-    if(data&&data.session){enterApp(data.session);}else{showScreen('register');}
-  });
+  // Supabase vuelve a emitir la sesión al regresar a la pestaña: solo se enruta la primera vez.
+  const routeSession=(ev,session)=>{
+    if(session){if(!appEntered)enterApp(session);return;}
+    if(ev==='SIGNED_OUT'||!appEntered){appEntered=false;showScreen('register');}
+  };
+  supaClient.auth.onAuthStateChange(routeSession);
+  supaClient.auth.getSession().then(({data})=>routeSession('INITIAL_SESSION',data&&data.session));
 }
 
 /* ── Turnstile (anti-bots): dormido hasta que se ponga la site key real ── */
@@ -859,7 +891,9 @@ async function resendLink(){
 
 function backToRegister(ev){if(ev)ev.preventDefault();clearInterval(resendTimer);showScreen('register');}
 
+let appEntered=false;
 function enterApp(session){
+  appEntered=true;
   const email=(session.user&&session.user.email)||'';
   document.getElementById('auth-email').textContent=email;
   document.getElementById('auth-info').classList.add('show');
@@ -869,6 +903,7 @@ function enterApp(session){
 
 async function signOut(){
   try{await supaClient.auth.signOut();}catch(e){}
+  appEntered=false;clearProgress();
   lastSavedResult=null;
   document.getElementById('btn-last-result').classList.remove('show');
   document.getElementById('auth-info').classList.remove('show');
@@ -1093,10 +1128,10 @@ function nextQuestion(){
   const q=CLARA.interactions[currentQ];
   answers[q.id]=JSON.parse(JSON.stringify(selectedAnswer));
   currentQ++;
-  if(currentQ>=CLARA.interactions.length){finishQuiz();}else{renderQuestion();}
+  if(currentQ>=CLARA.interactions.length){finishQuiz();}else{saveProgress();renderQuestion();}
 }
 
-function finishQuiz(){buildResults();showScreen('results');}
+function finishQuiz(){clearProgress();buildResults();showScreen('results');}
 
 function buildResults(){
   const result=CLARA.calculateResult(answers);
